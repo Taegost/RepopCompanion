@@ -1,0 +1,112 @@
+﻿#PageWrapper
+{
+  /*
+    Sets the total width for the entire page. Also sets the background color
+    which is used to fill the background of the Sidebar in case the MainContent section is taller than the Sidebar.
+    Uses margin: auto to center the entire page in the middle of the browser's window.
+  */
+  width: 1000px;
+  margin: auto;
+}
+
+header
+{
+    width: 1000px;
+    height: 20px;
+}
+
+footer
+{
+  /*
+    The footer is positioned below all other content (yet still within PageWrapper).
+    clear: both is used to clear the impact of the float properties used for #MainContent and #Sidebar.
+  */
+  width: 844px;
+  clear: both;
+  height: 37px;
+  text-align: center;
+  font-size: 0.7em;
+  font-weight: bold;
+  line-height: 37px;
+}
+
+.MainMenu
+{
+    width: 1000px;
+}
+
+.SectionWrapper
+{
+    width: 1000px;
+    float: left;
+}
+
+.CollapsePanelHeader 
+{
+    width: 1000px;
+    height: 30px;
+}
+
+h1
+{
+    text-align: center;
+}
+
+h2
+{
+    text-align: center;
+}
+
+h3
+{
+    text-align: center;
+}
+
+.Banner
+{
+    width: 900px;
+    margin-bottom: 5px;
+}
+
+.ColumnHeader
+{
+    font-weight: bold;
+    text-align: center;
+}
+
+.NoLinkStyle
+{
+    text-decoration-style: initial;
+    color: black;
+}
+
+.NoWrap
+{
+    white-space: nowrap;
+}
+
+.CardMain
+{
+    text-align: center;
+    margin: 5px;
+    width: 320px;
+    height: 80px;
+    float: left;
+}
+
+.CardTitle
+{
+    font-size: large;
+    font-weight: bold;
+    color: black;
+}
+
+.CardDescription
+{
+    font-size: small;
+}
+
+.DifficultyTable td
+{
+    width: 110px;
+}

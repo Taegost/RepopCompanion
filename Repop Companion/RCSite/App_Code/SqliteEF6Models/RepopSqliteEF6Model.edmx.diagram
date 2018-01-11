@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="54506342e99240f58c2bcde62845a1f5" Name="Diagram1">
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.C_dbINFO" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Ability" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Crafting_Components" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Crafting_Filters" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Fitting" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Hacking" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Harvestable_Regions" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item_Armor" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item_Armor_Energy" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item_Stackable" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item_Value" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item_Weapons" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Path" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Prop" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Recipe" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.ResourceAttribute" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Share" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Shop" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Skill" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Species" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Structure" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Tip" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Abilities_ActivationData" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Abilities_WeaponData" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item_Crafting_Components" Width="1.5" PointX="6.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item_Crafting_Filters" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item_Power_Source" Width="1.5" PointX="12.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Item_Stores_Power" Width="1.5" PointX="10.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Recipe_Agents" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Recipe_Books" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Recipe_Ingredients" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Recipe_Results" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Recipe_Skill_Range" Width="1.5" PointX="14.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Shop_Inventory_List" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Shop_To_Inventory_List" Width="1.5" PointX="2.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Repop_Companion.DataModels.Species_Results" Width="1.5" PointX="4.75" PointY="15.75" IsExpanded="true" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

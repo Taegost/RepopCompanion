@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="~/" title="Home"  description="Home">
+    <siteMapNode url="~/Default.aspx" title="Home"  description="Return to the home page" />
+    <siteMapNode url="~/TradeSkills/Default.aspx" title="Trade Skills"  description="View all trade skills" />
+  </siteMapNode>
+</siteMap>

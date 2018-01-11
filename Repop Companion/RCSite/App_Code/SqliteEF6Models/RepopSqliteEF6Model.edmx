@@ -1,0 +1,1525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="repopdataModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;E:\Dropbox\WS\GOTD-Git\Repop Companion\Repop Companion\RCSite\App_Data\repopdata.db3&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="_dbINFO">
+          <Key>
+            <PropertyRef Name="version" />
+          </Key>
+          <Property Name="version" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="time" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="updatedBy" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Abilities">
+          <Key>
+            <PropertyRef Name="abilityID" />
+          </Key>
+          <Property Name="abilityID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="iconID" Type="integer" />
+          <Property Name="skillID" Type="integer" />
+          <Property Name="skillMin" Type="integer" />
+          <Property Name="recharge" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="globalCoolDown" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="visualizationTimer" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="enduranceCost" Type="integer" />
+          <Property Name="energyCost" Type="integer" />
+          <Property Name="momentumCost" Type="integer" />
+          <Property Name="abilType" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Abilities_ActivationData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Abilities_ActivationData">
+          <Key>
+            <PropertyRef Name="abilityID" />
+          </Key>
+          <Property Name="abilityID" Type="integer" Nullable="false" />
+          <Property Name="activationType" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="radius" Type="real" />
+          <Property Name="range" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Abilities_WeaponData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Abilities_WeaponData">
+          <Key>
+            <PropertyRef Name="abilityID" />
+          </Key>
+          <Property Name="abilityID" Type="integer" Nullable="false" />
+          <Property Name="weaponAccuracyMod" Type="real" />
+          <Property Name="weaponDamageMod" Type="real" />
+          <Property Name="weaponEnduranceMod" Type="real" />
+          <Property Name="weaponEnergyMod" Type="real" />
+          <Property Name="weaponGlobalCooldownMod" Type="real" />
+          <Property Name="weaponMomentumMod" Type="real" />
+          <Property Name="weaponRangeMod" Type="real" />
+          <Property Name="weaponSpeedMod" Type="real" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'main.Areas' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Areas">
+          <Property Name="areaID" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="areaName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="regionLocation" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>-->
+        <EntityType Name="Crafting_Components">
+          <Key>
+            <PropertyRef Name="componentID" />
+          </Key>
+          <Property Name="componentID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="iconID" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Crafting_Filters">
+          <Key>
+            <PropertyRef Name="filterID" />
+          </Key>
+          <Property Name="filterID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Fittings">
+          <Key>
+            <PropertyRef Name="fittingID" />
+          </Key>
+          <Property Name="fittingID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Hacking">
+          <Key>
+            <PropertyRef Name="hackingID" />
+          </Key>
+          <Property Name="hackingID" Type="integer" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="recipe" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="skill" Type="integer" />
+        </EntityType>
+        <EntityType Name="Harvestable_Regions">
+          <Key>
+            <PropertyRef Name="harvestableRegionID" />
+          </Key>
+          <Property Name="harvestableRegionID" Type="integer" Nullable="false" />
+          <Property Name="areaID" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="levelMin" Type="integer" />
+          <Property Name="levelMax" Type="integer" />
+          <Property Name="minCount" Type="integer" />
+          <Property Name="maxCount" Type="integer" />
+          <Property Name="propID" Type="integer" />
+          <Property Name="replenishRate" Type="integer" />
+          <Property Name="isSeasonal" Type="integer" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'main.Harvestable_Regions_Multi' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Harvestable_Regions_Multi">
+          <Property Name="harvestableRegionID" Type="integer" />
+          <Property Name="propID" Type="integer" />
+        </EntityType>-->
+        <EntityType Name="Item_Armor">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="armorType" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="armorReduction" Type="integer" />
+          <Property Name="equipLOCation" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Item_Armor_Energy">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="maxEnergy" Type="integer" />
+          <Property Name="poolSplit" Type="integer" />
+          <Property Name="rechargeRate" Type="integer" />
+          <Property Name="rechargeDelay" Type="real" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'main.Item_Attributes' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Item_Attributes">
+          <Property Name="attributeID" Type="integer" />
+          <Property Name="itemID" Type="integer" />
+          <Property Name="value" Type="integer" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'main.Item_Attributes_Agents' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Item_Attributes_Agents">
+          <Property Name="attributeID" Type="integer" />
+          <Property Name="itemID" Type="integer" />
+          <Property Name="value" Type="real" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Item_Crafting_Components' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Item_Crafting_Components">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="componentID" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="componentID" Type="integer" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Item_Crafting_Filters' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Item_Crafting_Filters">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="filterID" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="filterID" Type="integer" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Item_Power_Source' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Item_Power_Source">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="powerIndex" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="powerIndex" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item_Stackable">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="defaultStackSize" Type="integer" />
+          <Property Name="maxStackSize" Type="integer" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Item_Stores_Power' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Item_Stores_Power">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="maxStorage" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="maxStorage" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item_Value">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="value" Type="integer" />
+          <Property Name="currencyType" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Item_Weapons">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="decimal" Precision="53" Scale="0" Nullable="false" />
+          <Property Name="momentum" Type="integer" />
+          <Property Name="endurance" Type="integer" />
+          <Property Name="armorLightPenetration" Type="integer" />
+          <Property Name="armorMediumPenetration" Type="integer" />
+          <Property Name="armorHeavyPenetration" Type="integer" />
+          <Property Name="minimalAmount" Type="integer" />
+          <Property Name="minimalRange" Type="integer" />
+          <Property Name="attackRange" Type="integer" />
+          <Property Name="diminishedAmount" Type="integer" />
+          <Property Name="diminishedRange" Type="integer" />
+          <Property Name="maximumRange" Type="integer" />
+          <Property Name="damageType" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="damageAmount" Type="integer" />
+          <Property Name="energyCost" Type="integer" />
+          <Property Name="attackSpeed" Type="real" />
+          <Property Name="weaponCategory" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dualWield" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="iconID" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Path">
+          <Key>
+            <PropertyRef Name="pathID" />
+          </Key>
+          <Property Name="pathID" Type="integer" Nullable="false" />
+          <Property Name="areaID" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="name" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="vect" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="mis" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Props">
+          <Key>
+            <PropertyRef Name="propID" />
+          </Key>
+          <Property Name="propID" Type="integer" Nullable="false" />
+          <Property Name="subsistenceID" Type="integer" />
+          <Property Name="numHarvests" Type="integer" />
+          <Property Name="toolID" Type="integer" />
+          <Property Name="skillID" Type="integer" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Recipe_Agents' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Recipe_Agents">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="componentID" />
+            <PropertyRef Name="count" />
+            <PropertyRef Name="weight" />
+          </Key>
+          <Property Name="recipeID" Type="integer" Nullable="false" />
+          <Property Name="componentID" Type="integer" Nullable="false" />
+          <Property Name="count" Type="integer" Nullable="false" />
+          <Property Name="weight" Type="integer" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Recipe_Books' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Recipe_Books">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="recipeID" />
+          </Key>
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="recipeID" Type="integer" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Recipe_Ingredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Recipe_Ingredients">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="componentID" />
+            <PropertyRef Name="count" />
+            <PropertyRef Name="weight" />
+            <PropertyRef Name="ingSlot" />
+          </Key>
+          <Property Name="recipeID" Type="integer" Nullable="false" />
+          <Property Name="componentID" Type="integer" Nullable="false" />
+          <Property Name="count" Type="integer" Nullable="false" />
+          <Property Name="weight" Type="integer" Nullable="false" />
+          <Property Name="ingSlot" Type="integer" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Recipe_Results' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Recipe_Results">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="groupID" />
+            <PropertyRef Name="count" />
+            <PropertyRef Name="grade" />
+            <PropertyRef Name="level" />
+            <PropertyRef Name="type" />
+            <PropertyRef Name="resultID" />
+            <PropertyRef Name="filter1ID" />
+            <PropertyRef Name="filter2ID" />
+            <PropertyRef Name="filter3ID" />
+            <PropertyRef Name="filter4ID" />
+            <PropertyRef Name="ingCount1" />
+            <PropertyRef Name="ingCount2" />
+            <PropertyRef Name="ingCount3" />
+            <PropertyRef Name="ingCount4" />
+          </Key>
+          <Property Name="recipeID" Type="integer" Nullable="false" />
+          <Property Name="groupID" Type="integer" Nullable="false" />
+          <Property Name="count" Type="integer" Nullable="false" />
+          <Property Name="grade" Type="integer" Nullable="false" />
+          <Property Name="level" Type="integer" Nullable="false" />
+          <Property Name="type" Type="integer" Nullable="false" />
+          <Property Name="resultID" Type="integer" Nullable="false" />
+          <Property Name="filter1ID" Type="integer" Nullable="false" />
+          <Property Name="filter2ID" Type="integer" Nullable="false" />
+          <Property Name="filter3ID" Type="integer" Nullable="false" />
+          <Property Name="filter4ID" Type="integer" Nullable="false" />
+          <Property Name="ingCount1" Type="integer" Nullable="false" />
+          <Property Name="ingCount2" Type="integer" Nullable="false" />
+          <Property Name="ingCount3" Type="integer" Nullable="false" />
+          <Property Name="ingCount4" Type="integer" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Recipe_Skill_Range' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Recipe_Skill_Range">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="level" />
+            <PropertyRef Name="minf" />
+            <PropertyRef Name="mind" />
+            <PropertyRef Name="minc" />
+            <PropertyRef Name="minb" />
+            <PropertyRef Name="mina" />
+            <PropertyRef Name="minaa" />
+            <PropertyRef Name="over1" />
+            <PropertyRef Name="over2" />
+          </Key>
+          <Property Name="recipeID" Type="integer" Nullable="false" />
+          <Property Name="level" Type="integer" Nullable="false" />
+          <Property Name="minf" Type="integer" Nullable="false" />
+          <Property Name="mind" Type="integer" Nullable="false" />
+          <Property Name="minc" Type="integer" Nullable="false" />
+          <Property Name="minb" Type="integer" Nullable="false" />
+          <Property Name="mina" Type="integer" Nullable="false" />
+          <Property Name="minaa" Type="integer" Nullable="false" />
+          <Property Name="over1" Type="integer" Nullable="false" />
+          <Property Name="over2" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipes">
+          <Key>
+            <PropertyRef Name="recipeID" />
+          </Key>
+          <Property Name="recipeID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="skillID" Type="integer" Nullable="false" />
+          <Property Name="steps" Type="integer" Nullable="false" />
+          <Property Name="ingredientWeight" Type="integer" Nullable="false" />
+          <Property Name="agentWeight" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ResourceAttributes">
+          <Key>
+            <PropertyRef Name="resourceAttributeID" />
+          </Key>
+          <Property Name="resourceAttributeID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="shortName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="socketPrimary" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Share">
+          <Key>
+            <PropertyRef Name="shareID" />
+          </Key>
+          <Property Name="shareID" Type="integer" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Shop_Inventory_List' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Shop_Inventory_List">
+          <Key>
+            <PropertyRef Name="inventoryID" />
+          </Key>
+          <Property Name="inventoryID" Type="integer" Nullable="false" />
+          <Property Name="itemID" Type="integer" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Shop_To_Inventory_List' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Shop_To_Inventory_List">
+          <Key>
+            <PropertyRef Name="shopID" />
+          </Key>
+          <Property Name="shopID" Type="integer" Nullable="false" />
+          <Property Name="inventoryID" Type="integer" />
+        </EntityType>
+        <EntityType Name="Shops">
+          <Key>
+            <PropertyRef Name="shopID" />
+          </Key>
+          <Property Name="shopID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="currencyType" Type="integer" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="skillID" />
+          </Key>
+          <Property Name="skillID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Species">
+          <Key>
+            <PropertyRef Name="speciesID" />
+          </Key>
+          <Property Name="speciesID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="extractionType" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.Species_Results' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Species_Results">
+          <Key>
+            <PropertyRef Name="speciesID" />
+            <PropertyRef Name="groupID" />
+            <PropertyRef Name="chance" />
+            <PropertyRef Name="chanceMultiplier" />
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="count" />
+            <PropertyRef Name="type" />
+            <PropertyRef Name="grade" />
+            <PropertyRef Name="difficulty" />
+          </Key>
+          <Property Name="speciesID" Type="integer" Nullable="false" />
+          <Property Name="groupID" Type="integer" Nullable="false" />
+          <Property Name="chance" Type="real" Nullable="false" />
+          <Property Name="chanceMultiplier" Type="real" Nullable="false" />
+          <Property Name="itemID" Type="integer" Nullable="false" />
+          <Property Name="count" Type="integer" Nullable="false" />
+          <Property Name="type" Type="integer" Nullable="false" />
+          <Property Name="grade" Type="integer" Nullable="false" />
+          <Property Name="difficulty" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Structures">
+          <Key>
+            <PropertyRef Name="structureID" />
+          </Key>
+          <Property Name="structureID" Type="integer" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="isHousingStructure" Type="integer" />
+          <Property Name="isSiegingUnit" Type="integer" />
+        </EntityType>
+        <EntityType Name="Tips">
+          <Key>
+            <PropertyRef Name="tipID" />
+          </Key>
+          <Property Name="tipID" Type="integer" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="displayDescription" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityContainer Name="repopdataModelStoreContainer">
+          <EntitySet Name="_dbINFO" EntityType="Self._dbINFO" store:Type="Tables" />
+          <EntitySet Name="Abilities" EntityType="Self.Abilities" store:Type="Tables" />
+          <EntitySet Name="Crafting_Components" EntityType="Self.Crafting_Components" store:Type="Tables" />
+          <EntitySet Name="Crafting_Filters" EntityType="Self.Crafting_Filters" store:Type="Tables" />
+          <EntitySet Name="Fittings" EntityType="Self.Fittings" store:Type="Tables" />
+          <EntitySet Name="Hacking" EntityType="Self.Hacking" store:Type="Tables" />
+          <EntitySet Name="Harvestable_Regions" EntityType="Self.Harvestable_Regions" store:Type="Tables" />
+          <EntitySet Name="Item_Armor" EntityType="Self.Item_Armor" store:Type="Tables" />
+          <EntitySet Name="Item_Armor_Energy" EntityType="Self.Item_Armor_Energy" store:Type="Tables" />
+          <EntitySet Name="Item_Stackable" EntityType="Self.Item_Stackable" store:Type="Tables" />
+          <EntitySet Name="Item_Value" EntityType="Self.Item_Value" store:Type="Tables" />
+          <EntitySet Name="Item_Weapons" EntityType="Self.Item_Weapons" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" store:Type="Tables" />
+          <EntitySet Name="Path" EntityType="Self.Path" store:Type="Tables" />
+          <EntitySet Name="Props" EntityType="Self.Props" store:Type="Tables" />
+          <EntitySet Name="Recipes" EntityType="Self.Recipes" store:Type="Tables" />
+          <EntitySet Name="ResourceAttributes" EntityType="Self.ResourceAttributes" store:Type="Tables" />
+          <EntitySet Name="Share" EntityType="Self.Share" store:Type="Tables" />
+          <EntitySet Name="Shops" EntityType="Self.Shops" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" store:Type="Tables" />
+          <EntitySet Name="Species" EntityType="Self.Species" store:Type="Tables" />
+          <EntitySet Name="Structures" EntityType="Self.Structures" store:Type="Tables" />
+          <EntitySet Name="Tips" EntityType="Self.Tips" store:Type="Tables" />
+          <EntitySet Name="Abilities_ActivationData" EntityType="Self.Abilities_ActivationData" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Abilities_ActivationData].[abilityID] AS [abilityID], 
+[Abilities_ActivationData].[activationType] AS [activationType], 
+[Abilities_ActivationData].[radius] AS [radius], 
+[Abilities_ActivationData].[range] AS [range]
+FROM [Abilities_ActivationData] AS [Abilities_ActivationData]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Abilities_WeaponData" EntityType="Self.Abilities_WeaponData" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Abilities_WeaponData].[abilityID] AS [abilityID], 
+[Abilities_WeaponData].[weaponAccuracyMod] AS [weaponAccuracyMod], 
+[Abilities_WeaponData].[weaponDamageMod] AS [weaponDamageMod], 
+[Abilities_WeaponData].[weaponEnduranceMod] AS [weaponEnduranceMod], 
+[Abilities_WeaponData].[weaponEnergyMod] AS [weaponEnergyMod], 
+[Abilities_WeaponData].[weaponGlobalCooldownMod] AS [weaponGlobalCooldownMod], 
+[Abilities_WeaponData].[weaponMomentumMod] AS [weaponMomentumMod], 
+[Abilities_WeaponData].[weaponRangeMod] AS [weaponRangeMod], 
+[Abilities_WeaponData].[weaponSpeedMod] AS [weaponSpeedMod]
+FROM [Abilities_WeaponData] AS [Abilities_WeaponData]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Item_Crafting_Components" EntityType="Self.Item_Crafting_Components" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Item_Crafting_Components].[itemID] AS [itemID], 
+[Item_Crafting_Components].[componentID] AS [componentID]
+FROM [Item_Crafting_Components] AS [Item_Crafting_Components]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Item_Crafting_Filters" EntityType="Self.Item_Crafting_Filters" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Item_Crafting_Filters].[itemID] AS [itemID], 
+[Item_Crafting_Filters].[filterID] AS [filterID]
+FROM [Item_Crafting_Filters] AS [Item_Crafting_Filters]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Item_Power_Source" EntityType="Self.Item_Power_Source" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Item_Power_Source].[itemID] AS [itemID], 
+[Item_Power_Source].[powerIndex] AS [powerIndex]
+FROM [Item_Power_Source] AS [Item_Power_Source]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Item_Stores_Power" EntityType="Self.Item_Stores_Power" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Item_Stores_Power].[itemID] AS [itemID], 
+[Item_Stores_Power].[maxStorage] AS [maxStorage]
+FROM [Item_Stores_Power] AS [Item_Stores_Power]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Recipe_Agents" EntityType="Self.Recipe_Agents" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Recipe_Agents].[recipeID] AS [recipeID], 
+[Recipe_Agents].[componentID] AS [componentID], 
+[Recipe_Agents].[count] AS [count], 
+[Recipe_Agents].[weight] AS [weight]
+FROM [Recipe_Agents] AS [Recipe_Agents]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Recipe_Books" EntityType="Self.Recipe_Books" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Recipe_Books].[itemID] AS [itemID], 
+[Recipe_Books].[recipeID] AS [recipeID]
+FROM [Recipe_Books] AS [Recipe_Books]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Recipe_Ingredients" EntityType="Self.Recipe_Ingredients" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Recipe_Ingredients].[recipeID] AS [recipeID], 
+[Recipe_Ingredients].[componentID] AS [componentID], 
+[Recipe_Ingredients].[count] AS [count], 
+[Recipe_Ingredients].[weight] AS [weight], 
+[Recipe_Ingredients].[ingSlot] AS [ingSlot]
+FROM [Recipe_Ingredients] AS [Recipe_Ingredients]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Recipe_Results" EntityType="Self.Recipe_Results" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Recipe_Results].[recipeID] AS [recipeID], 
+[Recipe_Results].[groupID] AS [groupID], 
+[Recipe_Results].[count] AS [count], 
+[Recipe_Results].[grade] AS [grade], 
+[Recipe_Results].[level] AS [level], 
+[Recipe_Results].[type] AS [type], 
+[Recipe_Results].[resultID] AS [resultID], 
+[Recipe_Results].[filter1ID] AS [filter1ID], 
+[Recipe_Results].[filter2ID] AS [filter2ID], 
+[Recipe_Results].[filter3ID] AS [filter3ID], 
+[Recipe_Results].[filter4ID] AS [filter4ID], 
+[Recipe_Results].[ingCount1] AS [ingCount1], 
+[Recipe_Results].[ingCount2] AS [ingCount2], 
+[Recipe_Results].[ingCount3] AS [ingCount3], 
+[Recipe_Results].[ingCount4] AS [ingCount4]
+FROM [Recipe_Results] AS [Recipe_Results]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Recipe_Skill_Range" EntityType="Self.Recipe_Skill_Range" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Recipe_Skill_Range].[recipeID] AS [recipeID], 
+[Recipe_Skill_Range].[level] AS [level], 
+[Recipe_Skill_Range].[minf] AS [minf], 
+[Recipe_Skill_Range].[mind] AS [mind], 
+[Recipe_Skill_Range].[minc] AS [minc], 
+[Recipe_Skill_Range].[minb] AS [minb], 
+[Recipe_Skill_Range].[mina] AS [mina], 
+[Recipe_Skill_Range].[minaa] AS [minaa], 
+[Recipe_Skill_Range].[over1] AS [over1], 
+[Recipe_Skill_Range].[over2] AS [over2]
+FROM [Recipe_Skill_Range] AS [Recipe_Skill_Range]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Shop_Inventory_List" EntityType="Self.Shop_Inventory_List" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Shop_Inventory_List].[inventoryID] AS [inventoryID], 
+[Shop_Inventory_List].[itemID] AS [itemID]
+FROM [Shop_Inventory_List] AS [Shop_Inventory_List]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Shop_To_Inventory_List" EntityType="Self.Shop_To_Inventory_List" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Shop_To_Inventory_List].[shopID] AS [shopID], 
+[Shop_To_Inventory_List].[inventoryID] AS [inventoryID]
+FROM [Shop_To_Inventory_List] AS [Shop_To_Inventory_List]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Species_Results" EntityType="Self.Species_Results" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[Species_Results].[speciesID] AS [speciesID], 
+[Species_Results].[groupID] AS [groupID], 
+[Species_Results].[chance] AS [chance], 
+[Species_Results].[chanceMultiplier] AS [chanceMultiplier], 
+[Species_Results].[itemID] AS [itemID], 
+[Species_Results].[count] AS [count], 
+[Species_Results].[type] AS [type], 
+[Species_Results].[grade] AS [grade], 
+[Species_Results].[difficulty] AS [difficulty]
+FROM [Species_Results] AS [Species_Results]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Repop_Companion.DataModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C_dbINFO">
+          <Key>
+            <PropertyRef Name="version" />
+          </Key>
+          <Property Name="version" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="time" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="updatedBy" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Ability">
+          <Key>
+            <PropertyRef Name="abilityID" />
+          </Key>
+          <Property Name="abilityID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="iconID" Type="Int64" />
+          <Property Name="skillID" Type="Int64" />
+          <Property Name="skillMin" Type="Int64" />
+          <Property Name="recharge" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="globalCoolDown" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="visualizationTimer" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="enduranceCost" Type="Int64" />
+          <Property Name="energyCost" Type="Int64" />
+          <Property Name="momentumCost" Type="Int64" />
+          <Property Name="abilType" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Crafting_Components">
+          <Key>
+            <PropertyRef Name="componentID" />
+          </Key>
+          <Property Name="componentID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="iconID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Crafting_Filters">
+          <Key>
+            <PropertyRef Name="filterID" />
+          </Key>
+          <Property Name="filterID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Fitting">
+          <Key>
+            <PropertyRef Name="fittingID" />
+          </Key>
+          <Property Name="fittingID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Hacking">
+          <Key>
+            <PropertyRef Name="hackingID" />
+          </Key>
+          <Property Name="hackingID" Type="Int64" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="recipe" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="skill" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Harvestable_Regions">
+          <Key>
+            <PropertyRef Name="harvestableRegionID" />
+          </Key>
+          <Property Name="harvestableRegionID" Type="Int64" Nullable="false" />
+          <Property Name="areaID" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="levelMin" Type="Int64" />
+          <Property Name="levelMax" Type="Int64" />
+          <Property Name="minCount" Type="Int64" />
+          <Property Name="maxCount" Type="Int64" />
+          <Property Name="propID" Type="Int64" />
+          <Property Name="replenishRate" Type="Int64" />
+          <Property Name="isSeasonal" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Item_Armor">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="armorType" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="armorReduction" Type="Int64" />
+          <Property Name="equipLOCation" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Item_Armor_Energy">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="maxEnergy" Type="Int64" />
+          <Property Name="poolSplit" Type="Int64" />
+          <Property Name="rechargeRate" Type="Int64" />
+          <Property Name="rechargeDelay" Type="Double" />
+        </EntityType>
+        <EntityType Name="Item_Stackable">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="defaultStackSize" Type="Int64" />
+          <Property Name="maxStackSize" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Item_Value">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="value" Type="Int64" />
+          <Property Name="currencyType" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Item_Weapons">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Decimal" Precision="53" Scale="0" Nullable="false" />
+          <Property Name="momentum" Type="Int64" />
+          <Property Name="endurance" Type="Int64" />
+          <Property Name="armorLightPenetration" Type="Int64" />
+          <Property Name="armorMediumPenetration" Type="Int64" />
+          <Property Name="armorHeavyPenetration" Type="Int64" />
+          <Property Name="minimalAmount" Type="Int64" />
+          <Property Name="minimalRange" Type="Int64" />
+          <Property Name="attackRange" Type="Int64" />
+          <Property Name="diminishedAmount" Type="Int64" />
+          <Property Name="diminishedRange" Type="Int64" />
+          <Property Name="maximumRange" Type="Int64" />
+          <Property Name="damageType" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="damageAmount" Type="Int64" />
+          <Property Name="energyCost" Type="Int64" />
+          <Property Name="attackSpeed" Type="Double" />
+          <Property Name="weaponCategory" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dualWield" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="iconID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Path">
+          <Key>
+            <PropertyRef Name="pathID" />
+          </Key>
+          <Property Name="pathID" Type="Int64" Nullable="false" />
+          <Property Name="areaID" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="vect" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="mis" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Prop">
+          <Key>
+            <PropertyRef Name="propID" />
+          </Key>
+          <Property Name="propID" Type="Int64" Nullable="false" />
+          <Property Name="subsistenceID" Type="Int64" />
+          <Property Name="numHarvests" Type="Int64" />
+          <Property Name="toolID" Type="Int64" />
+          <Property Name="skillID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="recipeID" />
+          </Key>
+          <Property Name="recipeID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="skillID" Type="Int64" Nullable="false" />
+          <Property Name="steps" Type="Int64" Nullable="false" />
+          <Property Name="ingredientWeight" Type="Int64" Nullable="false" />
+          <Property Name="agentWeight" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ResourceAttribute">
+          <Key>
+            <PropertyRef Name="resourceAttributeID" />
+          </Key>
+          <Property Name="resourceAttributeID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="shortName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="socketPrimary" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Share">
+          <Key>
+            <PropertyRef Name="shareID" />
+          </Key>
+          <Property Name="shareID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="shopID" />
+          </Key>
+          <Property Name="shopID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="currencyType" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="skillID" />
+          </Key>
+          <Property Name="skillID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Species">
+          <Key>
+            <PropertyRef Name="speciesID" />
+          </Key>
+          <Property Name="speciesID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="extractionType" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Structure">
+          <Key>
+            <PropertyRef Name="structureID" />
+          </Key>
+          <Property Name="structureID" Type="Int64" Nullable="false" />
+          <Property Name="displayName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="isHousingStructure" Type="Int64" />
+          <Property Name="isSiegingUnit" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Tip">
+          <Key>
+            <PropertyRef Name="tipID" />
+          </Key>
+          <Property Name="tipID" Type="Int64" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="displayDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Abilities_ActivationData">
+          <Key>
+            <PropertyRef Name="abilityID" />
+          </Key>
+          <Property Name="abilityID" Type="Int64" Nullable="false" />
+          <Property Name="activationType" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="radius" Type="Double" />
+          <Property Name="range" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Abilities_WeaponData">
+          <Key>
+            <PropertyRef Name="abilityID" />
+          </Key>
+          <Property Name="abilityID" Type="Int64" Nullable="false" />
+          <Property Name="weaponAccuracyMod" Type="Double" />
+          <Property Name="weaponDamageMod" Type="Double" />
+          <Property Name="weaponEnduranceMod" Type="Double" />
+          <Property Name="weaponEnergyMod" Type="Double" />
+          <Property Name="weaponGlobalCooldownMod" Type="Double" />
+          <Property Name="weaponMomentumMod" Type="Double" />
+          <Property Name="weaponRangeMod" Type="Double" />
+          <Property Name="weaponSpeedMod" Type="Double" />
+        </EntityType>
+        <EntityType Name="Item_Crafting_Components">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="componentID" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="componentID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item_Crafting_Filters">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="filterID" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="filterID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item_Power_Source">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="powerIndex" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="powerIndex" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item_Stores_Power">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="maxStorage" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="maxStorage" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipe_Agents">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="componentID" />
+            <PropertyRef Name="count" />
+            <PropertyRef Name="weight" />
+          </Key>
+          <Property Name="recipeID" Type="Int64" Nullable="false" />
+          <Property Name="componentID" Type="Int64" Nullable="false" />
+          <Property Name="count" Type="Int64" Nullable="false" />
+          <Property Name="weight" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipe_Books">
+          <Key>
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="recipeID" />
+          </Key>
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="recipeID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipe_Ingredients">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="componentID" />
+            <PropertyRef Name="count" />
+            <PropertyRef Name="weight" />
+            <PropertyRef Name="ingSlot" />
+          </Key>
+          <Property Name="recipeID" Type="Int64" Nullable="false" />
+          <Property Name="componentID" Type="Int64" Nullable="false" />
+          <Property Name="count" Type="Int64" Nullable="false" />
+          <Property Name="weight" Type="Int64" Nullable="false" />
+          <Property Name="ingSlot" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipe_Results">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="groupID" />
+            <PropertyRef Name="count" />
+            <PropertyRef Name="grade" />
+            <PropertyRef Name="level" />
+            <PropertyRef Name="type" />
+            <PropertyRef Name="resultID" />
+            <PropertyRef Name="filter1ID" />
+            <PropertyRef Name="filter2ID" />
+            <PropertyRef Name="filter3ID" />
+            <PropertyRef Name="filter4ID" />
+            <PropertyRef Name="ingCount1" />
+            <PropertyRef Name="ingCount2" />
+            <PropertyRef Name="ingCount3" />
+            <PropertyRef Name="ingCount4" />
+          </Key>
+          <Property Name="recipeID" Type="Int64" Nullable="false" />
+          <Property Name="groupID" Type="Int64" Nullable="false" />
+          <Property Name="count" Type="Int64" Nullable="false" />
+          <Property Name="grade" Type="Int64" Nullable="false" />
+          <Property Name="level" Type="Int64" Nullable="false" />
+          <Property Name="type" Type="Int64" Nullable="false" />
+          <Property Name="resultID" Type="Int64" Nullable="false" />
+          <Property Name="filter1ID" Type="Int64" Nullable="false" />
+          <Property Name="filter2ID" Type="Int64" Nullable="false" />
+          <Property Name="filter3ID" Type="Int64" Nullable="false" />
+          <Property Name="filter4ID" Type="Int64" Nullable="false" />
+          <Property Name="ingCount1" Type="Int64" Nullable="false" />
+          <Property Name="ingCount2" Type="Int64" Nullable="false" />
+          <Property Name="ingCount3" Type="Int64" Nullable="false" />
+          <Property Name="ingCount4" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipe_Skill_Range">
+          <Key>
+            <PropertyRef Name="recipeID" />
+            <PropertyRef Name="level" />
+            <PropertyRef Name="minf" />
+            <PropertyRef Name="mind" />
+            <PropertyRef Name="minc" />
+            <PropertyRef Name="minb" />
+            <PropertyRef Name="mina" />
+            <PropertyRef Name="minaa" />
+            <PropertyRef Name="over1" />
+            <PropertyRef Name="over2" />
+          </Key>
+          <Property Name="recipeID" Type="Int64" Nullable="false" />
+          <Property Name="level" Type="Int64" Nullable="false" />
+          <Property Name="minf" Type="Int64" Nullable="false" />
+          <Property Name="mind" Type="Int64" Nullable="false" />
+          <Property Name="minc" Type="Int64" Nullable="false" />
+          <Property Name="minb" Type="Int64" Nullable="false" />
+          <Property Name="mina" Type="Int64" Nullable="false" />
+          <Property Name="minaa" Type="Int64" Nullable="false" />
+          <Property Name="over1" Type="Int64" Nullable="false" />
+          <Property Name="over2" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shop_Inventory_List">
+          <Key>
+            <PropertyRef Name="inventoryID" />
+          </Key>
+          <Property Name="inventoryID" Type="Int64" Nullable="false" />
+          <Property Name="itemID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Shop_To_Inventory_List">
+          <Key>
+            <PropertyRef Name="shopID" />
+          </Key>
+          <Property Name="shopID" Type="Int64" Nullable="false" />
+          <Property Name="inventoryID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Species_Results">
+          <Key>
+            <PropertyRef Name="speciesID" />
+            <PropertyRef Name="groupID" />
+            <PropertyRef Name="chance" />
+            <PropertyRef Name="chanceMultiplier" />
+            <PropertyRef Name="itemID" />
+            <PropertyRef Name="count" />
+            <PropertyRef Name="type" />
+            <PropertyRef Name="grade" />
+            <PropertyRef Name="difficulty" />
+          </Key>
+          <Property Name="speciesID" Type="Int64" Nullable="false" />
+          <Property Name="groupID" Type="Int64" Nullable="false" />
+          <Property Name="chance" Type="Double" Nullable="false" />
+          <Property Name="chanceMultiplier" Type="Double" Nullable="false" />
+          <Property Name="itemID" Type="Int64" Nullable="false" />
+          <Property Name="count" Type="Int64" Nullable="false" />
+          <Property Name="type" Type="Int64" Nullable="false" />
+          <Property Name="grade" Type="Int64" Nullable="false" />
+          <Property Name="difficulty" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="RepopdataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C_dbINFO" EntityType="Self.C_dbINFO" />
+          <EntitySet Name="Abilities" EntityType="Self.Ability" />
+          <EntitySet Name="Crafting_Components" EntityType="Self.Crafting_Components" />
+          <EntitySet Name="Crafting_Filters" EntityType="Self.Crafting_Filters" />
+          <EntitySet Name="Fittings" EntityType="Self.Fitting" />
+          <EntitySet Name="Hackings" EntityType="Self.Hacking" />
+          <EntitySet Name="Harvestable_Regions" EntityType="Self.Harvestable_Regions" />
+          <EntitySet Name="Item_Armor" EntityType="Self.Item_Armor" />
+          <EntitySet Name="Item_Armor_Energy" EntityType="Self.Item_Armor_Energy" />
+          <EntitySet Name="Item_Stackable" EntityType="Self.Item_Stackable" />
+          <EntitySet Name="Item_Value" EntityType="Self.Item_Value" />
+          <EntitySet Name="Item_Weapons" EntityType="Self.Item_Weapons" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="Paths" EntityType="Self.Path" />
+          <EntitySet Name="Props" EntityType="Self.Prop" />
+          <EntitySet Name="Recipes" EntityType="Self.Recipe" />
+          <EntitySet Name="ResourceAttributes" EntityType="Self.ResourceAttribute" />
+          <EntitySet Name="Shares" EntityType="Self.Share" />
+          <EntitySet Name="Shops" EntityType="Self.Shop" />
+          <EntitySet Name="Skills" EntityType="Self.Skill" />
+          <EntitySet Name="Species" EntityType="Self.Species" />
+          <EntitySet Name="Structures" EntityType="Self.Structure" />
+          <EntitySet Name="Tips" EntityType="Self.Tip" />
+          <EntitySet Name="Abilities_ActivationData" EntityType="Self.Abilities_ActivationData" />
+          <EntitySet Name="Abilities_WeaponData" EntityType="Self.Abilities_WeaponData" />
+          <EntitySet Name="Item_Crafting_Components" EntityType="Self.Item_Crafting_Components" />
+          <EntitySet Name="Item_Crafting_Filters" EntityType="Self.Item_Crafting_Filters" />
+          <EntitySet Name="Item_Power_Source" EntityType="Self.Item_Power_Source" />
+          <EntitySet Name="Item_Stores_Power" EntityType="Self.Item_Stores_Power" />
+          <EntitySet Name="Recipe_Agents" EntityType="Self.Recipe_Agents" />
+          <EntitySet Name="Recipe_Books" EntityType="Self.Recipe_Books" />
+          <EntitySet Name="Recipe_Ingredients" EntityType="Self.Recipe_Ingredients" />
+          <EntitySet Name="Recipe_Results" EntityType="Self.Recipe_Results" />
+          <EntitySet Name="Recipe_Skill_Range" EntityType="Self.Recipe_Skill_Range" />
+          <EntitySet Name="Shop_Inventory_List" EntityType="Self.Shop_Inventory_List" />
+          <EntitySet Name="Shop_To_Inventory_List" EntityType="Self.Shop_To_Inventory_List" />
+          <EntitySet Name="Species_Results" EntityType="Self.Species_Results" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="repopdataModelStoreContainer" CdmEntityContainer="RepopdataEntities">
+          <EntitySetMapping Name="C_dbINFO">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.C_dbINFO">
+              <MappingFragment StoreEntitySet="_dbINFO">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="updatedBy" ColumnName="updatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Abilities">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Ability">
+              <MappingFragment StoreEntitySet="Abilities">
+                <ScalarProperty Name="abilityID" ColumnName="abilityID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+                <ScalarProperty Name="skillID" ColumnName="skillID" />
+                <ScalarProperty Name="skillMin" ColumnName="skillMin" />
+                <ScalarProperty Name="recharge" ColumnName="recharge" />
+                <ScalarProperty Name="globalCoolDown" ColumnName="globalCoolDown" />
+                <ScalarProperty Name="visualizationTimer" ColumnName="visualizationTimer" />
+                <ScalarProperty Name="enduranceCost" ColumnName="enduranceCost" />
+                <ScalarProperty Name="energyCost" ColumnName="energyCost" />
+                <ScalarProperty Name="momentumCost" ColumnName="momentumCost" />
+                <ScalarProperty Name="abilType" ColumnName="abilType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Crafting_Components">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Crafting_Components">
+              <MappingFragment StoreEntitySet="Crafting_Components">
+                <ScalarProperty Name="componentID" ColumnName="componentID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Crafting_Filters">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Crafting_Filters">
+              <MappingFragment StoreEntitySet="Crafting_Filters">
+                <ScalarProperty Name="filterID" ColumnName="filterID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fittings">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Fitting">
+              <MappingFragment StoreEntitySet="Fittings">
+                <ScalarProperty Name="fittingID" ColumnName="fittingID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hackings">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Hacking">
+              <MappingFragment StoreEntitySet="Hacking">
+                <ScalarProperty Name="hackingID" ColumnName="hackingID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="recipe" ColumnName="recipe" />
+                <ScalarProperty Name="skill" ColumnName="skill" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Harvestable_Regions">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Harvestable_Regions">
+              <MappingFragment StoreEntitySet="Harvestable_Regions">
+                <ScalarProperty Name="harvestableRegionID" ColumnName="harvestableRegionID" />
+                <ScalarProperty Name="areaID" ColumnName="areaID" />
+                <ScalarProperty Name="levelMin" ColumnName="levelMin" />
+                <ScalarProperty Name="levelMax" ColumnName="levelMax" />
+                <ScalarProperty Name="minCount" ColumnName="minCount" />
+                <ScalarProperty Name="maxCount" ColumnName="maxCount" />
+                <ScalarProperty Name="propID" ColumnName="propID" />
+                <ScalarProperty Name="replenishRate" ColumnName="replenishRate" />
+                <ScalarProperty Name="isSeasonal" ColumnName="isSeasonal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Armor">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item_Armor">
+              <MappingFragment StoreEntitySet="Item_Armor">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="armorType" ColumnName="armorType" />
+                <ScalarProperty Name="armorReduction" ColumnName="armorReduction" />
+                <ScalarProperty Name="equipLOCation" ColumnName="equipLOCation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Armor_Energy">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item_Armor_Energy">
+              <MappingFragment StoreEntitySet="Item_Armor_Energy">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="maxEnergy" ColumnName="maxEnergy" />
+                <ScalarProperty Name="poolSplit" ColumnName="poolSplit" />
+                <ScalarProperty Name="rechargeRate" ColumnName="rechargeRate" />
+                <ScalarProperty Name="rechargeDelay" ColumnName="rechargeDelay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Stackable">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item_Stackable">
+              <MappingFragment StoreEntitySet="Item_Stackable">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="defaultStackSize" ColumnName="defaultStackSize" />
+                <ScalarProperty Name="maxStackSize" ColumnName="maxStackSize" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Value">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item_Value">
+              <MappingFragment StoreEntitySet="Item_Value">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="currencyType" ColumnName="currencyType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Weapons">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item_Weapons">
+              <MappingFragment StoreEntitySet="Item_Weapons">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="momentum" ColumnName="momentum" />
+                <ScalarProperty Name="endurance" ColumnName="endurance" />
+                <ScalarProperty Name="armorLightPenetration" ColumnName="armorLightPenetration" />
+                <ScalarProperty Name="armorMediumPenetration" ColumnName="armorMediumPenetration" />
+                <ScalarProperty Name="armorHeavyPenetration" ColumnName="armorHeavyPenetration" />
+                <ScalarProperty Name="minimalAmount" ColumnName="minimalAmount" />
+                <ScalarProperty Name="minimalRange" ColumnName="minimalRange" />
+                <ScalarProperty Name="attackRange" ColumnName="attackRange" />
+                <ScalarProperty Name="diminishedAmount" ColumnName="diminishedAmount" />
+                <ScalarProperty Name="diminishedRange" ColumnName="diminishedRange" />
+                <ScalarProperty Name="maximumRange" ColumnName="maximumRange" />
+                <ScalarProperty Name="damageType" ColumnName="damageType" />
+                <ScalarProperty Name="damageAmount" ColumnName="damageAmount" />
+                <ScalarProperty Name="energyCost" ColumnName="energyCost" />
+                <ScalarProperty Name="attackSpeed" ColumnName="attackSpeed" />
+                <ScalarProperty Name="weaponCategory" ColumnName="weaponCategory" />
+                <ScalarProperty Name="dualWield" ColumnName="dualWield" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paths">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Path">
+              <MappingFragment StoreEntitySet="Path">
+                <ScalarProperty Name="pathID" ColumnName="pathID" />
+                <ScalarProperty Name="areaID" ColumnName="areaID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="vect" ColumnName="vect" />
+                <ScalarProperty Name="mis" ColumnName="mis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Props">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Prop">
+              <MappingFragment StoreEntitySet="Props">
+                <ScalarProperty Name="propID" ColumnName="propID" />
+                <ScalarProperty Name="subsistenceID" ColumnName="subsistenceID" />
+                <ScalarProperty Name="numHarvests" ColumnName="numHarvests" />
+                <ScalarProperty Name="toolID" ColumnName="toolID" />
+                <ScalarProperty Name="skillID" ColumnName="skillID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Recipe">
+              <MappingFragment StoreEntitySet="Recipes">
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+                <ScalarProperty Name="skillID" ColumnName="skillID" />
+                <ScalarProperty Name="steps" ColumnName="steps" />
+                <ScalarProperty Name="ingredientWeight" ColumnName="ingredientWeight" />
+                <ScalarProperty Name="agentWeight" ColumnName="agentWeight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResourceAttributes">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.ResourceAttribute">
+              <MappingFragment StoreEntitySet="ResourceAttributes">
+                <ScalarProperty Name="resourceAttributeID" ColumnName="resourceAttributeID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="shortName" ColumnName="shortName" />
+                <ScalarProperty Name="socketPrimary" ColumnName="socketPrimary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shares">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Share">
+              <MappingFragment StoreEntitySet="Share">
+                <ScalarProperty Name="shareID" ColumnName="shareID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shops">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Shop">
+              <MappingFragment StoreEntitySet="Shops">
+                <ScalarProperty Name="shopID" ColumnName="shopID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+                <ScalarProperty Name="currencyType" ColumnName="currencyType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="skillID" ColumnName="skillID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Species">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Species">
+              <MappingFragment StoreEntitySet="Species">
+                <ScalarProperty Name="speciesID" ColumnName="speciesID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+                <ScalarProperty Name="extractionType" ColumnName="extractionType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Structures">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Structure">
+              <MappingFragment StoreEntitySet="Structures">
+                <ScalarProperty Name="structureID" ColumnName="structureID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="isHousingStructure" ColumnName="isHousingStructure" />
+                <ScalarProperty Name="isSiegingUnit" ColumnName="isSiegingUnit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tips">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Tip">
+              <MappingFragment StoreEntitySet="Tips">
+                <ScalarProperty Name="tipID" ColumnName="tipID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="displayDescription" ColumnName="displayDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Abilities_ActivationData">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Abilities_ActivationData">
+              <MappingFragment StoreEntitySet="Abilities_ActivationData">
+                <ScalarProperty Name="abilityID" ColumnName="abilityID" />
+                <ScalarProperty Name="activationType" ColumnName="activationType" />
+                <ScalarProperty Name="radius" ColumnName="radius" />
+                <ScalarProperty Name="range" ColumnName="range" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Abilities_WeaponData">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Abilities_WeaponData">
+              <MappingFragment StoreEntitySet="Abilities_WeaponData">
+                <ScalarProperty Name="abilityID" ColumnName="abilityID" />
+                <ScalarProperty Name="weaponAccuracyMod" ColumnName="weaponAccuracyMod" />
+                <ScalarProperty Name="weaponDamageMod" ColumnName="weaponDamageMod" />
+                <ScalarProperty Name="weaponEnduranceMod" ColumnName="weaponEnduranceMod" />
+                <ScalarProperty Name="weaponEnergyMod" ColumnName="weaponEnergyMod" />
+                <ScalarProperty Name="weaponGlobalCooldownMod" ColumnName="weaponGlobalCooldownMod" />
+                <ScalarProperty Name="weaponMomentumMod" ColumnName="weaponMomentumMod" />
+                <ScalarProperty Name="weaponRangeMod" ColumnName="weaponRangeMod" />
+                <ScalarProperty Name="weaponSpeedMod" ColumnName="weaponSpeedMod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Crafting_Components">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item_Crafting_Components">
+              <MappingFragment StoreEntitySet="Item_Crafting_Components">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="componentID" ColumnName="componentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Crafting_Filters">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item_Crafting_Filters">
+              <MappingFragment StoreEntitySet="Item_Crafting_Filters">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="filterID" ColumnName="filterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Power_Source">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item_Power_Source">
+              <MappingFragment StoreEntitySet="Item_Power_Source">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="powerIndex" ColumnName="powerIndex" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Stores_Power">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Item_Stores_Power">
+              <MappingFragment StoreEntitySet="Item_Stores_Power">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="maxStorage" ColumnName="maxStorage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipe_Agents">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Recipe_Agents">
+              <MappingFragment StoreEntitySet="Recipe_Agents">
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="componentID" ColumnName="componentID" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipe_Books">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Recipe_Books">
+              <MappingFragment StoreEntitySet="Recipe_Books">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipe_Ingredients">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Recipe_Ingredients">
+              <MappingFragment StoreEntitySet="Recipe_Ingredients">
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="componentID" ColumnName="componentID" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="ingSlot" ColumnName="ingSlot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipe_Results">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Recipe_Results">
+              <MappingFragment StoreEntitySet="Recipe_Results">
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="resultID" ColumnName="resultID" />
+                <ScalarProperty Name="filter1ID" ColumnName="filter1ID" />
+                <ScalarProperty Name="filter2ID" ColumnName="filter2ID" />
+                <ScalarProperty Name="filter3ID" ColumnName="filter3ID" />
+                <ScalarProperty Name="filter4ID" ColumnName="filter4ID" />
+                <ScalarProperty Name="ingCount1" ColumnName="ingCount1" />
+                <ScalarProperty Name="ingCount2" ColumnName="ingCount2" />
+                <ScalarProperty Name="ingCount3" ColumnName="ingCount3" />
+                <ScalarProperty Name="ingCount4" ColumnName="ingCount4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipe_Skill_Range">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Recipe_Skill_Range">
+              <MappingFragment StoreEntitySet="Recipe_Skill_Range">
+                <ScalarProperty Name="recipeID" ColumnName="recipeID" />
+                <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="minf" ColumnName="minf" />
+                <ScalarProperty Name="mind" ColumnName="mind" />
+                <ScalarProperty Name="minc" ColumnName="minc" />
+                <ScalarProperty Name="minb" ColumnName="minb" />
+                <ScalarProperty Name="mina" ColumnName="mina" />
+                <ScalarProperty Name="minaa" ColumnName="minaa" />
+                <ScalarProperty Name="over1" ColumnName="over1" />
+                <ScalarProperty Name="over2" ColumnName="over2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shop_Inventory_List">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Shop_Inventory_List">
+              <MappingFragment StoreEntitySet="Shop_Inventory_List">
+                <ScalarProperty Name="inventoryID" ColumnName="inventoryID" />
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shop_To_Inventory_List">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Shop_To_Inventory_List">
+              <MappingFragment StoreEntitySet="Shop_To_Inventory_List">
+                <ScalarProperty Name="shopID" ColumnName="shopID" />
+                <ScalarProperty Name="inventoryID" ColumnName="inventoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Species_Results">
+            <EntityTypeMapping TypeName="Repop_Companion.DataModels.Species_Results">
+              <MappingFragment StoreEntitySet="Species_Results">
+                <ScalarProperty Name="speciesID" ColumnName="speciesID" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="chance" ColumnName="chance" />
+                <ScalarProperty Name="chanceMultiplier" ColumnName="chanceMultiplier" />
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="difficulty" ColumnName="difficulty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

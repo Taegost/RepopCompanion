@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "RCSite", "RCSite\", "{DA26FDE4-D49A-41E0-9989-044D43998CE7}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_30717"
+		Debug.AspNetCompiler.PhysicalPath = "RCSite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_30717\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_30717"
+		Release.AspNetCompiler.PhysicalPath = "RCSite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_30717\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "30717"
+		SlnRelativePath = "RCSite\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA26FDE4-D49A-41E0-9989-044D43998CE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA26FDE4-D49A-41E0-9989-044D43998CE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA26FDE4-D49A-41E0-9989-044D43998CE7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DA26FDE4-D49A-41E0-9989-044D43998CE7}.Debug|x64.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
