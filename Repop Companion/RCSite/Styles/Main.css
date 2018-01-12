@@ -1,10 +1,8 @@
 ﻿#PageWrapper
 {
   /*
-    Sets the total width for the entire page. Also sets the background color
-    which is used to fill the background of the Sidebar in case the MainContent section is taller than the Sidebar.
-    Uses margin: auto to center the entire page in the middle of the browser's window.
-  */
+    Sets the total width for the entire page */
+
   width: 1000px;
   margin: auto;
 }
@@ -30,9 +28,45 @@ footer
   line-height: 37px;
 }
 
-.MainMenu
+.MainMenu 
 {
     width: 1000px;
+    border: 1px solid #999999;
+    width: 814px;
+    height: 19px;
+}
+
+.MainMenu ul li
+{
+    text-decoration-style: initial;
+}
+
+ul.level1
+{
+    /* Defines the appearance of main menu items.*/
+    font-size: 14px;
+    font-weight: bold;
+    height: 19px;
+    line-height: 19px;
+}
+
+ul.level1 .selected
+{
+    /* Defines the appareance of active menu items.*/
+    background-color: lightgrey;
+}
+
+a.level1
+{
+    /* Adds some white space to the left ofhte main menu item text.
+        !important is used to overrule the in-line CSS that the menu generates */
+    padding-left: 5px !important;
+}
+
+a.level1:hover, a.level2:hover
+{
+    /* Defines the hover style for the main and sub items. */
+    background-color: lightgrey;
 }
 
 .SectionWrapper

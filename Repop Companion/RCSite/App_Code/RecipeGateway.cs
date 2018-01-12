@@ -184,17 +184,41 @@ public class RecipeGateway
         {
             using (RepopdataEntities myEntities = new RepopdataEntities())
             {
-                returnObject = (from item in myEntities.Recipes
-                                join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
-                                join itemResults in myEntities.Items on recipeResults.resultID equals itemResults.itemID
-                                where recipeResults.type == (long)itemType && itemResults.itemID == objectID
-                                select item).FirstOrDefault();
+                switch (itemType)
+                {
+                    case ItemTypeEnum.Item:
+                        returnObject = (from item in myEntities.Recipes
+                                        join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
+                                        join itemResults in myEntities.Items on recipeResults.resultID equals itemResults.itemID
+                                        where recipeResults.type == (long)itemType && itemResults.itemID == objectID
+                                        select item).FirstOrDefault();
+                        break;
+                    case ItemTypeEnum.Fitting:
+                        returnObject = (from item in myEntities.Recipes
+                                        join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
+                                        join itemResults in myEntities.Fittings on recipeResults.resultID equals itemResults.fittingID
+                                        where recipeResults.type == (long)itemType && itemResults.fittingID == objectID
+                                        select item).FirstOrDefault();
+                        break;
+                    case ItemTypeEnum.Blueprint:
+                        returnObject = (from item in myEntities.Recipes
+                                        join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
+                                        join itemResults in myEntities.Structures on recipeResults.resultID equals itemResults.structureID
+                                        where recipeResults.type == (long)itemType && itemResults.structureID == objectID
+                                        select item).FirstOrDefault();
+                        break;
+                }
                 if (returnObject == null) { return null; }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         }// if
         return returnObject;
     } // method GetCraftingFilterByFilterID
+
+    public static List<Recipe> GetAllRecipesGrantedByRecipeBookID(long objectID)
+    {
+        return GetAllRecipesGrantedByRecipeBookID(Convert.ToInt32(objectID));
+    }
 
     public static List<Recipe> GetAllRecipesGrantedByRecipeBookID(Int32 objectID)
     {

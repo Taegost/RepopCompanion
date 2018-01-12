@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\Dropbox\WS\GOTD-Git\Repop Companion\Repop Companion\RCSite\App_Code\SqliteEF6Models\RepopSqliteEF6Model.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\Dropbox\WS\GitHub\RepopCompanion\Repop Companion\RCSite\App_Code\SqliteEF6Models\RepopSqliteEF6Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

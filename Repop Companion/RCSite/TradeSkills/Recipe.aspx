@@ -85,7 +85,7 @@
             <Columns>
                 <asp:TemplateField HeaderText="Name">
                     <ItemTemplate>
-                        <asp:Label ID="lbl_IngredientNameColumn" runat="server"></asp:Label>
+                        <asp:HyperLink ID="lnk_IngredientName" runat="server" CssClass="NoLinkStyle"></asp:HyperLink>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="count" HeaderText="Qty" />
@@ -98,7 +98,7 @@
             <Columns>
                 <asp:TemplateField HeaderText="Name">
                     <ItemTemplate>
-                        <asp:Label ID="lbl_AgentsNameColumn" runat="server"></asp:Label>
+                        <asp:HyperLink ID="lnk_AgentName" runat="server" CssClass="NoLinkStyle"></asp:HyperLink>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="count" HeaderText="Qty" />

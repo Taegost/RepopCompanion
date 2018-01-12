@@ -35,7 +35,7 @@ public class LinkGenerator
 
     public static string GenerateFittingLink(int objectID)
     {
-        return "~/Items/Fitting.aspx?FittingID=" + objectID;
+        return "~/Fittings/Fitting.aspx?FittingID=" + objectID;
     } // method GenerateFittingLink
 
     public static string GenerateBlueprintLink(long objectID)
@@ -45,7 +45,7 @@ public class LinkGenerator
 
     public static string GenerateBlueprintLink(int objectID)
     {
-        return "~/Items/Blueprint.aspx?BlueprintID=" + objectID;
+        return "~/Blueprints/Blueprint.aspx?BlueprintID=" + objectID;
     } // method GenerateBlueprintLink
 
     public static string GenerateTradeskillLink(long objectID)
@@ -56,5 +56,15 @@ public class LinkGenerator
     public static string GenerateTradeskillLink(int objectID)
     {
         return "~/TradeSkills/Default.aspx?TradeSkillId=" + objectID;
-    } // method GenerateBlueprintLink
+    } // method GenerateTradeskillLink
+
+    public static string GenerateComponentLink(long objectID)
+    {
+        return GenerateComponentLink(Convert.ToInt32(objectID));
+    }
+
+    public static string GenerateComponentLink(int objectID)
+    {
+        return "~/Components/Component.aspx?ComponentId=" + objectID;
+    } // method GenerateComponentLink
 } // class LinkGenerator

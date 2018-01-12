@@ -88,11 +88,12 @@ public partial class TradeSkills_Recipe : BasePage
         switch (e.Row.RowType)
         {
             case DataControlRowType.DataRow:
-                Label levelLabel = (Label)e.Row.FindControl("lbl_IngredientNameColumn");
-                if (!string.Equals(levelLabel.Text, "Name", StringComparison.CurrentCultureIgnoreCase))
+                HyperLink itemLink = (HyperLink)e.Row.FindControl("lnk_IngredientName");
+                if (!string.Equals(itemLink.Text, "Name", StringComparison.CurrentCultureIgnoreCase))
                 {
                     Recipe_Ingredients gameData = (Recipe_Ingredients)e.Row.DataItem;
-                    levelLabel.Text = (RecipeGateway.GetCraftingComponentByComponentID(gameData.componentID).displayName) ;
+                    itemLink.Text = (RecipeGateway.GetCraftingComponentByComponentID(gameData.componentID).displayName);
+                    itemLink.NavigateUrl = LinkGenerator.GenerateComponentLink(gameData.componentID);
                 } // if
                 break;
         } // switch
@@ -103,11 +104,12 @@ public partial class TradeSkills_Recipe : BasePage
         switch (e.Row.RowType)
         {
             case DataControlRowType.DataRow:
-                Label levelLabel = (Label)e.Row.FindControl("lbl_AgentsNameColumn");
-                if (!string.Equals(levelLabel.Text, "Name", StringComparison.CurrentCultureIgnoreCase))
+                HyperLink itemLink = (HyperLink)e.Row.FindControl("lnk_AgentName");
+                if (!string.Equals(itemLink.Text, "Name", StringComparison.CurrentCultureIgnoreCase))
                 {
                     Recipe_Agents gameData = (Recipe_Agents)e.Row.DataItem;
-                    levelLabel.Text = (RecipeGateway.GetCraftingComponentByComponentID(gameData.componentID).displayName);
+                    itemLink.Text = (RecipeGateway.GetCraftingComponentByComponentID(gameData.componentID).displayName);
+                    itemLink.NavigateUrl = LinkGenerator.GenerateComponentLink(gameData.componentID);
                 } // if
                 break;
         } // switch
