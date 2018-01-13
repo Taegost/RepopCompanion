@@ -1,5 +1,6 @@
 ﻿public enum ItemGroupEnum
 {
     Unknown,
-    RecipeBook
+    RecipeBook,
+    CraftingComponent
 }

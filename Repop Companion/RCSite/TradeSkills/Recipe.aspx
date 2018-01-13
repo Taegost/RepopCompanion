@@ -15,7 +15,9 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cp_MainContent" runat="Server">
-    <uc1:TradeSkillList runat="server" ID="TradeSkillList" />
+    <div class="Banner">
+        <uc1:TradeSkillList runat="server" ID="TradeSkillList" />
+    </div>
     <div id="RecipeWrapper" runat="server">
         <h1><%=CurrentRecipe.displayName %></h1>
         <table id="tbl_Main" class="auto-style1" runat="server">

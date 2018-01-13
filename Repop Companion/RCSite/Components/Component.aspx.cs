@@ -19,7 +19,7 @@ public partial class Components_Component : BasePage
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("ComponentID")))
 
         int currentID = Convert.ToInt32(Request.QueryString.Get("ComponentID"));
-        CurrentComponent = ItemGateway.GetCraftingComponentByComponentID(currentID);
+        CurrentComponent = ComponentGateway.GetCraftingComponentByComponentID(currentID);
 
         rpt_Items.DataSource = ItemGateway.GetItemsByComponentID(CurrentComponent.componentID);
         rpt_Items.DataBind();

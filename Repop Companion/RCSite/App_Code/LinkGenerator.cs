@@ -67,4 +67,15 @@ public class LinkGenerator
     {
         return "~/Components/Component.aspx?ComponentId=" + objectID;
     } // method GenerateComponentLink
+
+    public static string GenerateFilterLink(long objectID)
+    {
+        return GenerateFilterLink(Convert.ToInt32(objectID));
+    }
+
+    public static string GenerateFilterLink(int objectID)
+    {
+        return "~/Filters/Filter.aspx?FilterID=" + objectID;
+    } // method GenerateComponentLink
+
 } // class LinkGenerator

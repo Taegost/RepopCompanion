@@ -29,6 +29,17 @@ public partial class Items_Item : BasePage
         {
             lbl_Value.Text = value.value.ToString();
         }
+        Item_Stackable itemStackInfo = ItemGateway.GetItemStackInfoByItemID(CurrentItem.itemID);
+        if (itemStackInfo == null)
+        {
+            lbl_MaxStackSize.Text = "n/a";
+            lbl_DefaultStackSize.Text = "n/a";
+        }
+        else
+        {
+            lbl_MaxStackSize.Text = itemStackInfo.maxStackSize.ToString();
+            lbl_DefaultStackSize.Text = itemStackInfo.defaultStackSize.ToString();
+        }
         
         switch (ItemGateway.DetermineItemGroupByItemID(CurrentItem.itemID))
         {
@@ -36,8 +47,15 @@ public partial class Items_Item : BasePage
                 rpt_RecipeBook.DataSource = RecipeGateway.GetAllRecipesGrantedByRecipeBookID(CurrentItem.itemID);
                 rpt_RecipeBook.DataBind();
                 break;
+            case ItemGroupEnum.CraftingComponent:
+                rpt_ComponentTypes.DataSource = ComponentGateway.GetComponentsByItemID(CurrentItem.itemID);
+                rpt_ComponentTypes.DataBind();
+                rpt_FilterTypes.DataSource = FilterGateway.GetFiltersByItemID(CurrentItem.itemID);
+                rpt_FilterTypes.DataBind();
+                break;
         } // switch
 
         RecipeBookWrapper.Visible = rpt_RecipeBook.Items.Count > 0;
+        ComponentWrapper.Visible = rpt_ComponentTypes.Items.Count > 0;
     } // method Page_Load
 } // class Items_Item

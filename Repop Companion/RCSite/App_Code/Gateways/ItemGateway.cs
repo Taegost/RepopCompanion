@@ -211,12 +211,20 @@ public class ItemGateway
                 // There's no easy way to determine the item "group" (recipe book, crafting component, etc.)
 
                 var recipeResult = RecipeGateway.GetAllRecipesGrantedByRecipeBookID(objectID);
-                if (!(recipeResult == null))
+                if (recipeResult.Count > 0)
                 {
                     returnObject = ItemGroupEnum.RecipeBook;
                     AppCaching.AddToCache(cacheKey, returnObject);
                     return returnObject;
                 }
+                var componentResult = ComponentGateway.GetComponentsByItemID(objectID);
+                if (componentResult.Count > 0)
+                    {
+                    returnObject = ItemGroupEnum.CraftingComponent;
+                    AppCaching.AddToCache(cacheKey, returnObject);
+                    return returnObject;
+                }
+
             } // using
         return returnObject;
     } // DetermineItemGroupByItemID
@@ -260,39 +268,7 @@ public class ItemGateway
         return returnObject;
     } // method GetAllItems
 
-    public static List<Crafting_Components> GetAllComponents()
-    {
-        string cacheKey = "AllComponents";
-        List<Crafting_Components> returnObject = HttpContext.Current.Cache[cacheKey] as List<Crafting_Components>;
 
-        if (returnObject == null)
-            using (RepopdataEntities myEntities = new RepopdataEntities())
-            {
-                var result = (from item in myEntities.Crafting_Components
-                              select item).Distinct().OrderBy(x => x.displayName);
-                if (result == null) { return null; }
-                returnObject = result.ToList();
-                AppCaching.AddToCache(cacheKey, returnObject);
-            } // using
-        return returnObject;
-    } // method GetAllComponents
-
-    public static Crafting_Components GetCraftingComponentByComponentID(Int32 objectID)
-    {
-        string cacheKey = "CraftingComponentByComponentID_" + objectID;
-        Crafting_Components returnObject = HttpContext.Current.Cache[cacheKey] as Crafting_Components;
-
-        if (returnObject == null)
-            using (RepopdataEntities myEntities = new RepopdataEntities())
-            {
-                returnObject = (from item in myEntities.Crafting_Components
-                                where item.componentID == objectID
-                                select item).FirstOrDefault();
-                if (returnObject == null) { return null; }
-                AppCaching.AddToCache(cacheKey, returnObject);
-            } // using
-        return returnObject;
-    } // method GetCraftingComponentByComponentID
 
     public static List<Fitting> GetAllFittings()
     {
@@ -327,4 +303,26 @@ public class ItemGateway
             } // using
         return returnObject;
     } // method GetAllBlueprints
+
+    public static Item_Stackable GetItemStackInfoByItemID(long objectID)
+    {
+        return GetItemStackInfoByItemID(Convert.ToInt32(objectID));
+    }
+
+    public static Item_Stackable GetItemStackInfoByItemID(Int32 objectID)
+    {
+        string cacheKey = "ItemStackInfoByItemID_" + objectID;
+        Item_Stackable returnObject = HttpContext.Current.Cache[cacheKey] as Item_Stackable;
+
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                returnObject = (from item in myEntities.Item_Stackable
+                                where item.itemID == objectID
+                                select item).FirstOrDefault();
+                if (returnObject == null) { return null; }
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method GetItemStackInfoByItemID
 } // class ItemGateway

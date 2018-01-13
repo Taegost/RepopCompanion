@@ -7,5 +7,6 @@
     <siteMapNode url="~/Items/Default.aspx" title="Items" description="View all items" />
     <siteMapNode url="~/Fittings/Default.aspx" title="Fittings" description="View all fittings" />
     <siteMapNode url="~/Blueprints/Default.aspx" title="Blueprints" description="View all blueprints" />
+    <siteMapNode url="~/Filters/Default.aspx" title="Filters" description="View All Filters" />
   </siteMapNode>
 </siteMap>

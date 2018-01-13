@@ -99,6 +99,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                         string newValue = RecipeGateway.GetCraftingFilterByFilterID(gameData.filter1ID).displayName;
                         if (gameData.ingCount1 > 0) newValue += " (" + gameData.ingCount1 + ")";
                         ingredientControl.Text = newValue;
+                        ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter1ID);
                     }
                     if (gameData.filter2ID > 0)
                     {
@@ -106,6 +107,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                         string newValue = RecipeGateway.GetCraftingFilterByFilterID(gameData.filter2ID).displayName;
                         if (gameData.ingCount2 > 0) newValue += " (" + gameData.ingCount2 + ")";
                         ingredientControl.Text = newValue;
+                        ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter2ID);
                     }
                     if (gameData.filter3ID > 0)
                     {
@@ -113,6 +115,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                         string newValue = RecipeGateway.GetCraftingFilterByFilterID(gameData.filter3ID).displayName;
                         if (gameData.ingCount3 > 0) newValue += " (" + gameData.ingCount3 + ")";
                         ingredientControl.Text = newValue;
+                        ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter3ID);
                     }
                     if (gameData.filter4ID > 0)
                     {
@@ -120,6 +123,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                         string newValue = RecipeGateway.GetCraftingFilterByFilterID(gameData.filter4ID).displayName;
                         if (gameData.ingCount4 > 0) newValue += " (" + gameData.ingCount4 + ")";
                         ingredientControl.Text = newValue;
+                        ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter4ID);
                     }
                 } // if (!string.Equals(levelLabel.Text, "Name", StringComparison.CurrentCultureIgnoreCase))
                 break;
