@@ -240,5 +240,53 @@ public class RecipeGateway
         return returnObject;
     } // method GetAllRecipesGrantedByRecipeBookID
 
+    public static List<Recipe> GetAllRecipesThatUseComponentAsIngredient(long objectID)
+    {
+        return GetAllRecipesThatUseComponentAsIngredient(Convert.ToInt32(objectID));
+    }
+
+    public static List<Recipe> GetAllRecipesThatUseComponentAsIngredient(Int32 objectID)
+    {
+        string cacheKey = "AllRecipesThatUseComponentAsIngredient_" + objectID;
+        List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
+
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                var result = (from item in myEntities.Recipes
+                              join ingredients in myEntities.Recipe_Ingredients on item.recipeID equals ingredients.recipeID
+                              where ingredients.componentID == objectID
+                              select item);
+                if (result == null) { return null; }
+                returnObject = result.ToList();
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method GetAllRecipesThatUseComponentAsIngredient
+
+    public static List<Recipe> GetAllRecipesThatUseComponentAsAgent(long objectID)
+    {
+        return GetAllRecipesThatUseComponentAsAgent(Convert.ToInt32(objectID));
+    }
+    
+    public static List<Recipe> GetAllRecipesThatUseComponentAsAgent(Int32 objectID)
+    {
+        string cacheKey = "AllRecipesThatUseComponentAsAgent_" + objectID;
+        List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
+
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                var result = (from item in myEntities.Recipes
+                              join agents in myEntities.Recipe_Agents on item.recipeID equals agents.recipeID
+                              where agents.componentID == objectID
+                              select item);
+                if (result == null) { return null; }
+                returnObject = result.ToList();
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method GetAllRecipesThatUseComponentAsAgent
+
     #endregion // Public Methods
 } // class RecipeLists
