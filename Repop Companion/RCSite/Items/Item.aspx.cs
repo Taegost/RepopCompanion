@@ -51,12 +51,17 @@ public partial class Items_Item : BasePage
                 rpt_ComponentTypes.DataSource = ComponentGateway.GetComponentsByItemID(CurrentItem.itemID);
                 rpt_ComponentTypes.DataBind();
                 Crafting_Filters craftingFilter = FilterGateway.GetCraftingFilterByItemID(CurrentItem.itemID);
-                lnk_Filter.Text = craftingFilter.displayName;
-                lnk_Filter.Text = LinkGenerator.GenerateFilterLink(craftingFilter.filterID);
+                if (craftingFilter != null)
+                {
+                    lnk_Filter.Text = craftingFilter.displayName;
+                    lnk_Filter.NavigateUrl = LinkGenerator.GenerateFilterLink(craftingFilter.filterID);
+                }
                 grd_Recipe.DataSource = RecipeGateway.GetRecipesByResultItemIDAndType(CurrentItem.itemID, ItemTypeEnum.Item);
                 grd_Recipe.DataBind();
                 grd_Ingredient.DataSource = RecipeGateway.GetAllRecipesThatUseItemAsIngredient(CurrentItem.itemID);
                 grd_Ingredient.DataBind();
+                grd_Agent.DataSource = RecipeGateway.GetAllRecipesThatUseItemAsAgent(CurrentItem.itemID);
+                grd_Agent.DataBind();
                 break;
         } // switch
 
@@ -65,6 +70,7 @@ public partial class Items_Item : BasePage
         FilterWrapper.Visible = lnk_Filter.Text != "";
         RecipeWrapper.Visible = grd_Recipe.Rows.Count > 0;
         IngredientWrapper.Visible = grd_Ingredient.Rows.Count > 0;
+        AgentWrapper.Visible = grd_Agent.Rows.Count > 0;
     } // method Page_Load
 
     protected void grd_Recipe_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -134,6 +140,20 @@ public partial class Items_Item : BasePage
 
     protected void grd_Agent_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        switch (e.Row.RowType)
+        {
+            case DataControlRowType.DataRow:
+                HyperLink nameLink = (HyperLink)e.Row.FindControl("lnk_Name");
+                Recipe currentRecipe = (Recipe)e.Row.DataItem;
+                nameLink.Text = currentRecipe.displayName;
+                nameLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(currentRecipe.recipeID);
+                HyperLink skillLink = (HyperLink)e.Row.FindControl("lnk_Skill");
+                Skill currentSkill = SkillGateway.GetSkillById(currentRecipe.skillID);
+                skillLink.Text = currentSkill.displayName;
+                skillLink.NavigateUrl = LinkGenerator.GenerateTradeskillLink(currentSkill.skillID);
+                break;
+        } // switch
 
-    }
+        // Need to add logic to determine the results
+    } // method grd_Agent_RowDataBound
 } // class Items_Item

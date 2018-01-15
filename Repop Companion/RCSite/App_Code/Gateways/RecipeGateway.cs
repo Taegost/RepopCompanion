@@ -280,6 +280,32 @@ public class RecipeGateway
         return returnObject;
     } // method GetAllRecipesThatUseComponentAsAgent
 
+    public static List<Recipe> GetAllRecipesThatUseItemAsAgent(long objectID)
+    {
+        return GetAllRecipesThatUseItemAsAgent(Convert.ToInt32(objectID));
+    }
+
+    public static List<Recipe> GetAllRecipesThatUseItemAsAgent(Int32 objectID)
+    {
+        string cacheKey = "AllRecipesThatUseItemAsAgent_" + objectID;
+        List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
+
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                var result = (from item in myEntities.Recipes
+                              join agents in myEntities.Recipe_Agents on item.recipeID equals agents.recipeID
+                              join itemComponents in myEntities.Item_Crafting_Components on agents.componentID equals itemComponents.componentID
+                              join items in myEntities.Items on itemComponents.itemID equals items.itemID
+                              where items.itemID == objectID
+                              select item).OrderBy(x => x.skillID).Distinct();
+                if (result == null) { return null; }
+                returnObject = result.ToList();
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method GetAllRecipesThatUseItemAsAgent
+
     public static List<Recipe> GetAllRecipesThatUseItemAsIngredient(long objectID)
     {
         return GetAllRecipesThatUseItemAsIngredient(Convert.ToInt32(objectID));
@@ -316,28 +342,28 @@ public class RecipeGateway
                             case 1:
                                 foreach (Recipe_Results recipeResult in recipeResults)
                                 {
-                                    if (recipeResult.filter1ID == 0 || recipeResult.filter1ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID)
+                                    if ((recipeResult.filter1ID == 0 || recipeResult.filter1ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID) && !returnObject.Contains(recipe))
                                     { returnObject.Add(recipe); break; } // Don't need to continue if it matches
                                 } // foreach (Recipe_Results recipeResult in recipeResults)
                                 break;
                             case 2:
                                 foreach (Recipe_Results recipeResult in recipeResults)
                                 {
-                                    if (recipeResult.filter2ID == 0 || recipeResult.filter2ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID)
+                                    if ((recipeResult.filter2ID == 0 || recipeResult.filter2ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID) && !returnObject.Contains(recipe))
                                     { returnObject.Add(recipe); break; } // Don't need to continue if it matches
                                 } // foreach (Recipe_Results recipeResult in recipeResults)
                                 break;
                             case 3:
                                 foreach (Recipe_Results recipeResult in recipeResults)
                                 {
-                                    if (recipeResult.filter3ID == 0 || recipeResult.filter3ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID)
+                                    if ((recipeResult.filter3ID == 0 || recipeResult.filter3ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID) && !returnObject.Contains(recipe))
                                     { returnObject.Add(recipe); break; } // Don't need to continue if it matches
                                 } // foreach (Recipe_Results recipeResult in recipeResults)
                                 break;
                             case 4:
                                 foreach (Recipe_Results recipeResult in recipeResults)
                                 {
-                                    if (recipeResult.filter4ID == 0 || recipeResult.filter4ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID)
+                                    if ((recipeResult.filter4ID == 0 || recipeResult.filter4ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID) && !returnObject.Contains(recipe))
                                     { returnObject.Add(recipe); break; } // Don't need to continue if it matches
                                 } // foreach (Recipe_Results recipeResult in recipeResults)
                                 break;
