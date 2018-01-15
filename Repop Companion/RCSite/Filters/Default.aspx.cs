@@ -11,7 +11,7 @@ public partial class Filters_Default : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        rpt_Filters.DataSource = FilterGateway.GetAllFilterss();
+        rpt_Filters.DataSource = FilterGateway.GetAllCraftingFilters();
         rpt_Filters.DataBind();
     } // method Page_Load
 } // class Filters_Default

@@ -105,6 +105,11 @@ public class RecipeGateway
         return returnObject;
     } // method GetRecipeAgentsByRecipeID
 
+    public static List<Recipe_Results> GetRecipeResultsByRecipeID(long objectID)
+    {
+        return GetRecipeResultsByRecipeID(Convert.ToInt32(objectID));
+    }
+
     public static List<Recipe_Results> GetRecipeResultsByRecipeID(Int32 objectID)
     {
         string cacheKey = "RecipeResultsByRecipeID_" + objectID;
@@ -123,7 +128,6 @@ public class RecipeGateway
         }// if
         return returnObject;
     } // method GetRecipeResultsByRecipeID
-
 
     public static Crafting_Components GetCraftingComponentByComponentID(long objectID)
     {
@@ -148,38 +152,15 @@ public class RecipeGateway
         return returnObject;
     } // method GetRecipeIngredientsByRecipeID
 
-    public static Crafting_Filters GetCraftingFilterByFilterID(long objectID)
+    public static List<Recipe> GetRecipesByResultItemIDAndType(long objectID, ItemTypeEnum itemType)
     {
-        return GetCraftingFilterByFilterID(Convert.ToInt32(objectID));
+        return GetRecipesByResultItemIDAndType(Convert.ToInt32(objectID), itemType);
     }
 
-    public static Crafting_Filters GetCraftingFilterByFilterID(Int32 objectID)
+    public static List<Recipe> GetRecipesByResultItemIDAndType(Int32 objectID, ItemTypeEnum itemType )
     {
-        string cacheKey = "CraftingCraftingFilterByFilterID_" + objectID;
-        Crafting_Filters returnObject = HttpContext.Current.Cache[cacheKey] as Crafting_Filters;
-        if (returnObject == null)
-        {
-            using (RepopdataEntities myEntities = new RepopdataEntities())
-            {
-                returnObject = (from item in myEntities.Crafting_Filters
-                                where item.filterID == objectID
-                                select item).FirstOrDefault();
-                if (returnObject == null) { return null; }
-                AppCaching.AddToCache(cacheKey, returnObject);
-            } // using
-        }// if
-        return returnObject;
-    } // method GetCraftingFilterByFilterID
-
-    public static Recipe GetRecipeByItemIDAndType(long objectID, ItemTypeEnum itemType)
-    {
-        return GetRecipeByItemIDAndType(Convert.ToInt32(objectID), itemType);
-    }
-
-    public static Recipe GetRecipeByItemIDAndType(Int32 objectID, ItemTypeEnum itemType )
-    {
-        string cacheKey = "RecipeByItemIDAndType_" + objectID + "_" + itemType;
-        Recipe returnObject = HttpContext.Current.Cache[cacheKey] as Recipe;
+        string cacheKey = "RecipesByResultItemIDAndType_" + objectID + "_" + itemType;
+        List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
         if (returnObject == null)
         {
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -187,25 +168,31 @@ public class RecipeGateway
                 switch (itemType)
                 {
                     case ItemTypeEnum.Item:
-                        returnObject = (from item in myEntities.Recipes
+                        var result = (from item in myEntities.Recipes
                                         join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
                                         join itemResults in myEntities.Items on recipeResults.resultID equals itemResults.itemID
                                         where recipeResults.type == (long)itemType && itemResults.itemID == objectID
-                                        select item).FirstOrDefault();
+                                        select item).OrderBy(x => x.displayName);
+                        if (result == null) { return null; }
+                        returnObject = result.ToList();
                         break;
                     case ItemTypeEnum.Fitting:
-                        returnObject = (from item in myEntities.Recipes
+                        var result2 = (from item in myEntities.Recipes
                                         join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
                                         join itemResults in myEntities.Fittings on recipeResults.resultID equals itemResults.fittingID
                                         where recipeResults.type == (long)itemType && itemResults.fittingID == objectID
-                                        select item).FirstOrDefault();
+                                        select item).OrderBy(x => x.displayName);
+                        if (result2 == null) { return null; }
+                        returnObject = result2.ToList();
                         break;
                     case ItemTypeEnum.Blueprint:
-                        returnObject = (from item in myEntities.Recipes
+                        var result3 = (from item in myEntities.Recipes
                                         join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
                                         join itemResults in myEntities.Structures on recipeResults.resultID equals itemResults.structureID
                                         where recipeResults.type == (long)itemType && itemResults.structureID == objectID
-                                        select item).FirstOrDefault();
+                                        select item).OrderBy(x => x.displayName);
+                        if (result3 == null) { return null; }
+                        returnObject = result3.ToList();
                         break;
                 }
                 if (returnObject == null) { return null; }
@@ -213,7 +200,7 @@ public class RecipeGateway
             } // using
         }// if
         return returnObject;
-    } // method GetCraftingFilterByFilterID
+    } // method GetRecipesByResultItemIDAndType
 
     public static List<Recipe> GetAllRecipesGrantedByRecipeBookID(long objectID)
     {
@@ -287,6 +274,56 @@ public class RecipeGateway
             } // using
         return returnObject;
     } // method GetAllRecipesThatUseComponentAsAgent
+
+    public static List<Recipe> GetAllRecipesThatUseItemAsIngredient(long objectID)
+    {
+        return GetAllRecipesThatUseItemAsIngredient(Convert.ToInt32(objectID));
+    }
+
+    public static List<Recipe> GetAllRecipesThatUseItemAsIngredient(Int32 objectID)
+    {
+        string cacheKey = "AllRecipesThatUseItemAsIngredient_" + objectID;
+        List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
+
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                // There is a flaw in this logic, but I don't know what it is just yet.
+                var result = (from item in myEntities.Recipes
+                              join ingredients in myEntities.Recipe_Ingredients on item.recipeID equals ingredients.recipeID
+                              join itemCraftingComponents in myEntities.Item_Crafting_Components on ingredients.componentID equals itemCraftingComponents.componentID
+                              join actualItems in myEntities.Items on itemCraftingComponents.itemID equals actualItems.itemID
+                              where actualItems.itemID == objectID
+                              select item).OrderBy( x => x.skillID);
+                if (result == null) { return null; }
+                returnObject = result.ToList();
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method GetAllRecipesThatUseComponentAsIngredient
+
+
+    public static Recipe_Results GetRecipeResultByRecipeIdAndFilterId(long recipeID, long filterID)
+    {
+        string cacheKey = "RecipeResultByRecipeIdAndFilterId_" + recipeID + "_" + filterID;
+        Recipe_Results returnObject = HttpContext.Current.Cache[cacheKey] as Recipe_Results;
+
+        if (returnObject == null)
+        {
+            List<Recipe_Results> allResults = GetRecipeResultsByRecipeID(recipeID);
+            foreach (Recipe_Results recipeResult in allResults)
+            {
+                // We want to break out of the loop if we get a match of any kind
+                if (recipeResult.filter1ID == filterID) { returnObject = recipeResult; break; }
+                if (recipeResult.filter2ID == filterID) { returnObject = recipeResult; break; }
+                if (recipeResult.filter3ID == filterID) { returnObject = recipeResult; break; }
+                if (recipeResult.filter4ID == filterID) { returnObject = recipeResult; break; }
+            } // foreach (Recipe_Results recipeResult in allResults)
+            if (returnObject == null) { return null; }
+            AppCaching.AddToCache(cacheKey, returnObject);
+        } // f (returnObject == null)
+        return returnObject;
+    } // GetRecipeResultByRecipeIdAndFilterId
 
     #endregion // Public Methods
 } // class RecipeLists

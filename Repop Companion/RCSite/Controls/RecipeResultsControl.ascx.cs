@@ -81,13 +81,15 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                     {
                         case ItemTypeEnum.Item:
                             nameControl.Text = (ItemGateway.GetItemByID(gameData.resultID).displayName);
-                            nameControl.NavigateUrl = LinkGenerator.GenerateItemLink(ItemGateway.GetItemByID(gameData.resultID).itemID);
+                            nameControl.NavigateUrl = LinkGenerator.GenerateItemLink(gameData.resultID);
                             break;
                         case ItemTypeEnum.Fitting:
                             nameControl.Text = (ItemGateway.GetFittingByID(gameData.resultID).displayName);
+                            nameControl.NavigateUrl = LinkGenerator.GenerateFittingLink(gameData.resultID);
                             break;
                         case ItemTypeEnum.Blueprint:
                             nameControl.Text = (ItemGateway.GetBlueprintByID(gameData.resultID).displayName);
+                            nameControl.NavigateUrl = LinkGenerator.GenerateBlueprintLink(gameData.resultID);
                             break;
                     } // switch ((ResultTypeEnum)gameData.type)
 
@@ -96,7 +98,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                     if (gameData.filter1ID > 0)
                     {
                         HyperLink ingredientControl = (HyperLink)e.Row.FindControl("lnk_Ingredient1");
-                        string newValue = RecipeGateway.GetCraftingFilterByFilterID(gameData.filter1ID).displayName;
+                        string newValue = FilterGateway.GetCraftingFilterByFilterID(gameData.filter1ID).displayName;
                         if (gameData.ingCount1 > 0) newValue += " (" + gameData.ingCount1 + ")";
                         ingredientControl.Text = newValue;
                         ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter1ID);
@@ -104,7 +106,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                     if (gameData.filter2ID > 0)
                     {
                         HyperLink ingredientControl = (HyperLink)e.Row.FindControl("lnk_Ingredient2");
-                        string newValue = RecipeGateway.GetCraftingFilterByFilterID(gameData.filter2ID).displayName;
+                        string newValue = FilterGateway.GetCraftingFilterByFilterID(gameData.filter2ID).displayName;
                         if (gameData.ingCount2 > 0) newValue += " (" + gameData.ingCount2 + ")";
                         ingredientControl.Text = newValue;
                         ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter2ID);
@@ -112,7 +114,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                     if (gameData.filter3ID > 0)
                     {
                         HyperLink ingredientControl = (HyperLink)e.Row.FindControl("lnk_Ingredient3");
-                        string newValue = RecipeGateway.GetCraftingFilterByFilterID(gameData.filter3ID).displayName;
+                        string newValue = FilterGateway.GetCraftingFilterByFilterID(gameData.filter3ID).displayName;
                         if (gameData.ingCount3 > 0) newValue += " (" + gameData.ingCount3 + ")";
                         ingredientControl.Text = newValue;
                         ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter3ID);
@@ -120,7 +122,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                     if (gameData.filter4ID > 0)
                     {
                         HyperLink ingredientControl = (HyperLink)e.Row.FindControl("lnk_Ingredient4");
-                        string newValue = RecipeGateway.GetCraftingFilterByFilterID(gameData.filter4ID).displayName;
+                        string newValue = FilterGateway.GetCraftingFilterByFilterID(gameData.filter4ID).displayName;
                         if (gameData.ingCount4 > 0) newValue += " (" + gameData.ingCount4 + ")";
                         ingredientControl.Text = newValue;
                         ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter4ID);

@@ -9,9 +9,9 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class FilterGateway
 {
-    public static List<Crafting_Filters> GetAllFilterss()
+    public static List<Crafting_Filters> GetAllCraftingFilters()
     {
-        string cacheKey = "AllFilterss";
+        string cacheKey = "AllCraftingFilters";
         List<Crafting_Filters> returnObject = HttpContext.Current.Cache[cacheKey] as List<Crafting_Filters>;
 
         if (returnObject == null)
@@ -26,37 +26,14 @@ public class FilterGateway
         return returnObject;
     } // method GetAllBlueprints
 
-    public static Crafting_Filters GetFilterByFilterID(long objectID)
-    { 
-        return GetFilterByFilterID(Convert.ToInt32(objectID));
+    public static List<Crafting_Filters> GetCraftingFiltersByItemID(long objectID)
+    {
+        return GetCraftingFiltersByItemID(Convert.ToInt32(objectID));
     }
 
-    public static Crafting_Filters GetFilterByFilterID(Int32 objectID)
+    public static List<Crafting_Filters> GetCraftingFiltersByItemID(Int32 objectID)
     {
-        string cacheKey = "FilterByFilterID_" + objectID;
-        Crafting_Filters returnObject = HttpContext.Current.Cache[cacheKey] as Crafting_Filters;
-        if (returnObject == null)
-        {
-            using (RepopdataEntities myEntities = new RepopdataEntities())
-            {
-                returnObject = (from item in myEntities.Crafting_Filters
-                                where item.filterID == objectID
-                                select item).FirstOrDefault();
-                if (returnObject == null) { return null; }
-                AppCaching.AddToCache(cacheKey, returnObject);
-            } // using
-        } // if (currentSkill == null)
-        return returnObject;
-    } // method GetFilterByFilterID
-
-    public static List<Crafting_Filters> GetFiltersByItemID(long objectID)
-    {
-        return GetFiltersByItemID(Convert.ToInt32(objectID));
-    }
-
-    public static List<Crafting_Filters> GetFiltersByItemID(Int32 objectID)
-    {
-        string cacheKey = "FilterByItemID_" + objectID;
+        string cacheKey = "CraftingFiltersByItemID_" + objectID;
         List<Crafting_Filters> returnObject = HttpContext.Current.Cache[cacheKey] as List<Crafting_Filters>;
         if (returnObject == null)
         {
@@ -73,5 +50,28 @@ public class FilterGateway
         } // if (currentSkill == null)
         return returnObject;
     } // method GetFilterByItemID
+
+    public static Crafting_Filters GetCraftingFilterByFilterID(long objectID)
+    {
+        return GetCraftingFilterByFilterID(Convert.ToInt32(objectID));
+    }
+
+    public static Crafting_Filters GetCraftingFilterByFilterID(Int32 objectID)
+    {
+        string cacheKey = "CraftingCraftingFilterByFilterID_" + objectID;
+        Crafting_Filters returnObject = HttpContext.Current.Cache[cacheKey] as Crafting_Filters;
+        if (returnObject == null)
+        {
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                returnObject = (from item in myEntities.Crafting_Filters
+                                where item.filterID == objectID
+                                select item).FirstOrDefault();
+                if (returnObject == null) { return null; }
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        }// if
+        return returnObject;
+    } // method GetCraftingFilterByFilterID
 
 } // class FilterGateway

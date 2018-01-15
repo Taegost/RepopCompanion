@@ -51,9 +51,12 @@ public partial class TradeSkills_Default : BasePage
                 {
                     HyperLink recipeLink = (HyperLink)e.Item.FindControl("lnk_RecipeLink");
                     Item currentItem = (Item)e.Item.DataItem;
-                    Recipe itemRecipe = RecipeGateway.GetRecipeByItemIDAndType(currentItem.itemID, ItemTypeEnum.Item);
-                    recipeLink.Text = itemRecipe.displayName;
-                    recipeLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(itemRecipe.recipeID);
+                    List<Recipe> itemRecipe = RecipeGateway.GetRecipesByResultItemIDAndType(currentItem.itemID, ItemTypeEnum.Item);
+                    var singleRecipe = (from item in itemRecipe
+                                where item.skillID == tradeSkillID
+                                select item).FirstOrDefault();
+                    recipeLink.Text = singleRecipe.displayName;
+                    recipeLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(singleRecipe.recipeID);
                     break;
                 }
         } // switch
@@ -68,9 +71,12 @@ public partial class TradeSkills_Default : BasePage
                 {
                     HyperLink recipeLink = (HyperLink)e.Item.FindControl("lnk_RecipeLink");
                     Fitting currentItem = (Fitting)e.Item.DataItem;
-                    Recipe itemRecipe = RecipeGateway.GetRecipeByItemIDAndType(currentItem.fittingID, ItemTypeEnum.Fitting);
-                    recipeLink.Text = itemRecipe.displayName;
-                    recipeLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(itemRecipe.recipeID);
+                    List<Recipe> itemRecipe = RecipeGateway.GetRecipesByResultItemIDAndType(currentItem.fittingID, ItemTypeEnum.Fitting);
+                    var singleRecipe = (from item in itemRecipe
+                                        where item.skillID == tradeSkillID
+                                        select item).FirstOrDefault();
+                    recipeLink.Text = singleRecipe.displayName;
+                    recipeLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(singleRecipe.recipeID);
                     break;
                 }
         } // switch
@@ -85,9 +91,12 @@ public partial class TradeSkills_Default : BasePage
                 {
                     HyperLink recipeLink = (HyperLink)e.Item.FindControl("lnk_RecipeLink");
                     Structure currentItem = (Structure)e.Item.DataItem;
-                    Recipe itemRecipe = RecipeGateway.GetRecipeByItemIDAndType(currentItem.structureID, ItemTypeEnum.Blueprint);
-                    recipeLink.Text = itemRecipe.displayName;
-                    recipeLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(itemRecipe.recipeID);
+                    List<Recipe> itemRecipe = RecipeGateway.GetRecipesByResultItemIDAndType(currentItem.structureID, ItemTypeEnum.Blueprint);
+                    var singleRecipe = (from item in itemRecipe
+                                        where item.skillID == tradeSkillID
+                                        select item).FirstOrDefault();
+                    recipeLink.Text = singleRecipe.displayName;
+                    recipeLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(singleRecipe.recipeID);
                     break;
                 }
         } // switch
