@@ -29,12 +29,9 @@
                 <asp:HyperLink runat="server" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateComponentLink(Convert.ToInt32(Eval("componentID"))) %>' CssClass="NoLinkStyle"></asp:HyperLink><br />
             </ItemTemplate>
         </asp:Repeater>
-        <asp:Repeater ID="rpt_FilterTypes" runat="server">
-            <ItemTemplate>
-                Filter:
-                <asp:HyperLink runat="server" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateFilterLink(Convert.ToInt32(Eval("filterID"))) %>' CssClass="NoLinkStyle"></asp:HyperLink><br />
-            </ItemTemplate>
-        </asp:Repeater>
+        <div id="FilterWrapper" runat="server">
+            Filter: <asp:HyperLink ID="lnk_Filter" runat="server" Text="" CssClass="NoLinkStyle"></asp:HyperLink><br />
+        </div>
         <section id="RecipeWrapper" runat="server">
             <h2>Produced in Recipe</h2>
             <asp:GridView ID="grd_Recipe" runat="server" AutoGenerateColumns="False" OnRowDataBound="grd_Recipe_RowDataBound">

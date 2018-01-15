@@ -67,6 +67,11 @@ public class RecipeGateway
         return returnObject;
     } // method GetSkillRangByRecipeID
 
+    public static List<Recipe_Ingredients> GetRecipeIngredientsByRecipeID(long objectID)
+    {
+        return GetRecipeIngredientsByRecipeID(Convert.ToInt32(objectID));
+    }
+
     public static List<Recipe_Ingredients> GetRecipeIngredientsByRecipeID(Int32 objectID)
     {
         string cacheKey = "RecipeIngredientsByRecipeID_" + objectID;
@@ -288,19 +293,63 @@ public class RecipeGateway
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
             {
-                // There is a flaw in this logic, but I don't know what it is just yet.
-                var result = (from item in myEntities.Recipes
+                returnObject = new List<Recipe>();
+                var recipeList = (from item in myEntities.Recipes
                               join ingredients in myEntities.Recipe_Ingredients on item.recipeID equals ingredients.recipeID
                               join itemCraftingComponents in myEntities.Item_Crafting_Components on ingredients.componentID equals itemCraftingComponents.componentID
                               join actualItems in myEntities.Items on itemCraftingComponents.itemID equals actualItems.itemID
                               where actualItems.itemID == objectID
-                              select item).OrderBy( x => x.skillID);
-                if (result == null) { return null; }
-                returnObject = result.ToList();
+                              select item).OrderBy(x => x.skillID);
+                if (recipeList == null) { return null; }
+                foreach (Recipe recipe in recipeList)
+                {
+                    List<Recipe_Results> recipeResults = GetRecipeResultsByRecipeID(recipe.recipeID);
+
+                    // We only need the Recipe_Ingredients for the current recipe that use one of the item components
+                    List<Recipe_Ingredients> componentIngredients = (from item in GetRecipeIngredientsByRecipeID(recipe.recipeID)
+                                                join components in ComponentGateway.GetComponentsByItemID(objectID) on item.componentID equals components.componentID
+                                                select item).ToList();
+                    foreach (Recipe_Ingredients recipeIngredient in componentIngredients)
+                    {
+                        switch (recipeIngredient.ingSlot)
+                        {
+                            case 1:
+                                foreach (Recipe_Results recipeResult in recipeResults)
+                                {
+                                    if (recipeResult.filter1ID == 0 || recipeResult.filter1ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID)
+                                    { returnObject.Add(recipe); break; } // Don't need to continue if it matches
+                                } // foreach (Recipe_Results recipeResult in recipeResults)
+                                break;
+                            case 2:
+                                foreach (Recipe_Results recipeResult in recipeResults)
+                                {
+                                    if (recipeResult.filter2ID == 0 || recipeResult.filter2ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID)
+                                    { returnObject.Add(recipe); break; } // Don't need to continue if it matches
+                                } // foreach (Recipe_Results recipeResult in recipeResults)
+                                break;
+                            case 3:
+                                foreach (Recipe_Results recipeResult in recipeResults)
+                                {
+                                    if (recipeResult.filter3ID == 0 || recipeResult.filter3ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID)
+                                    { returnObject.Add(recipe); break; } // Don't need to continue if it matches
+                                } // foreach (Recipe_Results recipeResult in recipeResults)
+                                break;
+                            case 4:
+                                foreach (Recipe_Results recipeResult in recipeResults)
+                                {
+                                    if (recipeResult.filter4ID == 0 || recipeResult.filter4ID == (long)FilterGateway.GetCraftingFilterByItemID(objectID).filterID)
+                                    { returnObject.Add(recipe); break; } // Don't need to continue if it matches
+                                } // foreach (Recipe_Results recipeResult in recipeResults)
+                                break;
+                        } // switch (recipeIngredient.ingSlot)
+                    } // foreach (Recipe_Ingredients recipeIngredient in componentIngredients)
+                } // foreach (Recipe recipe in recipeList)
+                if (returnObject == null) { return null; }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
     } // method GetAllRecipesThatUseComponentAsIngredient
+
 
 
     public static Recipe_Results GetRecipeResultByRecipeIdAndFilterId(long recipeID, long filterID)

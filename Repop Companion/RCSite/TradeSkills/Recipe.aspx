@@ -92,6 +92,7 @@
                 </asp:TemplateField>
                 <asp:BoundField DataField="count" HeaderText="Qty" />
                 <asp:BoundField DataField="weight" HeaderText="Weight" />
+                <asp:BoundField DataField="ingslot" HeaderText="Slot" />
             </Columns>
         </asp:GridView>
 

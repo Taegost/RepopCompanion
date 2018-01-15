@@ -50,8 +50,9 @@ public partial class Items_Item : BasePage
             case ItemGroupEnum.CraftingComponent:
                 rpt_ComponentTypes.DataSource = ComponentGateway.GetComponentsByItemID(CurrentItem.itemID);
                 rpt_ComponentTypes.DataBind();
-                rpt_FilterTypes.DataSource = FilterGateway.GetCraftingFiltersByItemID(CurrentItem.itemID);
-                rpt_FilterTypes.DataBind();
+                Crafting_Filters craftingFilter = FilterGateway.GetCraftingFilterByItemID(CurrentItem.itemID);
+                lnk_Filter.Text = craftingFilter.displayName;
+                lnk_Filter.Text = LinkGenerator.GenerateFilterLink(craftingFilter.filterID);
                 grd_Recipe.DataSource = RecipeGateway.GetRecipesByResultItemIDAndType(CurrentItem.itemID, ItemTypeEnum.Item);
                 grd_Recipe.DataBind();
                 grd_Ingredient.DataSource = RecipeGateway.GetAllRecipesThatUseItemAsIngredient(CurrentItem.itemID);
@@ -61,6 +62,7 @@ public partial class Items_Item : BasePage
 
         RecipeBookWrapper.Visible = rpt_RecipeBook.Items.Count > 0;
         ComponentWrapper.Visible = rpt_ComponentTypes.Items.Count > 0;
+        FilterWrapper.Visible = lnk_Filter.Text != "";
         RecipeWrapper.Visible = grd_Recipe.Rows.Count > 0;
         IngredientWrapper.Visible = grd_Ingredient.Rows.Count > 0;
     } // method Page_Load
@@ -98,31 +100,34 @@ public partial class Items_Item : BasePage
 
                 // The logic below here needs to be re-written.  It's ugly.
                 HyperLink resultLink = (HyperLink)e.Row.FindControl("lnk_Result");
-                List<Crafting_Filters> itemFilters = FilterGateway.GetCraftingFiltersByItemID(CurrentItem.itemID);
-                Recipe_Results recipeResult = new Recipe_Results();
-                foreach (Crafting_Filters filter in itemFilters)
-                {
-                    Recipe_Results tempResult = RecipeGateway.GetRecipeResultByRecipeIdAndFilterId(currentRecipe.recipeID, filter.filterID);
-                    if (tempResult != null) { recipeResult = tempResult; break; }
-                }
-                switch ((ItemTypeEnum)recipeResult.type)
-                {
-                    case ItemTypeEnum.Item:
-                        Item itemResult = ItemGateway.GetItemByID(recipeResult.resultID);
-                        resultLink.Text = itemResult.displayName;
-                        resultLink.NavigateUrl = LinkGenerator.GenerateItemLink(itemResult.itemID);
-                        break;
-                    case ItemTypeEnum.Fitting:
-                        Fitting fittingResult = ItemGateway.GetFittingByID(recipeResult.resultID);
-                        resultLink.Text = fittingResult.displayName;
-                        resultLink.NavigateUrl = LinkGenerator.GenerateFittingLink(fittingResult.fittingID);
-                        break;
-                    case ItemTypeEnum.Blueprint:
-                        Structure blueprintResult = ItemGateway.GetBlueprintByID(recipeResult.resultID);
-                        resultLink.Text = blueprintResult.displayName;
-                        resultLink.NavigateUrl = LinkGenerator.GenerateBlueprintLink(blueprintResult.structureID);
-                        break;
-                } // switch ((ItemTypeEnum)recipeResult.type)
+                //List<Crafting_Filters> itemFilters = FilterGateway.GetCraftingFiltersByItemID(objectID);
+                //foreach (Recipe recipe in result)
+                //{
+                //    foreach (Crafting_Filters filter in itemFilters)
+                //    {
+                //        Recipe_Results tempResult = RecipeGateway.GetRecipeResultByRecipeIdAndFilterId(recipe.recipeID, filter.filterID);
+                //        if (tempResult != null) { returnObject.Add(recipe); break; }
+                //    }
+                //}
+
+                //switch ((ItemTypeEnum)recipeResult.type)
+                //{
+                //    case ItemTypeEnum.Item:
+                //        Item itemResult = ItemGateway.GetItemByID(recipeResult.resultID);
+                //        resultLink.Text = itemResult.displayName;
+                //        resultLink.NavigateUrl = LinkGenerator.GenerateItemLink(itemResult.itemID);
+                //        break;
+                //    case ItemTypeEnum.Fitting:
+                //        Fitting fittingResult = ItemGateway.GetFittingByID(recipeResult.resultID);
+                //        resultLink.Text = fittingResult.displayName;
+                //        resultLink.NavigateUrl = LinkGenerator.GenerateFittingLink(fittingResult.fittingID);
+                //        break;
+                //    case ItemTypeEnum.Blueprint:
+                //        Structure blueprintResult = ItemGateway.GetBlueprintByID(recipeResult.resultID);
+                //        resultLink.Text = blueprintResult.displayName;
+                //        resultLink.NavigateUrl = LinkGenerator.GenerateBlueprintLink(blueprintResult.structureID);
+                //        break;
+                //} // switch ((ItemTypeEnum)recipeResult.type)
                 break;
         } // switch (e.Row.RowType)
     } // method grd_Ingredient_RowDataBound
