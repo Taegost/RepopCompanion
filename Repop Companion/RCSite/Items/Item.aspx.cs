@@ -15,7 +15,8 @@ public partial class Items_Item : BasePage
     {
         if (String.IsNullOrEmpty(Request.QueryString.Get("ItemID")))
         {
-            Response.Redirect("Default.aspx");
+            //Response.Redirect("Default.aspx");
+            Response.Redirect("~/Components/Default.aspx");
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("ItemID")))
 
         CurrentItem = ItemGateway.GetItemByID(Convert.ToInt32(Request.QueryString.Get("ItemID")));
