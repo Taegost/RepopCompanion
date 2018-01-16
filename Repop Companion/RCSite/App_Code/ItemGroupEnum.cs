@@ -2,5 +2,6 @@
 {
     Unknown,
     RecipeBook,
+    RawMaterial,
     CraftingComponent
 }

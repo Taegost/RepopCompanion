@@ -25,5 +25,13 @@ public partial class Filters_Filter : BasePage
         // Main information
         Title = CurrentFilter.displayName;
 
+        rpt_Items.DataSource = ItemGateway.GetItemsByFilterID(CurrentFilter.filterID);
+        rpt_Items.DataBind();
+        grd_Recipes.DataSource = RecipeGateway.GetAllRecipesThatUseFilter(CurrentFilter.filterID);
+        grd_Recipes.DataBind();
+
+        ItemWrapper.Visible = rpt_Items.Items.Count > 0;
+        RecipeWrapper.Visible = grd_Recipes.Rows.Count > 0;
+
     } // method Page_Load
 } // class Filters_Filter

@@ -4,7 +4,8 @@
     <siteMapNode url="~/Default.aspx" title="Home"  description="Return to the home page" />
     <siteMapNode url="~/TradeSkills/Default.aspx" title="Trade Skills"  description="View all trade skills" />
     <siteMapNode url="~/Components/Default.aspx" title="Components" description="View all crafting components" />
-    <!--<siteMapNode url="~/Items/Default.aspx" title="Items" description="View all items" />-->
+    <siteMapNode url="~/Items/Default.aspx" title="Items" description="View all items" />
+    <siteMapNode url="~/Subsistence/Default.aspx" title="Subsistence" description="View all species/subsistence" />
     <siteMapNode url="~/Fittings/Default.aspx" title="Fittings" description="View all fittings" />
     <siteMapNode url="~/Blueprints/Default.aspx" title="Blueprints" description="View all blueprints" />
     <siteMapNode url="~/Filters/Default.aspx" title="Filters" description="View All Filters" />

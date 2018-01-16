@@ -20,17 +20,19 @@ public partial class Components_Component : BasePage
 
         int currentID = Convert.ToInt32(Request.QueryString.Get("ComponentID"));
         CurrentComponent = ComponentGateway.GetCraftingComponentByComponentID(currentID);
+        if (CurrentComponent == null) { Response.Redirect("Default.aspx"); }
+        Title = CurrentComponent.displayName;
 
         rpt_Items.DataSource = ItemGateway.GetItemsByComponentID(CurrentComponent.componentID);
         rpt_Items.DataBind();
-        rpt_Ingredients.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsIngredient(CurrentComponent.componentID);
-        rpt_Ingredients.DataBind();
-        rpt_Agents.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsAgent(CurrentComponent.componentID);
-        rpt_Agents.DataBind();
+        grd_Ingredients.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsIngredient(CurrentComponent.componentID);
+        grd_Ingredients.DataBind();
+        grd_Agents.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsAgent(CurrentComponent.componentID);
+        grd_Agents.DataBind();
 
-        ItemSection.Visible = rpt_Items.Items.Count > 0;
-        IngredientSection.Visible = rpt_Ingredients.Items.Count > 0;
-        AgentSection.Visible = rpt_Agents.Items.Count > 0;
+        ItemWrapper.Visible = rpt_Items.Items.Count > 0;
+        IngredientWrapper.Visible = grd_Ingredients.Rows.Count > 0;
+        AgentWrapper.Visible = grd_Agents.Rows.Count > 0;
 
     } // method Page_Load
 } // class Components_Component

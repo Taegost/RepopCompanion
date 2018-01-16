@@ -6,7 +6,7 @@
     <h1>Blueprints</h1>
     <asp:Repeater ID="rpt_Blueprints" runat="server">
         <ItemTemplate>
-            <asp:HyperLink ID="lnk_Blueprint" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateBlueprintLink(Convert.ToInt32(Eval("structureID"))) %>' runat="server"></asp:HyperLink><br />
+            <asp:HyperLink ID="lnk_Blueprint" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateBlueprintLink(Convert.ToInt32(Eval("structureID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
         </ItemTemplate>
     </asp:Repeater>
 </asp:Content>

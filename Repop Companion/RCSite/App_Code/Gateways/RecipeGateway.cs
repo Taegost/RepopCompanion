@@ -9,8 +9,6 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class RecipeGateway
 {
-    #region "Public Methods"
-
     public static List<Recipe> RecipesInSkill(Int32 objectID)
     {
         string cacheKey = "RecipesInSkill_" + objectID;
@@ -69,11 +67,6 @@ public class RecipeGateway
 
     public static List<Recipe_Ingredients> GetRecipeIngredientsByRecipeID(long objectID)
     {
-        return GetRecipeIngredientsByRecipeID(Convert.ToInt32(objectID));
-    }
-
-    public static List<Recipe_Ingredients> GetRecipeIngredientsByRecipeID(Int32 objectID)
-    {
         string cacheKey = "RecipeIngredientsByRecipeID_" + objectID;
         List<Recipe_Ingredients> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe_Ingredients>;
         if (returnObject == null)
@@ -112,11 +105,6 @@ public class RecipeGateway
 
     public static List<Recipe_Results> GetRecipeResultsByRecipeID(long objectID)
     {
-        return GetRecipeResultsByRecipeID(Convert.ToInt32(objectID));
-    }
-
-    public static List<Recipe_Results> GetRecipeResultsByRecipeID(Int32 objectID)
-    {
         string cacheKey = "RecipeResultsByRecipeID_" + objectID;
         List<Recipe_Results> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe_Results>;
         if (returnObject == null)
@@ -136,11 +124,6 @@ public class RecipeGateway
 
     public static Crafting_Components GetCraftingComponentByComponentID(long objectID)
     {
-        return GetCraftingComponentByComponentID(Convert.ToInt32(objectID));
-    }
-
-    public static Crafting_Components GetCraftingComponentByComponentID(Int32 objectID)
-    {
         string cacheKey = "CraftingComponentByComponentID_" + objectID;
         Crafting_Components returnObject = HttpContext.Current.Cache[cacheKey] as Crafting_Components;
         if (returnObject == null)
@@ -157,12 +140,7 @@ public class RecipeGateway
         return returnObject;
     } // method GetRecipeIngredientsByRecipeID
 
-    public static List<Recipe> GetRecipesByResultItemIDAndType(long objectID, ItemTypeEnum itemType)
-    {
-        return GetRecipesByResultItemIDAndType(Convert.ToInt32(objectID), itemType);
-    }
-
-    public static List<Recipe> GetRecipesByResultItemIDAndType(Int32 objectID, ItemTypeEnum itemType )
+    public static List<Recipe> GetRecipesByResultItemIDAndType(long objectID, ItemTypeEnum itemType )
     {
         string cacheKey = "RecipesByResultItemIDAndType_" + objectID + "_" + itemType;
         List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
@@ -209,11 +187,6 @@ public class RecipeGateway
 
     public static List<Recipe> GetAllRecipesGrantedByRecipeBookID(long objectID)
     {
-        return GetAllRecipesGrantedByRecipeBookID(Convert.ToInt32(objectID));
-    }
-
-    public static List<Recipe> GetAllRecipesGrantedByRecipeBookID(Int32 objectID)
-    {
         string cacheKey = "AllRecipesGrantedByRecipeBookID_" + objectID;
         List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
 
@@ -234,11 +207,6 @@ public class RecipeGateway
 
     public static List<Recipe> GetAllRecipesThatUseComponentAsIngredient(long objectID)
     {
-        return GetAllRecipesThatUseComponentAsIngredient(Convert.ToInt32(objectID));
-    }
-
-    public static List<Recipe> GetAllRecipesThatUseComponentAsIngredient(Int32 objectID)
-    {
         string cacheKey = "AllRecipesThatUseComponentAsIngredient_" + objectID;
         List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
 
@@ -257,11 +225,6 @@ public class RecipeGateway
     } // method GetAllRecipesThatUseComponentAsIngredient
 
     public static List<Recipe> GetAllRecipesThatUseComponentAsAgent(long objectID)
-    {
-        return GetAllRecipesThatUseComponentAsAgent(Convert.ToInt32(objectID));
-    }
-    
-    public static List<Recipe> GetAllRecipesThatUseComponentAsAgent(Int32 objectID)
     {
         string cacheKey = "AllRecipesThatUseComponentAsAgent_" + objectID;
         List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
@@ -375,9 +338,7 @@ public class RecipeGateway
             } // using
         return returnObject;
     } // method GetAllRecipesThatUseComponentAsIngredient
-
-
-
+    
     public static Recipe_Results GetRecipeResultByRecipeIdAndFilterId(long recipeID, long filterID)
     {
         string cacheKey = "RecipeResultByRecipeIdAndFilterId_" + recipeID + "_" + filterID;
@@ -400,5 +361,24 @@ public class RecipeGateway
         return returnObject;
     } // GetRecipeResultByRecipeIdAndFilterId
 
-    #endregion // Public Methods
+    public static List<Recipe> GetAllRecipesThatUseFilter(long objectID)
+    {
+        string cacheKey = "AllRecipesThatUseFilter_" + objectID;
+        List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
+
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                var result = (from item in myEntities.Recipes
+                              join results in myEntities.Recipe_Results on item.recipeID equals results.recipeID
+                              where results.filter1ID == objectID || results.filter2ID == objectID || 
+                              results.filter3ID == objectID || results.filter4ID == objectID
+                              select item).OrderBy(x => x.skillID).Distinct();
+                if (result == null) { return null; }
+                returnObject = result.ToList();
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method GetAllRecipesThatUseFilter
+
 } // class RecipeLists

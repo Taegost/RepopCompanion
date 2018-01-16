@@ -4,8 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cp_MainContent" runat="Server">
     <h1><%=CurrentComponent.displayName %></h1>
-    <h2><%=CurrentComponent.displayDescription %></h2>
-    <section id="ItemSection" runat="server">
+    <p><%=CurrentComponent.displayDescription %></p>
+    <section id="ItemWrapper" runat="server">
         <h2>Items</h2>
         <asp:Repeater ID="rpt_Items" runat="server">
             <ItemTemplate>
@@ -13,23 +13,40 @@
             </ItemTemplate>
         </asp:Repeater>
     </section>
-    <section id="IngredientSection" runat="server">
+    <section id="IngredientWrapper" runat="server">
         <h2>Recipes used as Ingredient</h2>
-        <asp:Repeater ID="rpt_Ingredients" runat="server">
-            <ItemTemplate>
-                <asp:HyperLink ID="lnk_Recipe" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateRecipeLink(Convert.ToInt32(Eval("recipeID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink>
-                <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.GetSkillById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
-            </ItemTemplate>
-        </asp:Repeater>
+        <asp:GridView ID="grd_Ingredients" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:TemplateField HeaderText="Recipe">
+                    <ItemTemplate>
+                        <asp:HyperLink ID="lnk_Recipe" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateRecipeLink(Convert.ToInt32(Eval("recipeID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Skill">
+                    <ItemTemplate>
+                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.GetSkillById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
     </section>
-        <section id="AgentSection" runat="server">
+    <section id="AgentWrapper" runat="server">
         <h2>Recipes used as Agent</h2>
-        <asp:Repeater ID="rpt_Agents" runat="server">
-            <ItemTemplate>
-                <asp:HyperLink ID="lnk_Recipe" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateRecipeLink(Convert.ToInt32(Eval("recipeID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink>
-                <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.GetSkillById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
-            </ItemTemplate>
-        </asp:Repeater>
+        <asp:GridView ID="grd_Agents" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:TemplateField HeaderText="Recipe">
+                    <ItemTemplate>
+                        <asp:HyperLink ID="lnk_Recipe" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateRecipeLink(Convert.ToInt32(Eval("recipeID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Skill">
+                    <ItemTemplate>
+                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.GetSkillById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+
+        </asp:GridView>
     </section>
 
 

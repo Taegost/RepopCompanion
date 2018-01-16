@@ -6,7 +6,7 @@
     <h1>Fittings</h1>
     <asp:Repeater ID="rpt_Fittings" runat="server">
         <ItemTemplate>
-            <asp:HyperLink ID="lnk_Fitting" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateFittingLink(Convert.ToInt32(Eval("fittingID"))) %>' runat="server"></asp:HyperLink><br />
+            <asp:HyperLink ID="lnk_Fitting" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateFittingLink(Convert.ToInt32(Eval("fittingID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
         </ItemTemplate>
     </asp:Repeater>
 </asp:Content>

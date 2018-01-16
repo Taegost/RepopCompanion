@@ -16,31 +16,26 @@ public partial class Items_Item : BasePage
         if (String.IsNullOrEmpty(Request.QueryString.Get("ItemID")))
         {
             //Response.Redirect("Default.aspx");
-            Response.Redirect("~/Components/Default.aspx");
+            Response.Redirect("/Default.aspx");
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("ItemID")))
 
         CurrentItem = ItemGateway.GetItemByID(Convert.ToInt32(Request.QueryString.Get("ItemID")));
+        if (CurrentItem == null) { Response.Redirect("/Default.aspx"); }
         Title = CurrentItem.displayName;
+
+        // Core item information that is common amongst almost all item types
         Item_Value value = ItemGateway.GetItemValueByItemID(CurrentItem.itemID);
-        if (value == null)
-        {
-            lbl_Value.Text = "n/a";
-        }
-        else
-        {
-            lbl_Value.Text = value.value.ToString();
-        }
+        if (value != null) { lbl_Value.Text = value.value.ToString(); }
         Item_Stackable itemStackInfo = ItemGateway.GetItemStackInfoByItemID(CurrentItem.itemID);
-        if (itemStackInfo == null)
-        {
-            lbl_MaxStackSize.Text = "n/a";
-            lbl_DefaultStackSize.Text = "n/a";
-        }
-        else
+        if (itemStackInfo != null)
         {
             lbl_MaxStackSize.Text = itemStackInfo.maxStackSize.ToString();
             lbl_DefaultStackSize.Text = itemStackInfo.defaultStackSize.ToString();
         }
+        Item_Power_Source powerSource = ItemGateway.GetItemPowerSourceInfoByItemID(CurrentItem.itemID);
+        if (powerSource != null) { lbl_PowerIndex.Text = powerSource.powerIndex.ToString(); }
+        Item_Stores_Power powerStorage = ItemGateway.GetItemPowerStorageInfoByItemID(CurrentItem.itemID);
+        if (powerStorage != null) { lbl_PowerStorage.Text = powerStorage.maxStorage.ToString(); }
         
         switch (ItemGateway.DetermineItemGroupByItemID(CurrentItem.itemID))
         {
@@ -48,21 +43,14 @@ public partial class Items_Item : BasePage
                 rpt_RecipeBook.DataSource = RecipeGateway.GetAllRecipesGrantedByRecipeBookID(CurrentItem.itemID);
                 rpt_RecipeBook.DataBind();
                 break;
+            case ItemGroupEnum.RawMaterial:
+                rpt_Species.DataSource = SpeciesGateway.GetAllSpeciesResultsForItem(CurrentItem.itemID);
+                rpt_Species.DataBind();
+                SpeciesWrapper.Visible = rpt_Species.Items.Count > 0;
+                SetUpCraftingInfo();
+                break;
             case ItemGroupEnum.CraftingComponent:
-                rpt_ComponentTypes.DataSource = ComponentGateway.GetComponentsByItemID(CurrentItem.itemID);
-                rpt_ComponentTypes.DataBind();
-                Crafting_Filters craftingFilter = FilterGateway.GetCraftingFilterByItemID(CurrentItem.itemID);
-                if (craftingFilter != null)
-                {
-                    lnk_Filter.Text = craftingFilter.displayName;
-                    lnk_Filter.NavigateUrl = LinkGenerator.GenerateFilterLink(craftingFilter.filterID);
-                }
-                grd_Recipe.DataSource = RecipeGateway.GetRecipesByResultItemIDAndType(CurrentItem.itemID, ItemTypeEnum.Item);
-                grd_Recipe.DataBind();
-                grd_Ingredient.DataSource = RecipeGateway.GetAllRecipesThatUseItemAsIngredient(CurrentItem.itemID);
-                grd_Ingredient.DataBind();
-                grd_Agent.DataSource = RecipeGateway.GetAllRecipesThatUseItemAsAgent(CurrentItem.itemID);
-                grd_Agent.DataBind();
+                SetUpCraftingInfo();
                 break;
         } // switch
 
@@ -157,4 +145,22 @@ public partial class Items_Item : BasePage
 
         // Need to add logic to determine the results
     } // method grd_Agent_RowDataBound
+
+    private void SetUpCraftingInfo()
+    {
+        rpt_ComponentTypes.DataSource = ComponentGateway.GetComponentsByItemID(CurrentItem.itemID);
+        rpt_ComponentTypes.DataBind();
+        Crafting_Filters craftingFilter = FilterGateway.GetCraftingFilterByItemID(CurrentItem.itemID);
+        if (craftingFilter != null)
+        {
+            lnk_Filter.Text = craftingFilter.displayName;
+            lnk_Filter.NavigateUrl = LinkGenerator.GenerateFilterLink(craftingFilter.filterID);
+        }
+        grd_Recipe.DataSource = RecipeGateway.GetRecipesByResultItemIDAndType(CurrentItem.itemID, ItemTypeEnum.Item);
+        grd_Recipe.DataBind();
+        grd_Ingredient.DataSource = RecipeGateway.GetAllRecipesThatUseItemAsIngredient(CurrentItem.itemID);
+        grd_Ingredient.DataBind();
+        grd_Agent.DataSource = RecipeGateway.GetAllRecipesThatUseItemAsAgent(CurrentItem.itemID);
+        grd_Agent.DataBind();
+    } // SetUpCraftingInfo
 } // class Items_Item

@@ -78,4 +78,9 @@ public class LinkGenerator
         return "~/Filters/Filter.aspx?FilterID=" + objectID;
     } // method GenerateComponentLink
 
+    public static string GenerateSpeciesLink(long objectID)
+    {
+        return "~/Subsistence/Species.aspx?SpeciesID=" + objectID;
+    }
+
 } // class LinkGenerator

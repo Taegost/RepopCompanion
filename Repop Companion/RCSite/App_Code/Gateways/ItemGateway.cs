@@ -127,6 +127,30 @@ public class ItemGateway
         return returnObject;
     } // GetCraftingComponentsByComponentID
 
+    public static List<Item> GetItemsByFilterID(long objectID)
+    {
+        return GetItemsByFilterID(Convert.ToInt32(objectID));
+    }
+
+    public static List<Item> GetItemsByFilterID(Int32 objectID)
+    {
+        string cacheKey = "ItemsByFilterID_" + objectID;
+        List<Item> returnObject = HttpContext.Current.Cache[cacheKey] as List<Item>;
+
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                var result = (from item in myEntities.Items
+                              join filters in myEntities.Item_Crafting_Filters on item.itemID equals filters.itemID
+                              where filters.filterID == objectID
+                              select item).OrderBy(x => x.displayName);
+                if (result == null) { return null; }
+                returnObject = result.ToList();
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method GetItemsByFilterID
+
     public static List<Item> GetAllItemsCreatedByTradeskillID(Int32 objectID)
     {
         string cacheKey = "AllItemsCreatedByTradeskillID_" + objectID;
@@ -209,11 +233,19 @@ public class ItemGateway
             using (RepopdataEntities myEntities = new RepopdataEntities())
             {
                 // There's no easy way to determine the item "group" (recipe book, crafting component, etc.)
-
+                // This method definitely needs refactoring
+               
                 var recipeResult = RecipeGateway.GetAllRecipesGrantedByRecipeBookID(objectID);
                 if (recipeResult.Count > 0)
                 {
                     returnObject = ItemGroupEnum.RecipeBook;
+                    AppCaching.AddToCache(cacheKey, returnObject);
+                    return returnObject;
+                }
+                var rawMatResult = SpeciesGateway.GetAllSpeciesResultsForItem(objectID);
+                if (rawMatResult.Count > 0)
+                {
+                    returnObject = ItemGroupEnum.RawMaterial;
                     AppCaching.AddToCache(cacheKey, returnObject);
                     return returnObject;
                 }
@@ -318,6 +350,50 @@ public class ItemGateway
             using (RepopdataEntities myEntities = new RepopdataEntities())
             {
                 returnObject = (from item in myEntities.Item_Stackable
+                                where item.itemID == objectID
+                                select item).FirstOrDefault();
+                if (returnObject == null) { return null; }
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method GetItemStackInfoByItemID
+
+    public static Item_Power_Source GetItemPowerSourceInfoByItemID(long objectID)
+    {
+        return GetItemPowerSourceInfoByItemID(Convert.ToInt32(objectID));
+    }
+
+    public static Item_Power_Source GetItemPowerSourceInfoByItemID(Int32 objectID)
+    {
+        string cacheKey = "ItemPowerSourceInfoByItemID_" + objectID;
+        Item_Power_Source returnObject = HttpContext.Current.Cache[cacheKey] as Item_Power_Source;
+
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                returnObject = (from item in myEntities.Item_Power_Source
+                                where item.itemID == objectID
+                                select item).FirstOrDefault();
+                if (returnObject == null) { return null; }
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method GetItemStackInfoByItemID
+
+    public static Item_Stores_Power GetItemPowerStorageInfoByItemID(long objectID)
+    {
+        return GetItemPowerStorageInfoByItemID(Convert.ToInt32(objectID));
+    }
+
+    public static Item_Stores_Power GetItemPowerStorageInfoByItemID(Int32 objectID)
+    {
+        string cacheKey = "ItemPowerStorageInfoByItemID_" + objectID;
+        Item_Stores_Power returnObject = HttpContext.Current.Cache[cacheKey] as Item_Stores_Power;
+
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                returnObject = (from item in myEntities.Item_Stores_Power
                                 where item.itemID == objectID
                                 select item).FirstOrDefault();
                 if (returnObject == null) { return null; }
