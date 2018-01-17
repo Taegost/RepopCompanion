@@ -35,4 +35,26 @@ public partial class Components_Component : BasePage
         AgentWrapper.Visible = grd_Agents.Rows.Count > 0;
 
     } // method Page_Load
+
+    protected void grd_Ingredients_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        switch (e.Row.RowType)
+        {
+            case DataControlRowType.DataRow:
+                Recipe gameData = (Recipe)e.Row.DataItem;
+                e.Row.CssClass += " " + SkillGateway.GetSkillById(gameData.skillID).displayName;
+                break;
+        } // switch
+    } // method grd_Ingredients_RowDataBound
+
+    protected void grd_Agents_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        switch (e.Row.RowType)
+        {
+            case DataControlRowType.DataRow:
+                Recipe gameData = (Recipe)e.Row.DataItem;
+                e.Row.CssClass += " " + SkillGateway.GetSkillById(gameData.skillID).displayName;
+                break;
+        } // switch
+    } // method grd_Agents_RowDataBound
 } // class Components_Component

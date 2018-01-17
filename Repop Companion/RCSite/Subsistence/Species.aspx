@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="cp_MainContent" runat="Server">
     <h1><%=CurrentSpecies.displayName %></h1>
     <p><%=CurrentSpecies.displayDescription %></p>
-
+    <p>Extraction Type: <%=CurrentSpecies.extractionType %></p>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="cp_ClientScript" runat="Server">
 </asp:Content>

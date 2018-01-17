@@ -15,7 +15,7 @@
     </section>
     <section id="IngredientWrapper" runat="server">
         <h2>Recipes used as Ingredient</h2>
-        <asp:GridView ID="grd_Ingredients" runat="server" AutoGenerateColumns="False">
+        <asp:GridView ID="grd_Ingredients" runat="server" AutoGenerateColumns="False" OnRowDataBound="grd_Ingredients_RowDataBound">
             <Columns>
                 <asp:TemplateField HeaderText="Recipe">
                     <ItemTemplate>
@@ -32,7 +32,7 @@
     </section>
     <section id="AgentWrapper" runat="server">
         <h2>Recipes used as Agent</h2>
-        <asp:GridView ID="grd_Agents" runat="server" AutoGenerateColumns="False">
+        <asp:GridView ID="grd_Agents" runat="server" AutoGenerateColumns="False" OnRowDataBound="grd_Agents_RowDataBound">
             <Columns>
                 <asp:TemplateField HeaderText="Recipe">
                     <ItemTemplate>

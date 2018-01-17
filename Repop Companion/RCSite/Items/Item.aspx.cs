@@ -73,6 +73,7 @@ public partial class Items_Item : BasePage
                 nameLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(currentRecipe.recipeID);
                 HyperLink skillLink = (HyperLink)e.Row.FindControl("lnk_Skill");
                 Skill currentSkill = SkillGateway.GetSkillById(currentRecipe.skillID);
+                e.Row.CssClass += " " + currentSkill.displayName;
                 skillLink.Text = currentSkill.displayName;
                 skillLink.NavigateUrl = LinkGenerator.GenerateTradeskillLink(currentSkill.skillID);
                 break;
@@ -92,7 +93,7 @@ public partial class Items_Item : BasePage
                 Skill currentSkill = SkillGateway.GetSkillById(currentRecipe.skillID);
                 skillLink.Text = currentSkill.displayName;
                 skillLink.NavigateUrl = LinkGenerator.GenerateTradeskillLink(currentSkill.skillID);
-
+                e.Row.CssClass += " " + currentSkill.displayName;
                 // The logic below here needs to be re-written.  It's ugly.
                 HyperLink resultLink = (HyperLink)e.Row.FindControl("lnk_Result");
                 //List<Crafting_Filters> itemFilters = FilterGateway.GetCraftingFiltersByItemID(objectID);
@@ -138,6 +139,7 @@ public partial class Items_Item : BasePage
                 nameLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(currentRecipe.recipeID);
                 HyperLink skillLink = (HyperLink)e.Row.FindControl("lnk_Skill");
                 Skill currentSkill = SkillGateway.GetSkillById(currentRecipe.skillID);
+                e.Row.CssClass +=" " + currentSkill.displayName;
                 skillLink.Text = currentSkill.displayName;
                 skillLink.NavigateUrl = LinkGenerator.GenerateTradeskillLink(currentSkill.skillID);
                 break;

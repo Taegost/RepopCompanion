@@ -11,7 +11,7 @@ public partial class Subsistence_Default : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        rpt_Species.DataSource = SpeciesGateway.GetAllSpecies();
-        rpt_Species.DataBind();
+        grd_Species.DataSource = SpeciesGateway.GetAllSpecies();
+        grd_Species.DataBind();
     } // method Page_Load
 } // class Subsistence_Default
