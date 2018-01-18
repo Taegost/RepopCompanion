@@ -68,26 +68,25 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
     private void ParseResultIngredients(Recipe_Results recipeResults, HyperLink linkControl, long ingredientCount, long filterID, long slotID)
     {
 
-        // I can't decide if I like having this information display in the table or not, so I'm leaving it out for now.
-        //if (filterID == 0 && ingredientCount == -1)
-        //{
-        //    List<Recipe_Ingredients> ingredients = RecipeGateway.GetRecipeIngredientsByRecipeID(recipeResults.recipeID);
-        //    var ingredient = (from item in ingredients
-        //                      where item.ingSlot == slotID
-        //                      select item).FirstOrDefault();
-        //    if (ingredient == null)
-        //    {
-        //        linkControl.Text = "";
-        //        linkControl.NavigateUrl = "";
-        //    }
-        //    else
-        //    {
-        //        linkControl.Text = ComponentGateway.GetCraftingComponentByComponentID(ingredient.componentID).displayName;
-        //        if (ingredient.count > 1) linkControl.Text += " (" + ingredient.count + ")";
-        //        linkControl.NavigateUrl = LinkGenerator.GenerateComponentLink(ingredient.componentID);
-        //        return;
-        //    } // if (ingredient == null)
-        //} // if (filterID == 0 && ingredientCount == -1)
+        if (filterID == 0 && ingredientCount == -1)
+        {
+            List<Recipe_Ingredients> ingredients = RecipeGateway.GetRecipeIngredientsByRecipeID(recipeResults.recipeID);
+            var ingredient = (from item in ingredients
+                              where item.ingSlot == slotID
+                              select item).FirstOrDefault();
+            if (ingredient == null)
+            {
+                linkControl.Text = "";
+                linkControl.NavigateUrl = "";
+            }
+            else
+            {
+                linkControl.Text = ComponentGateway.GetCraftingComponentByComponentID(ingredient.componentID).displayName;
+                if (ingredient.count > 1) linkControl.Text += " (" + ingredient.count + ")";
+                linkControl.NavigateUrl = LinkGenerator.GenerateComponentLink(ingredient.componentID);
+                return;
+            } // if (ingredient == null)
+        } // if (filterID == 0 && ingredientCount == -1)
         if (ingredientCount == 0)
         {
             linkControl.Text = "None";
