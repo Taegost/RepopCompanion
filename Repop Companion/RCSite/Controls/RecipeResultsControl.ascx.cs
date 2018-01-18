@@ -65,6 +65,43 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
         }
     } // method Page_Load
 
+    private void ParseResultIngredients(Recipe_Results recipeResults, HyperLink linkControl, long ingredientCount, long filterID, long slotID)
+    {
+
+        // I can't decide if I like having this information display in the table or not, so I'm leaving it out for now.
+        //if (filterID == 0 && ingredientCount == -1)
+        //{
+        //    List<Recipe_Ingredients> ingredients = RecipeGateway.GetRecipeIngredientsByRecipeID(recipeResults.recipeID);
+        //    var ingredient = (from item in ingredients
+        //                      where item.ingSlot == slotID
+        //                      select item).FirstOrDefault();
+        //    if (ingredient == null)
+        //    {
+        //        linkControl.Text = "";
+        //        linkControl.NavigateUrl = "";
+        //    }
+        //    else
+        //    {
+        //        linkControl.Text = ComponentGateway.GetCraftingComponentByComponentID(ingredient.componentID).displayName;
+        //        if (ingredient.count > 1) linkControl.Text += " (" + ingredient.count + ")";
+        //        linkControl.NavigateUrl = LinkGenerator.GenerateComponentLink(ingredient.componentID);
+        //        return;
+        //    } // if (ingredient == null)
+        //} // if (filterID == 0 && ingredientCount == -1)
+        if (ingredientCount == 0)
+        {
+            linkControl.Text = "None";
+            linkControl.NavigateUrl = "";
+            return;
+        }
+        if (filterID > 0)
+        {
+            linkControl.Text = FilterGateway.GetCraftingFilterByFilterID(filterID).displayName;
+                if (ingredientCount > 0) linkControl.Text += " (" + ingredientCount + ")";
+            linkControl.NavigateUrl = LinkGenerator.GenerateFilterLink(filterID);
+        } // if (ingredientCount == 0)
+    } // ParseResultIngredients
+
     protected void grd_Results_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         switch (e.Row.RowType)
@@ -95,38 +132,10 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
 
                     gradeLabel.Text = ((GradeEnum)gameData.grade).ToString();
                     difficultyLabel.Text = ((DifficultyEnum)gameData.level).ToString();
-                    if (gameData.filter1ID > 0)
-                    {
-                        HyperLink ingredientControl = (HyperLink)e.Row.FindControl("lnk_Ingredient1");
-                        string newValue = FilterGateway.GetCraftingFilterByFilterID(gameData.filter1ID).displayName;
-                        if (gameData.ingCount1 > 0) newValue += " (" + gameData.ingCount1 + ")";
-                        ingredientControl.Text = newValue;
-                        ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter1ID);
-                    }
-                    if (gameData.filter2ID > 0)
-                    {
-                        HyperLink ingredientControl = (HyperLink)e.Row.FindControl("lnk_Ingredient2");
-                        string newValue = FilterGateway.GetCraftingFilterByFilterID(gameData.filter2ID).displayName;
-                        if (gameData.ingCount2 > 0) newValue += " (" + gameData.ingCount2 + ")";
-                        ingredientControl.Text = newValue;
-                        ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter2ID);
-                    }
-                    if (gameData.filter3ID > 0)
-                    {
-                        HyperLink ingredientControl = (HyperLink)e.Row.FindControl("lnk_Ingredient3");
-                        string newValue = FilterGateway.GetCraftingFilterByFilterID(gameData.filter3ID).displayName;
-                        if (gameData.ingCount3 > 0) newValue += " (" + gameData.ingCount3 + ")";
-                        ingredientControl.Text = newValue;
-                        ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter3ID);
-                    }
-                    if (gameData.filter4ID > 0)
-                    {
-                        HyperLink ingredientControl = (HyperLink)e.Row.FindControl("lnk_Ingredient4");
-                        string newValue = FilterGateway.GetCraftingFilterByFilterID(gameData.filter4ID).displayName;
-                        if (gameData.ingCount4 > 0) newValue += " (" + gameData.ingCount4 + ")";
-                        ingredientControl.Text = newValue;
-                        ingredientControl.NavigateUrl = LinkGenerator.GenerateFilterLink(gameData.filter4ID);
-                    }
+                        ParseResultIngredients(gameData, (HyperLink)e.Row.FindControl("lnk_Ingredient1"), gameData.ingCount1, gameData.filter1ID, 1);
+                        ParseResultIngredients(gameData, (HyperLink)e.Row.FindControl("lnk_Ingredient2"), gameData.ingCount2, gameData.filter2ID, 2);
+                        ParseResultIngredients(gameData, (HyperLink)e.Row.FindControl("lnk_Ingredient3"), gameData.ingCount3, gameData.filter3ID, 3);
+                        ParseResultIngredients(gameData, (HyperLink)e.Row.FindControl("lnk_Ingredient4"), gameData.ingCount4, gameData.filter4ID, 4);
                 } // if (!string.Equals(levelLabel.Text, "Name", StringComparison.CurrentCultureIgnoreCase))
                 break;
         } // switch

@@ -26,7 +26,7 @@ public class ComponentGateway
         return returnObject;
     } // method GetAllComponents
 
-    public static Crafting_Components GetCraftingComponentByComponentID(Int32 objectID)
+    public static Crafting_Components GetCraftingComponentByComponentID(long objectID)
     {
         string cacheKey = "CraftingComponentByComponentID_" + objectID;
         Crafting_Components returnObject = HttpContext.Current.Cache[cacheKey] as Crafting_Components;
