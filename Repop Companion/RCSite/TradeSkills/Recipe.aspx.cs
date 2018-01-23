@@ -11,8 +11,7 @@ using System.Data;
 
 public partial class TradeSkills_Recipe : BasePage
 {
-    public Int32 RecipeID { get; private set; }
-    public Recipe CurrentRecipe { get; private set; }
+    public CraftingRecipe CurrentRecipe { get; private set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -21,44 +20,42 @@ public partial class TradeSkills_Recipe : BasePage
             Response.Redirect("Default.aspx");
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("RecipeID")))
 
-        RecipeID = Convert.ToInt32(Request.QueryString.Get("RecipeID"));
-        CurrentRecipe = RecipeGateway.GetRecipeById(RecipeID);
-        if (CurrentRecipe == null) { Response.Redirect("~/TradeSkills/Default.aspx"); }
-
+        long incomingID = Convert.ToInt64(Request.QueryString.Get("RecipeID"));
+        if (incomingID == 0) { Response.Redirect("~/TradeSkills/Default.aspx"); }
+        CurrentRecipe = new CraftingRecipe(incomingID);
+        
         // Main information
-        Title = CurrentRecipe.displayName;
-        Skill recipeSkill = SkillGateway.GetSkillById(CurrentRecipe.skillID);
-        lnk_Skill.Text = recipeSkill.displayName;
-        lnk_Skill.NavigateUrl = LinkGenerator.GenerateTradeskillLink(recipeSkill.skillID);
+        Title = CurrentRecipe.Name;
+        lnk_Skill.Text = CurrentRecipe.ParentSkill.Name;
+        lnk_Skill.NavigateUrl = CurrentRecipe.ParentSkill.URL;
         RecipeWrapper.Attributes.Add("class", lnk_Skill.Text);
-        Item recipeBook = ItemGateway.GetBookByRecipeID(CurrentRecipe.recipeID);
 
-        if (recipeBook == null)
+        if (CurrentRecipe.RecipeBook == null)
         { lnk_RecipeBook.Text = "n/a"; }
         else
         {
-            lnk_RecipeBook.Text = recipeBook.displayName;
-            lnk_RecipeBook.NavigateUrl = LinkGenerator.GenerateItemLink(recipeBook.itemID);
+            lnk_RecipeBook.Text = CurrentRecipe.RecipeBook.Name;
+            lnk_RecipeBook.NavigateUrl = CurrentRecipe.RecipeBook.URL;
         }
 
-        lbl_Steps.Text = Convert.ToString(CurrentRecipe.steps);
-        lbl_WeightIngredient.Text = Convert.ToString(CurrentRecipe.ingredientWeight);
-        lbl_WeightAgent.Text = Convert.ToString(CurrentRecipe.agentWeight);
+        lbl_Steps.Text = Convert.ToString(CurrentRecipe.Steps);
+        lbl_WeightIngredient.Text = Convert.ToString(CurrentRecipe.IngredientWeight);
+        lbl_WeightAgent.Text = Convert.ToString(CurrentRecipe.AgentWeight);
 
         // Difficulty information
-        grd_Difficulty.DataSource = RecipeGateway.GetSkillRangeByRecipeID(RecipeID);
+        grd_Difficulty.DataSource = CurrentRecipe.SkillRange;
         grd_Difficulty.DataBind();
 
         // Ingredient information
-        grd_Ingredients.DataSource = RecipeGateway.GetRecipeIngredientsByRecipeID(RecipeID);
+        grd_Ingredients.DataSource = RecipeGateway.GetRecipeIngredientsByRecipeID(CurrentRecipe.ID);
         grd_Ingredients.DataBind();
 
         // Agent information
-        grd_Agents.DataSource = RecipeGateway.GetRecipeAgentsByRecipeID(RecipeID);
+        grd_Agents.DataSource = RecipeGateway.GetRecipeAgentsByRecipeID(CurrentRecipe.ID);
         grd_Agents.DataBind();
 
         // Results
-        List<Recipe_Results> recipeResults = RecipeGateway.GetRecipeResultsByRecipeID(RecipeID);
+        List<Recipe_Results> recipeResults = RecipeGateway.GetRecipeResultsByRecipeID(CurrentRecipe.ID);
         ctl_MainResults.SetRecipeResults(recipeResults);
         ctl_ByProduct1.SetRecipeResults(recipeResults);
         ctl_ByProduct2.SetRecipeResults(recipeResults);
@@ -76,8 +73,8 @@ public partial class TradeSkills_Recipe : BasePage
                 Label levelLabel = (Label)e.Row.FindControl("lbl_LevelColumn");
                 if (!string.Equals(levelLabel.Text, "Level", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    Recipe_Skill_Range gameData = (Recipe_Skill_Range)e.Row.DataItem;
-                    levelLabel.Text = ((DifficultyEnum)gameData.level).ToString();
+                    CraftingRecipeSkillRange gameData = (CraftingRecipeSkillRange)e.Row.DataItem;
+                    levelLabel.Text = (gameData.Difficulty).ToString();
                 } // if
                 break;
         } // switch

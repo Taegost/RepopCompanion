@@ -81,12 +81,7 @@ public class ItemGateway
         return returnObject;
     } // method GetFittingByID
 
-    public static Item GetBookByRecipeID(long objectID)
-    {
-        return GetBookByRecipeID(Convert.ToInt32(objectID));
-    }
-
-    public static Item GetBookByRecipeID(Int32 objectID)
+    public static Item BookGetByRecipeID(long objectID)
     {
         string cacheKey = "BookByRecipeID_" + objectID;
         Recipe_Books returnObject = HttpContext.Current.Cache[cacheKey] as Recipe_Books;
@@ -101,7 +96,7 @@ public class ItemGateway
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return GetItemByID(returnObject.itemID);
-    } // method GetBookByRecipeID
+    } // method BookGetByRecipeID
 
     public static List<Item> GetItemsByComponentID(long objectID)
     {

@@ -28,7 +28,7 @@ public class RecipeGateway
         return returnObject;
     } // method RecipesInSkill
 
-    public static Recipe GetRecipeById(Int32 objectID)
+    public static Recipe GetRecipeById(long objectID)
     {
         string cacheKey = "Recipe_" + objectID;
         Recipe returnObject = HttpContext.Current.Cache[cacheKey] as Recipe;
@@ -46,7 +46,7 @@ public class RecipeGateway
         return returnObject;
     } // method GetRecipeById
 
-    public static List<Recipe_Skill_Range> GetSkillRangeByRecipeID(Int32 objectID)
+    public static List<Recipe_Skill_Range> SkillRangeGetByRecipeID(long objectID)
     {
         string cacheKey = "SkillRangeByRecipeID_" + objectID;
         List<Recipe_Skill_Range> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe_Skill_Range>;
@@ -84,7 +84,7 @@ public class RecipeGateway
         return returnObject;
     } // method GetRecipeIngredientsByRecipeID
 
-    public static List<Recipe_Agents> GetRecipeAgentsByRecipeID(Int32 objectID)
+    public static List<Recipe_Agents> GetRecipeAgentsByRecipeID(long objectID)
     {
         string cacheKey = "RecipeAgentsByRecipeID_" + objectID;
         List<Recipe_Agents> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe_Agents>;

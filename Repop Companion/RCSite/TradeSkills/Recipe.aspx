@@ -19,7 +19,7 @@
         <uc1:TradeSkillList runat="server" ID="TradeSkillList" />
     </div>
     <div id="RecipeWrapper" runat="server">
-        <h1><%=CurrentRecipe.displayName %></h1>
+        <h1><%=CurrentRecipe.Name %></h1>
         <table id="tbl_Main" class="auto-style1" runat="server">
             <tr>
                 <td>
@@ -71,14 +71,14 @@
                         <asp:Label ID="lbl_LevelColumn" runat="server"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="minf" HeaderText="MinF" />
-                <asp:BoundField DataField="mind" HeaderText="MinD" />
-                <asp:BoundField DataField="minc" HeaderText="MinC" />
-                <asp:BoundField DataField="minb" HeaderText="MinB" />
-                <asp:BoundField DataField="mina" HeaderText="MinA" />
-                <asp:BoundField DataField="minaa" HeaderText="MinAA" />
-                <asp:BoundField DataField="over1" HeaderText="Over1" />
-                <asp:BoundField DataField="over2" HeaderText="Over2" />
+                <asp:BoundField DataField="MinF" HeaderText="MinF" />
+                <asp:BoundField DataField="MinD" HeaderText="MinD" />
+                <asp:BoundField DataField="MinC" HeaderText="MinC" />
+                <asp:BoundField DataField="MinB" HeaderText="MinB" />
+                <asp:BoundField DataField="MinA" HeaderText="MinA" />
+                <asp:BoundField DataField="MinAA" HeaderText="MinAA" />
+                <asp:BoundField DataField="Over1" HeaderText="Over1" />
+                <asp:BoundField DataField="Over2" HeaderText="Over2" />
             </Columns>
         </asp:GridView>
 
