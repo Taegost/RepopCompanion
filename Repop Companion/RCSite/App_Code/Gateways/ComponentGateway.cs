@@ -26,12 +26,12 @@ public class ComponentGateway
         return returnObject;
     } // method GetAllComponents
 
-    public static Crafting_Components GetCraftingComponentByComponentID(long objectID)
+    public static Crafting_Components CraftingComponentGetByComponentID(long objectID)
     {
         string cacheKey = "CraftingComponentByComponentID_" + objectID;
         Crafting_Components returnObject = HttpContext.Current.Cache[cacheKey] as Crafting_Components;
-
         if (returnObject == null)
+        {
             using (RepopdataEntities myEntities = new RepopdataEntities())
             {
                 returnObject = (from item in myEntities.Crafting_Components
@@ -40,8 +40,9 @@ public class ComponentGateway
                 if (returnObject == null) { return null; }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
+        }// if
         return returnObject;
-    } // method GetCraftingComponentByComponentID
+    } // method CraftingComponentGetByComponentID
 
     public static List<Crafting_Components> GetComponentsByItemID(long objectID)
     {

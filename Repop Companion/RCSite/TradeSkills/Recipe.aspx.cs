@@ -23,20 +23,16 @@ public partial class TradeSkills_Recipe : BasePage
         long incomingID = Convert.ToInt64(Request.QueryString.Get("RecipeID"));
         if (incomingID == 0) { Response.Redirect("~/TradeSkills/Default.aspx"); }
         CurrentRecipe = new CraftingRecipe(incomingID);
-        
+        if (CurrentRecipe.Name.Equals("n/a")) { Response.Redirect("~/TradeSkills/Default.aspx"); }
+
         // Main information
         Title = CurrentRecipe.Name;
         lnk_Skill.Text = CurrentRecipe.ParentSkill.Name;
         lnk_Skill.NavigateUrl = CurrentRecipe.ParentSkill.URL;
         RecipeWrapper.Attributes.Add("class", lnk_Skill.Text);
 
-        if (CurrentRecipe.RecipeBook == null)
-        { lnk_RecipeBook.Text = "n/a"; }
-        else
-        {
-            lnk_RecipeBook.Text = CurrentRecipe.RecipeBook.Name;
-            lnk_RecipeBook.NavigateUrl = CurrentRecipe.RecipeBook.URL;
-        }
+        lnk_RecipeBook.Text = CurrentRecipe.RecipeBook.Name;
+        lnk_RecipeBook.NavigateUrl = CurrentRecipe.RecipeBook.URL;
 
         lbl_Steps.Text = Convert.ToString(CurrentRecipe.Steps);
         lbl_WeightIngredient.Text = Convert.ToString(CurrentRecipe.IngredientWeight);
@@ -47,11 +43,11 @@ public partial class TradeSkills_Recipe : BasePage
         grd_Difficulty.DataBind();
 
         // Ingredient information
-        grd_Ingredients.DataSource = RecipeGateway.GetRecipeIngredientsByRecipeID(CurrentRecipe.ID);
+        grd_Ingredients.DataSource = CurrentRecipe.Ingredients;
         grd_Ingredients.DataBind();
 
         // Agent information
-        grd_Agents.DataSource = RecipeGateway.GetRecipeAgentsByRecipeID(CurrentRecipe.ID);
+        grd_Agents.DataSource = CurrentRecipe.Agents; ;
         grd_Agents.DataBind();
 
         // Results
@@ -88,9 +84,9 @@ public partial class TradeSkills_Recipe : BasePage
                 HyperLink itemLink = (HyperLink)e.Row.FindControl("lnk_IngredientName");
                 if (!string.Equals(itemLink.Text, "Name", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    Recipe_Ingredients gameData = (Recipe_Ingredients)e.Row.DataItem;
-                    itemLink.Text = (RecipeGateway.GetCraftingComponentByComponentID(gameData.componentID).displayName);
-                    itemLink.NavigateUrl = LinkGenerator.GenerateComponentLink(gameData.componentID);
+                    CraftingRecipeIngredient gameData = (CraftingRecipeIngredient)e.Row.DataItem;
+                    itemLink.Text = gameData.CraftingComponent.Name;
+                    itemLink.NavigateUrl = gameData.CraftingComponent.URL;
                 } // if
                 break;
         } // switch
@@ -104,9 +100,9 @@ public partial class TradeSkills_Recipe : BasePage
                 HyperLink itemLink = (HyperLink)e.Row.FindControl("lnk_AgentName");
                 if (!string.Equals(itemLink.Text, "Name", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    Recipe_Agents gameData = (Recipe_Agents)e.Row.DataItem;
-                    itemLink.Text = (RecipeGateway.GetCraftingComponentByComponentID(gameData.componentID).displayName);
-                    itemLink.NavigateUrl = LinkGenerator.GenerateComponentLink(gameData.componentID);
+                    CraftingRecipeAgent gameData = (CraftingRecipeAgent)e.Row.DataItem;
+                    itemLink.Text = gameData.CraftingComponent.Name;
+                    itemLink.NavigateUrl = gameData.CraftingComponent.URL;
                 } // if
                 break;
         } // switch

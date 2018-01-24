@@ -28,7 +28,7 @@ public class RecipeGateway
         return returnObject;
     } // method RecipesInSkill
 
-    public static Recipe GetRecipeById(long objectID)
+    public static Recipe RecipeGetById(long objectID)
     {
         string cacheKey = "Recipe_" + objectID;
         Recipe returnObject = HttpContext.Current.Cache[cacheKey] as Recipe;
@@ -44,7 +44,7 @@ public class RecipeGateway
             } // using
         } // if (currentRecipe == null)
         return returnObject;
-    } // method GetRecipeById
+    } // method RecipeGetById
 
     public static List<Recipe_Skill_Range> SkillRangeGetByRecipeID(long objectID)
     {
@@ -65,7 +65,7 @@ public class RecipeGateway
         return returnObject;
     } // method GetSkillRangByRecipeID
 
-    public static List<Recipe_Ingredients> GetRecipeIngredientsByRecipeID(long objectID)
+    public static List<Recipe_Ingredients> IngredientsGetByRecipeID(long objectID)
     {
         string cacheKey = "RecipeIngredientsByRecipeID_" + objectID;
         List<Recipe_Ingredients> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe_Ingredients>;
@@ -82,9 +82,9 @@ public class RecipeGateway
             } // using
         }// if
         return returnObject;
-    } // method GetRecipeIngredientsByRecipeID
+    } // method IngredientsGetByRecipeID
 
-    public static List<Recipe_Agents> GetRecipeAgentsByRecipeID(long objectID)
+    public static List<Recipe_Agents> AgentsGetByRecipeID(long objectID)
     {
         string cacheKey = "RecipeAgentsByRecipeID_" + objectID;
         List<Recipe_Agents> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe_Agents>;
@@ -101,7 +101,7 @@ public class RecipeGateway
             } // using
         }// if
         return returnObject;
-    } // method GetRecipeAgentsByRecipeID
+    } // method AgentsGetByRecipeID
 
     public static List<Recipe_Results> GetRecipeResultsByRecipeID(long objectID)
     {
@@ -121,24 +121,6 @@ public class RecipeGateway
         }// if
         return returnObject;
     } // method GetRecipeResultsByRecipeID
-
-    public static Crafting_Components GetCraftingComponentByComponentID(long objectID)
-    {
-        string cacheKey = "CraftingComponentByComponentID_" + objectID;
-        Crafting_Components returnObject = HttpContext.Current.Cache[cacheKey] as Crafting_Components;
-        if (returnObject == null)
-        {
-            using (RepopdataEntities myEntities = new RepopdataEntities())
-            {
-                returnObject = (from item in myEntities.Crafting_Components
-                               where item.componentID == objectID
-                               select item).FirstOrDefault();
-                if (returnObject == null) { return null; }
-                AppCaching.AddToCache(cacheKey, returnObject);
-            } // using
-        }// if
-        return returnObject;
-    } // method GetRecipeIngredientsByRecipeID
 
     public static List<Recipe> GetRecipesByResultItemIDAndType(long objectID, ItemTypeEnum itemType )
     {
@@ -295,7 +277,7 @@ public class RecipeGateway
                     List<Recipe_Results> recipeResults = GetRecipeResultsByRecipeID(recipe.recipeID);
 
                     // We only need the Recipe_Ingredients for the current recipe that use one of the item components
-                    List<Recipe_Ingredients> componentIngredients = (from item in GetRecipeIngredientsByRecipeID(recipe.recipeID)
+                    List<Recipe_Ingredients> componentIngredients = (from item in IngredientsGetByRecipeID(recipe.recipeID)
                                                 join components in ComponentGateway.GetComponentsByItemID(objectID) on item.componentID equals components.componentID
                                                 select item).ToList();
                     foreach (Recipe_Ingredients recipeIngredient in componentIngredients)

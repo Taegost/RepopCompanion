@@ -70,7 +70,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
 
         if (filterID == 0 && ingredientCount == -1)
         {
-            List<Recipe_Ingredients> ingredients = RecipeGateway.GetRecipeIngredientsByRecipeID(recipeResults.recipeID);
+            List<Recipe_Ingredients> ingredients = RecipeGateway.IngredientsGetByRecipeID(recipeResults.recipeID);
             var ingredient = (from item in ingredients
                               where item.ingSlot == slotID
                               select item).FirstOrDefault();
@@ -81,7 +81,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
             }
             else
             {
-                linkControl.Text = ComponentGateway.GetCraftingComponentByComponentID(ingredient.componentID).displayName;
+                linkControl.Text = ComponentGateway.CraftingComponentGetByComponentID(ingredient.componentID).displayName;
                 if (ingredient.count > 1) linkControl.Text += " (" + ingredient.count + ")";
                 linkControl.NavigateUrl = LinkGenerator.GenerateComponentLink(ingredient.componentID);
                 return;

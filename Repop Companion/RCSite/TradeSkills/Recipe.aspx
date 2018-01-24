@@ -90,9 +90,9 @@
                         <asp:HyperLink ID="lnk_IngredientName" runat="server" CssClass="NoLinkStyle"></asp:HyperLink>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="count" HeaderText="Qty" />
-                <asp:BoundField DataField="weight" HeaderText="Weight" />
-                <asp:BoundField DataField="ingslot" HeaderText="Slot" />
+                <asp:BoundField DataField="Count" HeaderText="Qty" />
+                <asp:BoundField DataField="Weight" HeaderText="Weight" />
+                <asp:BoundField DataField="Slot" HeaderText="Slot" />
             </Columns>
         </asp:GridView>
 
@@ -104,8 +104,8 @@
                         <asp:HyperLink ID="lnk_AgentName" runat="server" CssClass="NoLinkStyle"></asp:HyperLink>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="count" HeaderText="Qty" />
-                <asp:BoundField DataField="weight" HeaderText="Weight" />
+                <asp:BoundField DataField="Count" HeaderText="Qty" />
+                <asp:BoundField DataField="Weight" HeaderText="Weight" />
             </Columns>
         </asp:GridView>
 

@@ -19,7 +19,7 @@ public partial class Components_Component : BasePage
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("ComponentID")))
 
         int currentID = Convert.ToInt32(Request.QueryString.Get("ComponentID"));
-        CurrentComponent = ComponentGateway.GetCraftingComponentByComponentID(currentID);
+        CurrentComponent = ComponentGateway.CraftingComponentGetByComponentID(currentID);
         if (CurrentComponent == null) { Response.Redirect("Default.aspx"); }
         Title = CurrentComponent.displayName;
 

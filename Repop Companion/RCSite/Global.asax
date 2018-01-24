@@ -7,7 +7,7 @@
     {
         ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
             {
-                Path = "~/Scripts/jquery-3.2.1.min.js"
+                Path = "~/Scripts/jquery-3.3.1.min.js"
             }
         );
         BundleTable.Bundles.Add(new StyleBundle("~/StyleSheets").IncludeDirectory("~/Styles", "*.css"));

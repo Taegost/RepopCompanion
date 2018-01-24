@@ -70,15 +70,57 @@ public class CraftingRecipe
         } // get
     } // property RecipeBook
 
+    private List<CraftingRecipeIngredient> _ingredients = null;
+    public List<CraftingRecipeIngredient> Ingredients
+    {
+        get
+        {
+            if (_ingredients == null)
+            {
+                List<Recipe_Ingredients> recipeIngredients = RecipeGateway.IngredientsGetByRecipeID(ID);
+                _ingredients = new List<CraftingRecipeIngredient>();
+                foreach (Recipe_Ingredients ingredient in recipeIngredients) { _ingredients.Add(new CraftingRecipeIngredient(ingredient)); }
+            }
+            return _ingredients;
+        } // get
+    } // property Ingredients
+
+    private List<CraftingRecipeAgent> _agents = null;
+    public List<CraftingRecipeAgent> Agents
+    {
+        get
+        {
+            if (_agents == null)
+            {
+                List<Recipe_Agents> recipeAgents = RecipeGateway.AgentsGetByRecipeID(ID);
+                _agents = new List<CraftingRecipeAgent>();
+                foreach (Recipe_Agents agent in recipeAgents) { _agents.Add(new CraftingRecipeAgent(agent)); }
+            }
+            return _agents;
+        } // get
+    } // property Agents
+
     public CraftingRecipe(long recipeId)
     {
         ID = recipeId;
-        Recipe recipeRecord = RecipeGateway.GetRecipeById(ID);
-        Name = recipeRecord.displayName;
-        Description = recipeRecord.displayDescription;
-        Steps = recipeRecord.steps;
-        IngredientWeight = recipeRecord.ingredientWeight;
-        AgentWeight = recipeRecord.agentWeight;
-        parentSkillID = recipeRecord.skillID;
+        Recipe recipeRecord = RecipeGateway.RecipeGetById(ID);
+        if (recipeRecord == null)
+        {
+            Name = "n/a";
+            Description = "n/a";
+            Steps = -1;
+            IngredientWeight = -1;
+            AgentWeight = -1;
+            parentSkillID = -1;
+        }
+        else
+        {
+            Name = recipeRecord.displayName;
+            Description = recipeRecord.displayDescription;
+            Steps = recipeRecord.steps;
+            IngredientWeight = recipeRecord.ingredientWeight;
+            AgentWeight = recipeRecord.agentWeight;
+            parentSkillID = recipeRecord.skillID;
+        }
     } // constructor
 } // class CraftingRecipe
