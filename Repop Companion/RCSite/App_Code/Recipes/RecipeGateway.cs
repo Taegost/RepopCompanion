@@ -103,7 +103,7 @@ public class RecipeGateway
         return returnObject;
     } // method AgentsGetByRecipeID
 
-    public static List<Recipe_Results> GetRecipeResultsByRecipeID(long objectID)
+    public static List<Recipe_Results> RecipeResultsGetByRecipeID(long objectID)
     {
         string cacheKey = "RecipeResultsByRecipeID_" + objectID;
         List<Recipe_Results> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe_Results>;
@@ -120,7 +120,7 @@ public class RecipeGateway
             } // using
         }// if
         return returnObject;
-    } // method GetRecipeResultsByRecipeID
+    } // method RecipeResultsGetByRecipeID
 
     public static List<Recipe> GetRecipesByResultItemIDAndType(long objectID, ItemTypeEnum itemType )
     {
@@ -274,7 +274,7 @@ public class RecipeGateway
                 if (recipeList == null) { return null; }
                 foreach (Recipe recipe in recipeList)
                 {
-                    List<Recipe_Results> recipeResults = GetRecipeResultsByRecipeID(recipe.recipeID);
+                    List<Recipe_Results> recipeResults = RecipeResultsGetByRecipeID(recipe.recipeID);
 
                     // We only need the Recipe_Ingredients for the current recipe that use one of the item components
                     List<Recipe_Ingredients> componentIngredients = (from item in IngredientsGetByRecipeID(recipe.recipeID)
@@ -328,7 +328,7 @@ public class RecipeGateway
 
         if (returnObject == null)
         {
-            List<Recipe_Results> allResults = GetRecipeResultsByRecipeID(recipeID);
+            List<Recipe_Results> allResults = RecipeResultsGetByRecipeID(recipeID);
             foreach (Recipe_Results recipeResult in allResults)
             {
                 // We want to break out of the loop if we get a match of any kind

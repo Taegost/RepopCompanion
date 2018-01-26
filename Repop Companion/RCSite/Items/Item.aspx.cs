@@ -19,7 +19,7 @@ public partial class Items_Item : BasePage
             Response.Redirect("/Default.aspx");
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("ItemID")))
 
-        CurrentItem = ItemGateway.GetItemByID(Convert.ToInt32(Request.QueryString.Get("ItemID")));
+        CurrentItem = ItemGateway.ItemGetByID(Convert.ToInt32(Request.QueryString.Get("ItemID")));
         if (CurrentItem == null) { Response.Redirect("/Default.aspx"); }
         Title = CurrentItem.displayName;
 

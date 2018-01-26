@@ -10,6 +10,9 @@ using Repop_Companion.DataModels;
 public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
 {
     int _groupID = 1;
+    /// <summary>
+    /// GroupID is whether the item is the Main product (1) or a byproduct (2,3,4)
+    /// </summary>
     public Int32 GroupID
     {
         get
@@ -38,7 +41,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
         RecipeResults = results;
         List<Recipe_Results> controlDataSource = new List<Recipe_Results>();
 
-        // If the group ID is 0 or less, show all results.  Else, provide subset
+        // If the group ID is 0 or less, show all results.  Else, provide the subset corresponding to the group
         // This may provide an empty table.  It's up to the end-user to decide what to do with empty tables
         if (GroupID < 1)
         {
@@ -95,7 +98,7 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
         }
         if (filterID > 0)
         {
-            linkControl.Text = FilterGateway.GetCraftingFilterByFilterID(filterID).displayName;
+            linkControl.Text = FilterGateway.CraftingFilterGetByFilterID(filterID).displayName;
                 if (ingredientCount > 0) linkControl.Text += " (" + ingredientCount + ")";
             linkControl.NavigateUrl = LinkGenerator.GenerateFilterLink(filterID);
         } // if (ingredientCount == 0)
@@ -116,15 +119,15 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                     switch ((ItemTypeEnum)gameData.type)
                     {
                         case ItemTypeEnum.Item:
-                            nameControl.Text = (ItemGateway.GetItemByID(gameData.resultID).displayName);
+                            nameControl.Text = (ItemGateway.ItemGetByID(gameData.resultID).displayName);
                             nameControl.NavigateUrl = LinkGenerator.GenerateItemLink(gameData.resultID);
                             break;
                         case ItemTypeEnum.Fitting:
-                            nameControl.Text = (ItemGateway.GetFittingByID(gameData.resultID).displayName);
+                            nameControl.Text = (ItemGateway.FittingGetByID(gameData.resultID).displayName);
                             nameControl.NavigateUrl = LinkGenerator.GenerateFittingLink(gameData.resultID);
                             break;
                         case ItemTypeEnum.Blueprint:
-                            nameControl.Text = (ItemGateway.GetBlueprintByID(gameData.resultID).displayName);
+                            nameControl.Text = (ItemGateway.BlueprintGetByID(gameData.resultID).displayName);
                             nameControl.NavigateUrl = LinkGenerator.GenerateBlueprintLink(gameData.resultID);
                             break;
                     } // switch ((ResultTypeEnum)gameData.type)

@@ -19,7 +19,7 @@ public partial class Filters_Filter : BasePage
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("RecipeID")))
 
         int itemID = Convert.ToInt32(Request.QueryString.Get("FilterID"));
-        CurrentFilter = FilterGateway.GetCraftingFilterByFilterID(itemID);
+        CurrentFilter = FilterGateway.CraftingFilterGetByFilterID(itemID);
         if (CurrentFilter == null) { Response.Redirect("Default.aspx"); }
 
         // Main information

@@ -51,14 +51,9 @@ public class FilterGateway
         return returnObject;
     } // method GetFilterByItemID
 
-    public static Crafting_Filters GetCraftingFilterByFilterID(long objectID)
+    public static Crafting_Filters CraftingFilterGetByFilterID(long objectID)
     {
-        return GetCraftingFilterByFilterID(Convert.ToInt32(objectID));
-    }
-
-    public static Crafting_Filters GetCraftingFilterByFilterID(Int32 objectID)
-    {
-        string cacheKey = "CraftingCraftingFilterByFilterID_" + objectID;
+        string cacheKey = "CraftingFilterByFilterID_" + objectID;
         Crafting_Filters returnObject = HttpContext.Current.Cache[cacheKey] as Crafting_Filters;
         if (returnObject == null)
         {
@@ -72,6 +67,6 @@ public class FilterGateway
             } // using
         }// if
         return returnObject;
-    } // method GetCraftingFilterByFilterID
+    } // method CraftingFilterGetByFilterID
 
 } // class FilterGateway

@@ -18,7 +18,7 @@ public partial class Blueprints_Blueprint : BasePage
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("ComponentID")))
 
         int currentID = Convert.ToInt32(Request.QueryString.Get("BlueprintID"));
-        CurrentBlueprint = ItemGateway.GetBlueprintByID(currentID);
+        CurrentBlueprint = ItemGateway.BlueprintGetByID(currentID);
         Title = CurrentBlueprint.displayName;
 
     } // method Page_Load

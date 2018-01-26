@@ -51,7 +51,7 @@ public partial class TradeSkills_Recipe : BasePage
         grd_Agents.DataBind();
 
         // Results
-        List<Recipe_Results> recipeResults = RecipeGateway.GetRecipeResultsByRecipeID(CurrentRecipe.ID);
+        List<Recipe_Results> recipeResults = RecipeGateway.RecipeResultsGetByRecipeID(CurrentRecipe.ID);
         ctl_MainResults.SetRecipeResults(recipeResults);
         ctl_ByProduct1.SetRecipeResults(recipeResults);
         ctl_ByProduct2.SetRecipeResults(recipeResults);

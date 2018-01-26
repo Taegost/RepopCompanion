@@ -7,36 +7,34 @@ using Repop_Companion.DataModels;
 /// <summary>
 /// Summary description for ItemBase
 /// </summary>
-public class ItemBase : IRecipeResultItem
+public class BlueprintBase : IRecipeResultItem
 {
     public long ID { get; private set; }
     public string Name { get; private set; }
-    public string Description { get; private set; }
-    public ItemGroupEnum Group { get; private set; }
+    public bool IsHousingStructure { get; private set; }
+    public bool IsSiegingUnit { get; private set; }
     public string URL
     {
         get
         {
-            if (ID > 0) { return LinkGenerator.GenerateItemLink(ID); }
+            if (ID > 0) { return LinkGenerator.GenerateBlueprintLink(ID); }
             return "";
         } // get
     } // property URL
 
-    public ItemBase(long itemID)
+    public BlueprintBase(long itemID)
     {
         ID = itemID;
         if (ID > 0)
         {
-            Item itemRecord = ItemGateway.ItemGetByID(itemID);
+            Structure itemRecord = ItemGateway.BlueprintGetByID(itemID);
             Name = itemRecord.displayName;
-            Description = itemRecord.displayDescription;
-            Group = ItemGateway.DetermineItemGroupByItemID(ID);
+            IsHousingStructure = itemRecord.isHousingStructure > 0;
+            IsSiegingUnit = itemRecord.isSiegingUnit > 0;
         } // if (ID > 0)
         else
         {
             Name = "n/a";
-            Description = "n/a";
-            Group = ItemGroupEnum.Unknown;
         }
     } // constructor
-} // Class ItemBase
+} // Class BlueprintBase

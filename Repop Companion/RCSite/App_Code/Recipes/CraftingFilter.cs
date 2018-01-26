@@ -7,7 +7,7 @@ using Repop_Companion.DataModels;
 /// <summary>
 /// Summary description for CraftingComponent
 /// </summary>
-public class CraftingComponent : IRecipeIngredient
+public class CraftingFilter : IRecipeIngredient
 {
     public long ID { get; private set; }
     public string Name { get; private set; }
@@ -16,15 +16,15 @@ public class CraftingComponent : IRecipeIngredient
     {
         get
         {
-            return LinkGenerator.GenerateComponentLink(ID);
+            return LinkGenerator.GenerateFilterLink(ID);
         } // get
     } // property URL
 
-    public CraftingComponent(long componentID)
+    public CraftingFilter(long filterID)
     {
-        ID = componentID;
-        Crafting_Components component = ComponentGateway.CraftingComponentGetByComponentID(ID);
-        Name = component.displayName;
-        Description = component.displayDescription;
+        ID = filterID;
+        Crafting_Filters filter = FilterGateway.CraftingFilterGetByFilterID(ID);
+        Name = filter.displayName;
+        Description = filter.displayDescription;
     } // constructor
-} // class CraftingComponent
+} // class CraftingFilter

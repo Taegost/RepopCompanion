@@ -16,6 +16,20 @@ public class CraftingRecipe
     public long IngredientWeight { get; private set; }
     public long AgentWeight { get; private set; }
 
+    List<CraftingRecipeResult> _results = null;
+    public List<CraftingRecipeResult> Results
+    {
+        get
+        {
+            if (_results == null)
+            {
+                List<Recipe_Results> recipeResults = RecipeGateway.RecipeResultsGetByRecipeID(ID);
+                foreach (Recipe_Results result in recipeResults) { _results.Add(new CraftingRecipeResult(result)); }
+            } // if (_results == null)
+            return _results;
+        } // get
+    } // property Results
+
     public string URL
     {
         get

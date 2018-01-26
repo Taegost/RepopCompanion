@@ -9,12 +9,7 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class ItemGateway
 {
-    public static Item GetItemByID(long objectID)
-    {
-        return GetItemByID(Convert.ToInt32(objectID));
-    }
-
-    public static Item GetItemByID(Int32 objectID)
+    public static Item ItemGetByID(long objectID)
     {
         string cacheKey = "Item_" + objectID;
         Item returnObject = HttpContext.Current.Cache[cacheKey] as Item;
@@ -31,14 +26,9 @@ public class ItemGateway
             } // using
         } // if (returnObject == null)
         return returnObject;
-    } // method GetItemByID
+    } // method ItemGetByID
 
-    public static Fitting GetFittingByID(long objectID)
-    {
-        return GetFittingByID(Convert.ToInt32(objectID));
-    }
-
-    public static Fitting GetFittingByID(Int32 objectID)
+    public static Fitting FittingGetByID(long objectID)
     {
         string cacheKey = "Fitting_" + objectID;
         Fitting returnObject = HttpContext.Current.Cache[cacheKey] as Fitting;
@@ -55,14 +45,9 @@ public class ItemGateway
             } // using
         } // if (returnObject == null)
         return returnObject;
-    } // method GetFittingByID
+    } // method FittingGetByID
 
-    public static Structure GetBlueprintByID(long objectID)
-    {
-        return GetBlueprintByID(Convert.ToInt32(objectID));
-    }
-
-    public static Structure GetBlueprintByID(Int32 objectID)
+    public static Structure BlueprintGetByID(long objectID)
     {
         string cacheKey = "Blueprint_" + objectID;
         Structure returnObject = HttpContext.Current.Cache[cacheKey] as Structure;
@@ -79,7 +64,7 @@ public class ItemGateway
             } // using
         } // if (returnObject == null)
         return returnObject;
-    } // method GetFittingByID
+    } // method BlueprintGetByID
 
     public static Item BookGetByRecipeID(long objectID)
     {
@@ -95,15 +80,10 @@ public class ItemGateway
                 if (returnObject == null) { return null; }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
-        return GetItemByID(returnObject.itemID);
+        return ItemGetByID(returnObject.itemID);
     } // method BookGetByRecipeID
 
     public static List<Item> GetItemsByComponentID(long objectID)
-    {
-        return GetItemsByComponentID(Convert.ToInt32(objectID));
-    }
-
-    public static List<Item> GetItemsByComponentID(Int32 objectID)
     {
         string cacheKey = "ItemsByComponentID_" + objectID;
         List<Item> returnObject = HttpContext.Current.Cache[cacheKey] as List<Item>;
@@ -123,11 +103,6 @@ public class ItemGateway
     } // GetCraftingComponentsByComponentID
 
     public static List<Item> GetItemsByFilterID(long objectID)
-    {
-        return GetItemsByFilterID(Convert.ToInt32(objectID));
-    }
-
-    public static List<Item> GetItemsByFilterID(Int32 objectID)
     {
         string cacheKey = "ItemsByFilterID_" + objectID;
         List<Item> returnObject = HttpContext.Current.Cache[cacheKey] as List<Item>;
@@ -208,11 +183,6 @@ public class ItemGateway
 
     public static ItemGroupEnum DetermineItemGroupByItemID(long objectID)
     {
-        return DetermineItemGroupByItemID(Convert.ToInt32(objectID));
-    }
-
-    public static ItemGroupEnum DetermineItemGroupByItemID(Int32 objectID)
-    {
         string cacheKey = "ItemGroupByItemID_" + objectID;
         ItemGroupEnum returnObject;
         if (HttpContext.Current.Cache[cacheKey] == null)
@@ -258,11 +228,6 @@ public class ItemGateway
 
     public static Item_Value GetItemValueByItemID(long objectID)
     {
-        return GetItemValueByItemID(Convert.ToInt32(objectID));
-    }
-
-    public static Item_Value GetItemValueByItemID(Int32 objectID)
-    {
         string cacheKey = "ItemValueByItemID_" + objectID;
         Item_Value returnObject = HttpContext.Current.Cache[cacheKey] as Item_Value;
 
@@ -294,9 +259,7 @@ public class ItemGateway
             } // using
         return returnObject;
     } // method GetAllItems
-
-
-
+    
     public static List<Fitting> GetAllFittings()
     {
         string cacheKey = "AllFittings";
@@ -333,11 +296,6 @@ public class ItemGateway
 
     public static Item_Stackable GetItemStackInfoByItemID(long objectID)
     {
-        return GetItemStackInfoByItemID(Convert.ToInt32(objectID));
-    }
-
-    public static Item_Stackable GetItemStackInfoByItemID(Int32 objectID)
-    {
         string cacheKey = "ItemStackInfoByItemID_" + objectID;
         Item_Stackable returnObject = HttpContext.Current.Cache[cacheKey] as Item_Stackable;
 
@@ -355,11 +313,6 @@ public class ItemGateway
 
     public static Item_Power_Source GetItemPowerSourceInfoByItemID(long objectID)
     {
-        return GetItemPowerSourceInfoByItemID(Convert.ToInt32(objectID));
-    }
-
-    public static Item_Power_Source GetItemPowerSourceInfoByItemID(Int32 objectID)
-    {
         string cacheKey = "ItemPowerSourceInfoByItemID_" + objectID;
         Item_Power_Source returnObject = HttpContext.Current.Cache[cacheKey] as Item_Power_Source;
 
@@ -376,11 +329,6 @@ public class ItemGateway
     } // method GetItemStackInfoByItemID
 
     public static Item_Stores_Power GetItemPowerStorageInfoByItemID(long objectID)
-    {
-        return GetItemPowerStorageInfoByItemID(Convert.ToInt32(objectID));
-    }
-
-    public static Item_Stores_Power GetItemPowerStorageInfoByItemID(Int32 objectID)
     {
         string cacheKey = "ItemPowerStorageInfoByItemID_" + objectID;
         Item_Stores_Power returnObject = HttpContext.Current.Cache[cacheKey] as Item_Stores_Power;

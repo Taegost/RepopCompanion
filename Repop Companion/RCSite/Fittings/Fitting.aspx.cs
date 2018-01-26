@@ -18,7 +18,7 @@ public partial class Items_Fitting : BasePage
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("ComponentID")))
 
         int currentID = Convert.ToInt32(Request.QueryString.Get("FittingID"));
-        CurrentFitting = ItemGateway.GetFittingByID(currentID);
+        CurrentFitting = ItemGateway.FittingGetByID(currentID);
         Title = CurrentFitting.displayName;
 
     } // method Page_Load
