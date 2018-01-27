@@ -9,7 +9,16 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class CraftingRecipeAgent
 {
-    public CraftingRecipe ParentRecipe { get; private set; }
+    private long parentRecipeID;
+    private CraftingRecipe _parentRecipe = null;
+    public CraftingRecipe ParentRecipe
+    {
+        get
+        {
+            if (_parentRecipe == null) { _parentRecipe = new CraftingRecipe(parentRecipeID); }
+            return _parentRecipe;
+        }
+    } // property ParentRecipe
     public long Count { get; private set; }
     public long Weight { get; private set; }
 
@@ -19,10 +28,7 @@ public class CraftingRecipeAgent
     {
         get
         {
-            if (_craftingComponent == null)
-            {
-                _craftingComponent = new CraftingComponent(craftingComponentID);
-            }
+            if (_craftingComponent == null) { _craftingComponent = new CraftingComponent(craftingComponentID); }
             return _craftingComponent;
         } // get
     } // property CraftingComponent
@@ -36,7 +42,7 @@ public class CraftingRecipeAgent
 
     public CraftingRecipeAgent(Recipe_Agents agent)
     {
-        ParentRecipe = new CraftingRecipe(agent.recipeID);
+        parentRecipeID = agent.recipeID;
         Count = agent.count;
         Weight = agent.weight;
         craftingComponentID = agent.componentID;

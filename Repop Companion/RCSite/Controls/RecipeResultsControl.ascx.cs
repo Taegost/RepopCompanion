@@ -9,11 +9,11 @@ using Repop_Companion.DataModels;
 
 public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
 {
-    int _groupID = 1;
+    long _groupID = 1;
     /// <summary>
     /// GroupID is whether the item is the Main product (1) or a byproduct (2,3,4)
     /// </summary>
-    public Int32 GroupID
+    public long GroupID
     {
         get
         {
@@ -25,21 +25,21 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
         }
     } // property GroupID
 
-    public List<Recipe_Results> RecipeResults { get; private set; }
+    public List<CraftingRecipeResult> RecipeResults { get; private set; }
     public int Count { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="results"></param>
-    public void SetRecipeResults(List<Recipe_Results> results)
+    public void SetRecipeResults(List<CraftingRecipeResult> results)
     {
         if (results == null)
         {
             throw new ArgumentOutOfRangeException("results", null, "Value CANNOT be null");
         }
         RecipeResults = results;
-        List<Recipe_Results> controlDataSource = new List<Recipe_Results>();
+        List<CraftingRecipeResult> controlDataSource = new List<CraftingRecipeResult>();
 
         // If the group ID is 0 or less, show all results.  Else, provide the subset corresponding to the group
         // This may provide an empty table.  It's up to the end-user to decide what to do with empty tables
@@ -49,9 +49,9 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
         }
         else
         {
-            foreach (Recipe_Results item in RecipeResults)
+            foreach (CraftingRecipeResult item in RecipeResults)
             {
-                if (item.groupID == GroupID) { controlDataSource.Add(item); }
+                if (item.Group == GroupID) { controlDataSource.Add(item); }
             } // foreach (Recipe_Results item in RecipeResults)
         } // if (GroupID < 1) 
 
@@ -68,42 +68,6 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
         }
     } // method Page_Load
 
-    private void ParseResultIngredients(Recipe_Results recipeResults, HyperLink linkControl, long ingredientCount, long filterID, long slotID)
-    {
-
-        if (filterID == 0 && ingredientCount == -1)
-        {
-            List<Recipe_Ingredients> ingredients = RecipeGateway.IngredientsGetByRecipeID(recipeResults.recipeID);
-            var ingredient = (from item in ingredients
-                              where item.ingSlot == slotID
-                              select item).FirstOrDefault();
-            if (ingredient == null)
-            {
-                linkControl.Text = "";
-                linkControl.NavigateUrl = "";
-            }
-            else
-            {
-                linkControl.Text = ComponentGateway.CraftingComponentGetByComponentID(ingredient.componentID).displayName;
-                if (ingredient.count > 1) linkControl.Text += " (" + ingredient.count + ")";
-                linkControl.NavigateUrl = LinkGenerator.GenerateComponentLink(ingredient.componentID);
-                return;
-            } // if (ingredient == null)
-        } // if (filterID == 0 && ingredientCount == -1)
-        if (ingredientCount == 0)
-        {
-            linkControl.Text = "None";
-            linkControl.NavigateUrl = "";
-            return;
-        }
-        if (filterID > 0)
-        {
-            linkControl.Text = FilterGateway.CraftingFilterGetByFilterID(filterID).displayName;
-                if (ingredientCount > 0) linkControl.Text += " (" + ingredientCount + ")";
-            linkControl.NavigateUrl = LinkGenerator.GenerateFilterLink(filterID);
-        } // if (ingredientCount == 0)
-    } // ParseResultIngredients
-
     protected void grd_Results_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         switch (e.Row.RowType)
@@ -114,30 +78,39 @@ public partial class Controls_RecipeResultsControl : System.Web.UI.UserControl
                 {
                     Label gradeLabel = (Label)e.Row.FindControl("lbl_Grade");
                     Label difficultyLabel = (Label)e.Row.FindControl("lbl_Difficulty");
-                    Recipe_Results gameData = (Recipe_Results)e.Row.DataItem;
+                    CraftingRecipeResult gameData = (CraftingRecipeResult)e.Row.DataItem;
 
-                    switch ((ItemTypeEnum)gameData.type)
+                    nameControl.Text = gameData.Result.Name;
+                    nameControl.NavigateUrl = gameData.Result.URL;
+
+                    gradeLabel.Text = gameData.MinimumGrade.ToString();
+                    difficultyLabel.Text = gameData.Difficulty.ToString();
+                    foreach (CraftingRecipeFilter filter in gameData.Filters)
                     {
-                        case ItemTypeEnum.Item:
-                            nameControl.Text = (ItemGateway.ItemGetByID(gameData.resultID).displayName);
-                            nameControl.NavigateUrl = LinkGenerator.GenerateItemLink(gameData.resultID);
-                            break;
-                        case ItemTypeEnum.Fitting:
-                            nameControl.Text = (ItemGateway.FittingGetByID(gameData.resultID).displayName);
-                            nameControl.NavigateUrl = LinkGenerator.GenerateFittingLink(gameData.resultID);
-                            break;
-                        case ItemTypeEnum.Blueprint:
-                            nameControl.Text = (ItemGateway.BlueprintGetByID(gameData.resultID).displayName);
-                            nameControl.NavigateUrl = LinkGenerator.GenerateBlueprintLink(gameData.resultID);
-                            break;
-                    } // switch ((ResultTypeEnum)gameData.type)
-
-                    gradeLabel.Text = ((GradeEnum)gameData.grade).ToString();
-                    difficultyLabel.Text = ((DifficultyEnum)gameData.level).ToString();
-                        ParseResultIngredients(gameData, (HyperLink)e.Row.FindControl("lnk_Ingredient1"), gameData.ingCount1, gameData.filter1ID, 1);
-                        ParseResultIngredients(gameData, (HyperLink)e.Row.FindControl("lnk_Ingredient2"), gameData.ingCount2, gameData.filter2ID, 2);
-                        ParseResultIngredients(gameData, (HyperLink)e.Row.FindControl("lnk_Ingredient3"), gameData.ingCount3, gameData.filter3ID, 3);
-                        ParseResultIngredients(gameData, (HyperLink)e.Row.FindControl("lnk_Ingredient4"), gameData.ingCount4, gameData.filter4ID, 4);
+                        HyperLink rowControl = new HyperLink();
+                        switch (filter.Slot)
+                        {
+                            case 1:
+                                rowControl = (HyperLink)e.Row.FindControl("lnk_Ingredient1");
+                                break;
+                            case 2:
+                                rowControl = (HyperLink)e.Row.FindControl("lnk_Ingredient2");
+                                break;
+                            case 3:
+                                rowControl = (HyperLink)e.Row.FindControl("lnk_Ingredient3");
+                                break;
+                            case 4:
+                                rowControl = (HyperLink)e.Row.FindControl("lnk_Ingredient4");
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException("Slot", filter.Slot, "Value must be between 1-4");
+                        } // switch (filter.Slot)
+                        if (filter.Ingredient != null)
+                        {
+                            rowControl.Text = filter.IngredientFullName;
+                            rowControl.NavigateUrl = filter.Ingredient.URL;
+                        }
+                    } // foreach (CraftingRecipeFilter filter in gameData.Filters)
                 } // if (!string.Equals(levelLabel.Text, "Name", StringComparison.CurrentCultureIgnoreCase))
                 break;
         } // switch

@@ -9,7 +9,16 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class CraftingRecipeIngredient
 {
-    public CraftingRecipe ParentRecipe { get; private set; }
+    private long parentRecipeID;
+    private CraftingRecipe _parentRecipe = null;
+    public CraftingRecipe ParentRecipe
+    {
+        get
+        {
+            if (_parentRecipe == null) { _parentRecipe = new CraftingRecipe(parentRecipeID); }
+            return _parentRecipe;
+        }
+    } // property ParentRecipe
     public long Count { get; private set; }
     public long Weight { get; private set; }
     public long Slot { get; private set; }
@@ -38,7 +47,7 @@ public class CraftingRecipeIngredient
 
     public CraftingRecipeIngredient(Recipe_Ingredients ingredient)
     {
-        ParentRecipe = new CraftingRecipe(ingredient.recipeID);
+        parentRecipeID = ingredient.recipeID;
         Count = ingredient.count;
         Weight = ingredient.weight;
         Slot = ingredient.ingSlot;

@@ -21,6 +21,18 @@ public class BlueprintBase : IRecipeResultItem
             return "";
         } // get
     } // property URL
+    private List<CraftingRecipe> _recipes = null;
+    public List<CraftingRecipe> Recipes
+    {
+        get
+        {
+            if (_recipes == null)
+            {
+                _recipes = RecipeGateway.RecipesThatCreateBlueprint(ID);
+            }
+            return _recipes;
+        } // get
+    } // property Recipes
 
     public BlueprintBase(long itemID)
     {

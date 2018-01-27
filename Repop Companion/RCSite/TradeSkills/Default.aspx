@@ -10,16 +10,16 @@
         <uc1:TradeSkillList runat="server" ID="TradeSkillList" />
     </div>
     <section id="TradeskillWrapper" runat="server">
-        <h1><%=TradeSkillName %></h1>
+        <h1><%=CurrentSkill.Name %></h1>
         <section id="RecipeWrapper" class="SectionWrapper">
             <div id="RecipeHeader">
                 <h2>Recipes</h2>
             </div>
             <asp:Repeater ID="rpt_Recipes" runat="server">
                 <ItemTemplate>
-                    <div id="RecipeCard" class="CardMain <%=TradeSkillName %>">
-                        <asp:HyperLink runat="server" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateRecipeLink(Convert.ToInt32(Eval("recipeId"))) %>' CssClass="CardTitle"></asp:HyperLink><br />
-                        <asp:Label runat="server" Text='<%# Eval("displayDescription") %>' CssClass="CardDescription"></asp:Label>
+                    <div id="RecipeCard" class="CardMain <%=CurrentSkill.Name %>">
+                        <asp:HyperLink runat="server" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="CardTitle"></asp:HyperLink><br />
+                        <asp:Label runat="server" Text='<%# Eval("Description") %>' CssClass="CardDescription"></asp:Label>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
@@ -30,10 +30,10 @@
             </div>
             <asp:Repeater ID="rpt_Items" runat="server" OnItemDataBound="rpt_Items_ItemDataBound">
                 <ItemTemplate>
-                    <div id="ItemCard" class="CardMain <%=TradeSkillName %>">
-                        <asp:HyperLink runat="server" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateItemLink(Convert.ToInt32(Eval("itemId"))) %>' CssClass="CardTitle"></asp:HyperLink><br />
+                    <div id="ItemCard" class="CardMain <%=CurrentSkill.Name %>">
+                        <asp:HyperLink runat="server" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="CardTitle"></asp:HyperLink><br />
                         <asp:HyperLink ID="lnk_RecipeLink" runat="server" CssClass="NoLinkStyle"></asp:HyperLink><br />
-                        <asp:Label runat="server" Text='<%# Eval("displayDescription") %>' CssClass="CardDescription"></asp:Label>
+                        <asp:Label runat="server" Text='<%# Eval("Description") %>' CssClass="CardDescription"></asp:Label>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
@@ -44,10 +44,10 @@
             </div>
             <asp:Repeater ID="rpt_Fittings" runat="server" OnItemDataBound="rpt_Fittings_ItemDataBound">
                 <ItemTemplate>
-                    <div id="FittingCard" class="CardMain <%=TradeSkillName %>">
-                        <asp:HyperLink runat="server" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateFittingLink(Convert.ToInt32(Eval("fittingId"))) %>' CssClass="CardTitle"></asp:HyperLink><br />
+                    <div id="FittingCard" class="CardMain <%=CurrentSkill.Name %>">
+                        <asp:HyperLink runat="server" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="CardTitle"></asp:HyperLink><br />
                         <asp:HyperLink ID="lnk_RecipeLink" runat="server" CssClass="NoLinkStyle"></asp:HyperLink><br />
-                        <asp:Label runat="server" Text='<%# Eval("displayDescription") %>' CssClass="CardDescription"></asp:Label>
+                        <asp:Label runat="server" Text='<%# Eval("Description") %>' CssClass="CardDescription"></asp:Label>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
@@ -58,11 +58,11 @@
             </div>
             <asp:Repeater ID="rpt_Blueprints" runat="server" OnItemDataBound="rpt_Blueprints_ItemDataBound">
                 <ItemTemplate>
-                    <div id="BlueprintCard" class="CardMain <%=TradeSkillName %>">
-                        <asp:HyperLink runat="server" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateBlueprintLink(Convert.ToInt32(Eval("structureId"))) %>' CssClass="CardTitle"></asp:HyperLink><br />
+                    <div id="BlueprintCard" class="CardMain <%=CurrentSkill.Name %>">
+                        <asp:HyperLink runat="server" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="CardTitle"></asp:HyperLink><br />
                         <asp:HyperLink ID="lnk_RecipeLink" runat="server" CssClass="NoLinkStyle"></asp:HyperLink><br />
-                        <asp:Label runat="server" Text='<%# Eval("isHousingStructure", "Housing Structure: {0}") %>' CssClass="CardDescription"></asp:Label><br />
-                        <asp:Label runat="server" Text='<%# Eval("isSiegingUnit", "Sieging Unit: {0}") %>' CssClass="CardDescription"></asp:Label>
+                        <asp:Label runat="server" Text='<%# Eval("IsHousingStructure", "Housing Structure: {0}") %>' CssClass="CardDescription"></asp:Label><br />
+                        <asp:Label runat="server" Text='<%# Eval("IsSiegingUnit", "Sieging Unit: {0}") %>' CssClass="CardDescription"></asp:Label>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>

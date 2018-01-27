@@ -2,6 +2,6 @@
 
 <asp:Repeater ID="rpt_TradeSkills" runat="server">
     <ItemTemplate>
-        <asp:HyperLink ID="Label1" runat="server" Text='<%# Eval("displayName") %>' CssClass='<%# Eval("displayName", "NoWrap NoLinkStyle {0}") %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillId"))) %>'></asp:HyperLink>
+        <asp:HyperLink ID="Label1" runat="server" Text='<%# Eval("Name") %>' CssClass='<%# Eval("Name", "NoWrap NoLinkStyle {0}") %>' NavigateUrl='<%# Eval("URL") %>'></asp:HyperLink>
     </ItemTemplate>
 </asp:Repeater>

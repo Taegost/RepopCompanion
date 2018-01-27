@@ -3,26 +3,31 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cp_MainContent" runat="Server">
-    <h1><%=CurrentItem.displayName %></h1>
-    <p><%=CurrentItem.displayDescription %></p>
+    <h1><%=CurrentItem.Name %></h1>
+    <p><%=CurrentItem.Description %></p>
 
     Value: <asp:Label ID="lbl_Value" runat="server" Text="n/a"></asp:Label><br />
-    Default Stack Size: <asp:Label ID="lbl_DefaultStackSize" runat="server" Text="n/a"></asp:Label><br />
-    Max Stack Size: <asp:Label ID="lbl_MaxStackSize" runat="server" Text="n/a"></asp:Label><br />
-    Power Index: <asp:Label ID="lbl_PowerIndex" runat="server" Text="n/a"></asp:Label><br />
-    Power Storage Max: <asp:Label ID="lbl_PowerStorage" runat="server" Text="n/a"></asp:Label><br />
+    <section id="StackInfoWrapper" visible="false" runat="server">
+        Default Stack Size: <asp:Label ID="lbl_DefaultStackSize" runat="server" Text="n/a"></asp:Label><br />
+        Max Stack Size: <asp:Label ID="lbl_MaxStackSize" runat="server" Text="n/a"></asp:Label><br />
+    </section>
+    <section id="PowerInfoWrapper" visible="false" runat="server">
+        Power Index: <asp:Label ID="lbl_PowerIndex" runat="server" Text="n/a"></asp:Label><br />
+        Power Storage Max: <asp:Label ID="lbl_PowerStorage" runat="server" Text="n/a"></asp:Label><br />
+    </section>
 
     <section id="RecipeBookWrapper" runat="server">
+        <br />
         <asp:Repeater ID="rpt_RecipeBook" runat="server">
             <ItemTemplate>
-                Recipe: <asp:HyperLink ID="lnk_Recipe" CssClass="NoLinkStyle" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateRecipeLink((long)(Eval("recipeID"))) %>' runat="server"></asp:HyperLink><br />
+                Recipe: <asp:HyperLink ID="lnk_Recipe" CssClass=<%# Eval("ParentSkill.Name", "NoLinkStyle {0}") %> Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' runat="server"></asp:HyperLink><br />
             </ItemTemplate>
         </asp:Repeater>
     </section>
     <section id="SpeciesWrapper" runat="server">
                 <asp:Repeater ID="rpt_Species" runat="server">
             <ItemTemplate>
-                Species/Subsistence: <asp:HyperLink ID="lnk_Recipe" CssClass="NoLinkStyle" Text='<%# SpeciesGateway.GetSpeciesBySpeciesID((long) Eval("speciesID")).displayName + " - " + Eval("chance") + "%" %>' NavigateUrl='<%# LinkGenerator.GenerateSpeciesLink((long)(Eval("speciesID"))) %>' runat="server"></asp:HyperLink><br />
+                Species/Subsistence: <asp:HyperLink ID="lnk_Recipe" CssClass="NoLinkStyle" Text='<%# Eval("ParentSpecies.Name") + " - " + Eval("Chance") + "%" %>' NavigateUrl='<%# Eval("ParentSpecies.URL") %>' runat="server"></asp:HyperLink><br />
             </ItemTemplate>
         </asp:Repeater>
     </section>

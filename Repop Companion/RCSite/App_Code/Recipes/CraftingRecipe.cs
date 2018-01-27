@@ -24,6 +24,7 @@ public class CraftingRecipe
             if (_results == null)
             {
                 List<Recipe_Results> recipeResults = RecipeGateway.RecipeResultsGetByRecipeID(ID);
+                _results = new List<CraftingRecipeResult>();
                 foreach (Recipe_Results result in recipeResults) { _results.Add(new CraftingRecipeResult(result)); }
             } // if (_results == null)
             return _results;
@@ -39,14 +40,14 @@ public class CraftingRecipe
     } // property URL
 
     private long parentSkillID;
-    private CharacterSkill _parentSkill = null;
-    public CharacterSkill ParentSkill
+    private CharacterTradeSkill _parentSkill = null;
+    public CharacterTradeSkill ParentSkill
     {
         get
         {
             if (_parentSkill == null)
             {
-                _parentSkill = new CharacterSkill(parentSkillID);
+                _parentSkill = new CharacterTradeSkill(parentSkillID);
             } // if (_parentSkill == null)
             return _parentSkill;
         } // get

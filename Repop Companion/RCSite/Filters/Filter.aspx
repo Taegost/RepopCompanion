@@ -26,7 +26,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Skill">
                     <ItemTemplate>
-                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.GetSkillById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.SkillGetById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

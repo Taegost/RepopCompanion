@@ -16,6 +16,7 @@ public class CraftingRecipeResult
     public GradeEnum MinimumGrade { get; private set; }
     public IRecipeResultItem Result { get; private set; }
     public List<CraftingRecipeFilter> Filters { get; private set; }
+    public DifficultyEnum Difficulty { get; private set; }
 
     public CraftingRecipeResult(Recipe_Results recipeResult)
     {
@@ -24,6 +25,7 @@ public class CraftingRecipeResult
         Type = (ItemTypeEnum)recipeResult.type;
         MinimumGrade = (GradeEnum)recipeResult.grade;
         Group = recipeResult.groupID;
+        Difficulty = (DifficultyEnum)recipeResult.level;
 
         switch (Type)
         {
@@ -38,6 +40,7 @@ public class CraftingRecipeResult
                 break;
         } // switch (Type)
 
+        Filters = new List<CraftingRecipeFilter>();
         Filters.Add(new CraftingRecipeFilter(ParentRecipe.ID, recipeResult.filter1ID, recipeResult.ingCount1, 1));
         Filters.Add(new CraftingRecipeFilter(ParentRecipe.ID, recipeResult.filter2ID, recipeResult.ingCount2, 2));
         Filters.Add(new CraftingRecipeFilter(ParentRecipe.ID, recipeResult.filter3ID, recipeResult.ingCount3, 3));

@@ -51,11 +51,10 @@ public partial class TradeSkills_Recipe : BasePage
         grd_Agents.DataBind();
 
         // Results
-        List<Recipe_Results> recipeResults = RecipeGateway.RecipeResultsGetByRecipeID(CurrentRecipe.ID);
-        ctl_MainResults.SetRecipeResults(recipeResults);
-        ctl_ByProduct1.SetRecipeResults(recipeResults);
-        ctl_ByProduct2.SetRecipeResults(recipeResults);
-        ctl_ByProduct3.SetRecipeResults(recipeResults);
+        ctl_MainResults.SetRecipeResults(CurrentRecipe.Results);
+        ctl_ByProduct1.SetRecipeResults(CurrentRecipe.Results);
+        ctl_ByProduct2.SetRecipeResults(CurrentRecipe.Results);
+        ctl_ByProduct3.SetRecipeResults(CurrentRecipe.Results);
         if (ctl_ByProduct1.Count + ctl_ByProduct2.Count + ctl_ByProduct3.Count == 0) { ByProducts.Visible = false; }
 
     } // method Page_Load

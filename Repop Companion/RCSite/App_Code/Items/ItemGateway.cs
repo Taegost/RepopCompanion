@@ -83,10 +83,10 @@ public class ItemGateway
         return ItemGetByID(returnObject.itemID);
     } // method BookGetByRecipeID
 
-    public static List<Item> GetItemsByComponentID(long objectID)
+    public static List<ItemBase> ItemsGetByComponentID(long objectID)
     {
         string cacheKey = "ItemsByComponentID_" + objectID;
-        List<Item> returnObject = HttpContext.Current.Cache[cacheKey] as List<Item>;
+        List<ItemBase> returnObject = HttpContext.Current.Cache[cacheKey] as List<ItemBase>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -96,7 +96,8 @@ public class ItemGateway
                                 where components.componentID == objectID
                                 select item).OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<ItemBase>();
+                foreach (Item item in result.ToList()) { returnObject.Add(new ItemBase(item.itemID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
@@ -121,10 +122,10 @@ public class ItemGateway
         return returnObject;
     } // method GetItemsByFilterID
 
-    public static List<Item> GetAllItemsCreatedByTradeskillID(Int32 objectID)
+    public static List<ItemBase> ItemsGetAllCreatedByTradeskillID(long objectID)
     {
         string cacheKey = "AllItemsCreatedByTradeskillID_" + objectID;
-        List<Item> returnObject = HttpContext.Current.Cache[cacheKey] as List<Item>;
+        List<ItemBase> returnObject = HttpContext.Current.Cache[cacheKey] as List<ItemBase>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -135,16 +136,17 @@ public class ItemGateway
                               where recipeResults.type == (long)ItemTypeEnum.Item && recipesinSkill.skillID == objectID
                               select item).Distinct().OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<ItemBase>();
+                foreach (Item item in result.ToList()) { returnObject.Add(new ItemBase(item.itemID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
-    } // method GetAllItemsCreatedByTradeskillID
+    } // method ItemsGetAllCreatedByTradeskillID
 
-    public static List<Fitting> GetAllFittingsCreatedByTradeskillID(Int32 objectID)
+    public static List<FittingBase> FittingsGetAllCreatedByTradeskillID(long objectID)
     {
         string cacheKey = "AllFittingsCreatedByTradeskillID_" + objectID;
-        List<Fitting> returnObject = HttpContext.Current.Cache[cacheKey] as List<Fitting>;
+        List<FittingBase> returnObject = HttpContext.Current.Cache[cacheKey] as List<FittingBase>;
         
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -155,16 +157,17 @@ public class ItemGateway
                               where recipeResults.type == (long)ItemTypeEnum.Fitting && recipesinSkill.skillID == objectID
                               select item).Distinct().OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<FittingBase>();
+                foreach (Fitting item in result.ToList()) { returnObject.Add(new FittingBase(item.fittingID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
-    } // method GetAllFittingsCreatedByTradeskillID
+    } // method FittingsGetAllCreatedByTradeskillID
 
-    public static List<Structure> GetAllBlueprintsCreatedByTradeskillID(Int32 objectID)
+    public static List<BlueprintBase> BlueprintsGetAllCreatedByTradeskillID(long objectID)
     {
         string cacheKey = "AllBlueprintsCreatedByTradeskillID_" + objectID;
-        List<Structure> returnObject = HttpContext.Current.Cache[cacheKey] as List<Structure>;
+        List<BlueprintBase> returnObject = HttpContext.Current.Cache[cacheKey] as List<BlueprintBase>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -175,7 +178,8 @@ public class ItemGateway
                               where recipeResults.type == (long)ItemTypeEnum.Blueprint && recipesinSkill.skillID == objectID
                               select item).Distinct().OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<BlueprintBase>();
+                foreach (Structure item in result.ToList()) { returnObject.Add(new BlueprintBase(item.structureID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
@@ -200,14 +204,14 @@ public class ItemGateway
                 // There's no easy way to determine the item "group" (recipe book, crafting component, etc.)
                 // This method definitely needs refactoring
                
-                var recipeResult = RecipeGateway.GetAllRecipesGrantedByRecipeBookID(objectID);
+                var recipeResult = RecipeGateway.RecipesGrantedByRecipeBookID(objectID);
                 if (recipeResult.Count > 0)
                 {
                     returnObject = ItemGroupEnum.RecipeBook;
                     AppCaching.AddToCache(cacheKey, returnObject);
                     return returnObject;
                 }
-                var rawMatResult = SpeciesGateway.GetAllSpeciesResultsForItem(objectID);
+                var rawMatResult = SpeciesGateway.AllSpeciesInfoForItem(objectID);
                 if (rawMatResult.Count > 0)
                 {
                     returnObject = ItemGroupEnum.RawMaterial;
@@ -226,7 +230,7 @@ public class ItemGateway
         return returnObject;
     } // DetermineItemGroupByItemID
 
-    public static Item_Value GetItemValueByItemID(long objectID)
+    public static Item_Value ValueGetByItemID(long objectID)
     {
         string cacheKey = "ItemValueByItemID_" + objectID;
         Item_Value returnObject = HttpContext.Current.Cache[cacheKey] as Item_Value;
@@ -241,12 +245,12 @@ public class ItemGateway
                     AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
-    } // DetermineItemGroupByItemID
+    } // ValueGetByItemID
 
-    public static List<Item> GetAllItems()
+    public static List<ItemBase> GetAllItems()
     {
         string cacheKey = "AllItems";
-        List<Item> returnObject = HttpContext.Current.Cache[cacheKey] as List<Item>;
+        List<ItemBase> returnObject = HttpContext.Current.Cache[cacheKey] as List<ItemBase>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -254,7 +258,8 @@ public class ItemGateway
                 var result = (from item in myEntities.Items
                               select item).Distinct().OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<ItemBase>();
+                foreach (Item item in result.ToList()) { returnObject.Add(new ItemBase(item.itemID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
@@ -294,7 +299,7 @@ public class ItemGateway
         return returnObject;
     } // method GetAllBlueprints
 
-    public static Item_Stackable GetItemStackInfoByItemID(long objectID)
+    public static Item_Stackable ItemStackInfoGetByItemID(long objectID)
     {
         string cacheKey = "ItemStackInfoByItemID_" + objectID;
         Item_Stackable returnObject = HttpContext.Current.Cache[cacheKey] as Item_Stackable;
@@ -309,9 +314,9 @@ public class ItemGateway
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
-    } // method GetItemStackInfoByItemID
+    } // method ItemStackInfoGetByItemID
 
-    public static Item_Power_Source GetItemPowerSourceInfoByItemID(long objectID)
+    public static Item_Power_Source PowerSourceInfoGetByItemID(long objectID)
     {
         string cacheKey = "ItemPowerSourceInfoByItemID_" + objectID;
         Item_Power_Source returnObject = HttpContext.Current.Cache[cacheKey] as Item_Power_Source;
@@ -326,9 +331,9 @@ public class ItemGateway
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
-    } // method GetItemStackInfoByItemID
+    } // method PowerSourceInfoGetByItemID
 
-    public static Item_Stores_Power GetItemPowerStorageInfoByItemID(long objectID)
+    public static Item_Stores_Power PowerStorageInfoGetByItemID(long objectID)
     {
         string cacheKey = "ItemPowerStorageInfoByItemID_" + objectID;
         Item_Stores_Power returnObject = HttpContext.Current.Cache[cacheKey] as Item_Stores_Power;
@@ -343,5 +348,5 @@ public class ItemGateway
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
-    } // method GetItemStackInfoByItemID
+    } // method PowerStorageInfoGetByItemID
 } // class ItemGateway

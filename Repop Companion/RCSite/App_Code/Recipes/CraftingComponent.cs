@@ -20,11 +20,32 @@ public class CraftingComponent : IRecipeIngredient
         } // get
     } // property URL
 
+    private List<ItemBase> _items = null;
+    public List<ItemBase> Items
+    {
+        get
+        {
+            if (_items == null)
+            {
+                _items = ItemGateway.ItemsGetByComponentID(ID);
+            }
+            return _items;
+        } // get
+    } // property Items
+
     public CraftingComponent(long componentID)
     {
         ID = componentID;
         Crafting_Components component = ComponentGateway.CraftingComponentGetByComponentID(ID);
-        Name = component.displayName;
-        Description = component.displayDescription;
+        if (component == null)
+        {
+            Name = "n/a";
+            Description = "n/a";
+        }
+        else
+        {
+            Name = component.displayName;
+            Description = component.displayDescription;
+        }
     } // constructor
 } // class CraftingComponent

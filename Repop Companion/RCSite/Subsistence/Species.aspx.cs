@@ -9,7 +9,7 @@ using Repop_Companion.DataModels;
 
 public partial class Subsistence_Species : BasePage
 {
-    public Species CurrentSpecies { get; set; }
+    public SpeciesInfo CurrentSpecies { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -19,9 +19,9 @@ public partial class Subsistence_Species : BasePage
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("RecipeID")))
 
         int itemID = Convert.ToInt32(Request.QueryString.Get("SpeciesID"));
-        CurrentSpecies = SpeciesGateway.GetSpeciesBySpeciesID(itemID);
+        CurrentSpecies = SpeciesGateway.SpeciesInfoGetBySpeciesID(itemID);
         if (CurrentSpecies == null) { Response.Redirect("Default.aspx"); }
-        Title = CurrentSpecies.displayName;
+        Title = CurrentSpecies.Name;
 
     } // method Page_Load
 } // class Subsistence_Species

@@ -3,13 +3,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cp_MainContent" runat="Server">
-    <h1><%=CurrentComponent.displayName %></h1>
-    <p><%=CurrentComponent.displayDescription %></p>
+    <h1><%=CurrentComponent.Name %></h1>
+    <p><%=CurrentComponent.Description %></p>
     <section id="ItemWrapper" runat="server">
         <h2>Items</h2>
         <asp:Repeater ID="rpt_Items" runat="server">
             <ItemTemplate>
-                <asp:HyperLink ID="lnk_Item" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateItemLink(Convert.ToInt32(Eval("itemID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+                <asp:HyperLink ID="lnk_Item" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
             </ItemTemplate>
         </asp:Repeater>
     </section>
@@ -24,7 +24,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Skill">
                     <ItemTemplate>
-                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.GetSkillById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.SkillGetById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -41,7 +41,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Skill">
                     <ItemTemplate>
-                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.GetSkillById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.SkillGetById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

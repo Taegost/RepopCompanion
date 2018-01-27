@@ -11,8 +11,7 @@ public partial class Controls_TradeSkillList : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        List<Skill> skillList = SkillGateway.AllTradeSkills();
-        rpt_TradeSkills.DataSource = skillList;
+        rpt_TradeSkills.DataSource = SkillGateway.TradeSkillsGetAll();
         rpt_TradeSkills.DataBind();
     } // method Page_Load
 } // class Controls_TradeSkillList

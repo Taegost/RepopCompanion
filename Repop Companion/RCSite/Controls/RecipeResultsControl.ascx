@@ -7,15 +7,15 @@
                         <asp:Hyperlink ID="lnk_ResultName" runat="server" CssClass="NoLinkStyle"></asp:Hyperlink>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="count" HeaderText="Qty" />
+                <asp:BoundField DataField="Count" HeaderText="Qty" />
                 <asp:TemplateField HeaderText="Min. Grade">
                     <ItemTemplate>
-                        <asp:Label ID="lbl_Grade" runat="server" Text='<%# Bind("grade") %>' ></asp:Label>
+                        <asp:Label ID="lbl_Grade" runat="server" Text='<%# Bind("MinimumGrade") %>' ></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Difficulty">
                     <ItemTemplate>
-                        <asp:Label ID="lbl_Difficulty" runat="server" Text='<%# Bind("level") %>'></asp:Label>
+                        <asp:Label ID="lbl_Difficulty" runat="server" Text='<%# Bind("Difficulty") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Ingredient1">

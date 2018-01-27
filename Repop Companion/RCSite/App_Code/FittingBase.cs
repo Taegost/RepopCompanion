@@ -20,6 +20,19 @@ public class FittingBase : IRecipeResultItem
             return "";
         } // get
     } // property URL
+    private List<CraftingRecipe> _recipes = null;
+    public List<CraftingRecipe> Recipes
+    {
+        get
+        {
+            if (_recipes == null)
+            {
+                _recipes = RecipeGateway.RecipesThatCreateFitting(ID);
+            }
+            return _recipes;
+        } // get
+    } // property Recipes
+
 
     public FittingBase(long itemID)
     {

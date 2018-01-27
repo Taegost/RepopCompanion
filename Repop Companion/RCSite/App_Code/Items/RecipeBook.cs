@@ -9,15 +9,12 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class RecipeBook : ItemBase
 {
-    private List<Recipe> _recipesTaught = null;
-    public List<Recipe> RecipesTaught
+    private List<CraftingRecipe> _recipesTaught = null;
+    public List<CraftingRecipe> RecipesTaught
     {
         get
         {
-            if (_recipesTaught == null)
-            {
-                _recipesTaught = RecipeGateway.GetAllRecipesGrantedByRecipeBookID(ID);
-            }
+            if (_recipesTaught == null) { _recipesTaught = RecipeGateway.RecipesGrantedByRecipeBookID(ID); }
             return _recipesTaught;
         } // get
     } // property RecipesTaught

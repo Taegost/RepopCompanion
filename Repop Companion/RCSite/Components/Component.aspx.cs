@@ -9,7 +9,7 @@ using Repop_Companion.DataModels;
 
 public partial class Components_Component : BasePage
 {
-    public Crafting_Components CurrentComponent { get; set; }
+    public CraftingComponent CurrentComponent { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -18,16 +18,16 @@ public partial class Components_Component : BasePage
             Response.Redirect("Default.aspx");
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("ComponentID")))
 
-        int currentID = Convert.ToInt32(Request.QueryString.Get("ComponentID"));
-        CurrentComponent = ComponentGateway.CraftingComponentGetByComponentID(currentID);
-        if (CurrentComponent == null) { Response.Redirect("Default.aspx"); }
-        Title = CurrentComponent.displayName;
+        long currentID = Convert.ToInt32(Request.QueryString.Get("ComponentID"));
+        CurrentComponent = new CraftingComponent(currentID);
+        if (CurrentComponent.Name.Equals("n/a")) { Response.Redirect("Default.aspx"); }
+        Title = CurrentComponent.Name;
 
-        rpt_Items.DataSource = ItemGateway.GetItemsByComponentID(CurrentComponent.componentID);
+        rpt_Items.DataSource = CurrentComponent.Items;
         rpt_Items.DataBind();
-        grd_Ingredients.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsIngredient(CurrentComponent.componentID);
+        grd_Ingredients.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsIngredient(CurrentComponent.ID);
         grd_Ingredients.DataBind();
-        grd_Agents.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsAgent(CurrentComponent.componentID);
+        grd_Agents.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsAgent(CurrentComponent.ID);
         grd_Agents.DataBind();
 
         ItemWrapper.Visible = rpt_Items.Items.Count > 0;
@@ -42,7 +42,7 @@ public partial class Components_Component : BasePage
         {
             case DataControlRowType.DataRow:
                 Recipe gameData = (Recipe)e.Row.DataItem;
-                e.Row.CssClass += " " + SkillGateway.GetSkillById(gameData.skillID).displayName;
+                e.Row.CssClass += " " + SkillGateway.SkillGetById(gameData.skillID).displayName;
                 break;
         } // switch
     } // method grd_Ingredients_RowDataBound
@@ -53,7 +53,7 @@ public partial class Components_Component : BasePage
         {
             case DataControlRowType.DataRow:
                 Recipe gameData = (Recipe)e.Row.DataItem;
-                e.Row.CssClass += " " + SkillGateway.GetSkillById(gameData.skillID).displayName;
+                e.Row.CssClass += " " + SkillGateway.SkillGetById(gameData.skillID).displayName;
                 break;
         } // switch
     } // method grd_Agents_RowDataBound

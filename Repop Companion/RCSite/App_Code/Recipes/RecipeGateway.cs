@@ -9,10 +9,10 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class RecipeGateway
 {
-    public static List<Recipe> RecipesInSkill(Int32 objectID)
+    public static List<CraftingRecipe> RecipesGetBySkillID(long objectID)
     {
         string cacheKey = "RecipesInSkill_" + objectID;
-        List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
+        List<CraftingRecipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<CraftingRecipe>;
         if (returnObject == null)
         {
             using (RepopdataEntities myEntitities = new RepopdataEntities())
@@ -21,12 +21,13 @@ public class RecipeGateway
                                   where recipe.skillID == objectID
                                   select recipe).OrderBy(x => x.displayName);
                 if (results == null) { return null; }
-                returnObject = results.ToList();
+                returnObject = new List<CraftingRecipe>();
+                foreach (Recipe recipe in results.ToList()) { returnObject.Add(new CraftingRecipe(recipe.recipeID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         } // if (returnList == null)
         return returnObject;
-    } // method RecipesInSkill
+    } // method RecipesGetBySkillID
 
     public static Recipe RecipeGetById(long objectID)
     {
@@ -122,55 +123,73 @@ public class RecipeGateway
         return returnObject;
     } // method RecipeResultsGetByRecipeID
 
-    public static List<Recipe> GetRecipesByResultItemIDAndType(long objectID, ItemTypeEnum itemType )
+    public static List<CraftingRecipe> RecipesThatCreateItem(long objectID)
     {
-        string cacheKey = "RecipesByResultItemIDAndType_" + objectID + "_" + itemType;
-        List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
+        string cacheKey = "RecipesThatCreateItem_" + objectID;
+        List<CraftingRecipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<CraftingRecipe>;
         if (returnObject == null)
         {
             using (RepopdataEntities myEntities = new RepopdataEntities())
             {
-                switch (itemType)
-                {
-                    case ItemTypeEnum.Item:
-                        var result = (from item in myEntities.Recipes
-                                        join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
-                                        join itemResults in myEntities.Items on recipeResults.resultID equals itemResults.itemID
-                                        where recipeResults.type == (long)itemType && itemResults.itemID == objectID
-                                        select item).OrderBy(x => x.displayName);
-                        if (result == null) { return null; }
-                        returnObject = result.ToList();
-                        break;
-                    case ItemTypeEnum.Fitting:
-                        var result2 = (from item in myEntities.Recipes
-                                        join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
-                                        join itemResults in myEntities.Fittings on recipeResults.resultID equals itemResults.fittingID
-                                        where recipeResults.type == (long)itemType && itemResults.fittingID == objectID
-                                        select item).OrderBy(x => x.displayName);
-                        if (result2 == null) { return null; }
-                        returnObject = result2.ToList();
-                        break;
-                    case ItemTypeEnum.Blueprint:
-                        var result3 = (from item in myEntities.Recipes
-                                        join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
-                                        join itemResults in myEntities.Structures on recipeResults.resultID equals itemResults.structureID
-                                        where recipeResults.type == (long)itemType && itemResults.structureID == objectID
-                                        select item).OrderBy(x => x.displayName);
-                        if (result3 == null) { return null; }
-                        returnObject = result3.ToList();
-                        break;
-                }
-                if (returnObject == null) { return null; }
-                AppCaching.AddToCache(cacheKey, returnObject);
+                var result = (from item in myEntities.Recipes
+                              join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
+                              join itemResults in myEntities.Items on recipeResults.resultID equals itemResults.itemID
+                              where recipeResults.type == (long)ItemTypeEnum.Item && itemResults.itemID == objectID
+                              select item).OrderBy(x => x.displayName);
+                if (result == null) { return null; }
+                returnObject = new List<CraftingRecipe>();
+                foreach (Recipe recipe in result.ToList()) { returnObject.Add(new CraftingRecipe(recipe.recipeID)); }
             } // using
-        }// if
+        } // if (returnObject == null)
         return returnObject;
-    } // method GetRecipesByResultItemIDAndType
+    } // method RecipesThatCreateItem
 
-    public static List<Recipe> GetAllRecipesGrantedByRecipeBookID(long objectID)
+    public static List<CraftingRecipe> RecipesThatCreateFitting(long objectID)
+    {
+        string cacheKey = "RecipesThatCreateFitting_" + objectID;
+        List<CraftingRecipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<CraftingRecipe>;
+        if (returnObject == null)
+        {
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                var result = (from item in myEntities.Recipes
+                              join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
+                              join itemResults in myEntities.Items on recipeResults.resultID equals itemResults.itemID
+                              where recipeResults.type == (long)ItemTypeEnum.Fitting && itemResults.itemID == objectID
+                              select item).OrderBy(x => x.displayName);
+                if (result == null) { return null; }
+                returnObject = new List<CraftingRecipe>();
+                foreach (Recipe recipe in result.ToList()) { returnObject.Add(new CraftingRecipe(recipe.recipeID)); }
+            } // using
+        } // if (returnObject == null)
+        return returnObject;
+    } // method RecipesThatCreateItem
+
+    public static List<CraftingRecipe> RecipesThatCreateBlueprint(long objectID)
+    {
+        string cacheKey = "RecipesThatCreateBlueprint_" + objectID;
+        List<CraftingRecipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<CraftingRecipe>;
+        if (returnObject == null)
+        {
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                var result = (from item in myEntities.Recipes
+                              join recipeResults in myEntities.Recipe_Results on item.recipeID equals recipeResults.recipeID
+                              join itemResults in myEntities.Items on recipeResults.resultID equals itemResults.itemID
+                              where recipeResults.type == (long)ItemTypeEnum.Blueprint && itemResults.itemID == objectID
+                              select item).OrderBy(x => x.displayName);
+                if (result == null) { return null; }
+                returnObject = new List<CraftingRecipe>();
+                foreach (Recipe recipe in result.ToList()) { returnObject.Add(new CraftingRecipe(recipe.recipeID)); }
+            } // using
+        } // if (returnObject == null)
+        return returnObject;
+    } // method RecipesThatCreateBlueprint
+
+    public static List<CraftingRecipe> RecipesGrantedByRecipeBookID(long objectID)
     {
         string cacheKey = "AllRecipesGrantedByRecipeBookID_" + objectID;
-        List<Recipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<Recipe>;
+        List<CraftingRecipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<CraftingRecipe>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -181,11 +200,12 @@ public class RecipeGateway
                               where items.itemID == objectID
                               select item);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<CraftingRecipe>();
+                foreach (Recipe recipe in result.ToList()) { returnObject.Add(new CraftingRecipe(recipe.recipeID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
-    } // method GetAllRecipesGrantedByRecipeBookID
+    } // method RecipesGrantedByRecipeBookID
 
     public static List<Recipe> GetAllRecipesThatUseComponentAsIngredient(long objectID)
     {

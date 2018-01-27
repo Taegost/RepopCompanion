@@ -8,10 +8,10 @@ public class SkillGateway
 {
     #region "Public Methods"
 
-    public static List<Skill> AllTradeSkills()
+    public static List<CharacterTradeSkill> TradeSkillsGetAll()
     {
         string cacheKey = "TradeSkillList";
-        List<Skill> returnObject = HttpContext.Current.Cache[cacheKey] as List<Skill>;
+        List<CharacterTradeSkill> returnObject = HttpContext.Current.Cache[cacheKey] as List<CharacterTradeSkill>;
         if (returnObject == null)
         {
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -19,19 +19,15 @@ public class SkillGateway
                 var tradeSkills = (from skill in myEntities.Skills
                                    join recipe in myEntities.Recipes on skill.skillID equals recipe.skillID
                                    select skill).Distinct().OrderBy(x => x.displayName);
-                returnObject = tradeSkills.ToList();
+                returnObject = new List<CharacterTradeSkill>();
+                foreach (Skill skill in tradeSkills.ToList()) { returnObject.Add(new CharacterTradeSkill(skill.skillID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         } // if (skillList == null)
         return returnObject;
-    } // method AllTradeSkills
+    } // method TradeSkillsGetAll
 
-    public static Skill GetSkillById(long objectID)
-    {
-        return GetSkillById(Convert.ToInt32(objectID));
-    } // method GetSkillById(long inSkillId)
-
-    public static Skill GetSkillById(Int32 objectID)
+    public static Skill SkillGetById(long objectID)
     {
         string cacheKey = "Skill_" + objectID;
         Skill returnObject = HttpContext.Current.Cache[cacheKey] as Skill;
@@ -46,7 +42,7 @@ public class SkillGateway
             } // using
         } // if (currentSkill == null)
         return returnObject;
-    } // method GetSkillById
+    } // method SkillGetById
 
     #endregion // Public Methods
 } // class SkillLists
