@@ -19,12 +19,12 @@
             <Columns>
                 <asp:TemplateField HeaderText="Recipe">
                     <ItemTemplate>
-                        <asp:HyperLink ID="lnk_Recipe" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateRecipeLink(Convert.ToInt32(Eval("recipeID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink>
+                        <asp:HyperLink ID="lnk_Recipe" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Skill">
                     <ItemTemplate>
-                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.SkillGetById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# Eval("ParentSkill.Name") %>' NavigateUrl='<%# Eval("ParentSkill.URL") %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -36,12 +36,12 @@
             <Columns>
                 <asp:TemplateField HeaderText="Recipe">
                     <ItemTemplate>
-                        <asp:HyperLink ID="lnk_Recipe" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateRecipeLink(Convert.ToInt32(Eval("recipeID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink>
+                        <asp:HyperLink ID="lnk_Recipe" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Skill">
                     <ItemTemplate>
-                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# SkillGateway.SkillGetById(Convert.ToInt32(Eval("skillID"))).displayName %>' NavigateUrl='<%# LinkGenerator.GenerateTradeskillLink(Convert.ToInt32(Eval("skillID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+                        <asp:HyperLink ID="lnk_RecipeSkill" Text='<%# Eval("ParentSkill.Name") %>' NavigateUrl='<%# Eval("ParentSkill.URL") %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

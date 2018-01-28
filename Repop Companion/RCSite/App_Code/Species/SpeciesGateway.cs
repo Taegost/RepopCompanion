@@ -9,10 +9,10 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class SpeciesGateway
 {
-    public static List<Species> GetAllSpecies()
+    public static List<SpeciesInfo> GetAllSpecies()
     {
         string cacheKey = "AllSpecies";
-        List<Species> returnObject = HttpContext.Current.Cache[cacheKey] as List<Species>;
+        List<SpeciesInfo> returnObject = HttpContext.Current.Cache[cacheKey] as List<SpeciesInfo>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -20,7 +20,8 @@ public class SpeciesGateway
                 var result = (from item in myEntities.Species
                               select item).Distinct().OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<SpeciesInfo>();
+                foreach (Species item in result.ToList()) { returnObject.Add(new SpeciesInfo(item)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;

@@ -8,12 +8,12 @@
         <Columns>
             <asp:TemplateField HeaderText="Name">
                 <ItemTemplate>
-                    <asp:HyperLink ID="lnk_Species" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateSpeciesLink(Convert.ToInt32(Eval("speciesID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+                    <asp:HyperLink ID="lnk_Species" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Type">
                 <ItemTemplate>
-                    <asp:Label ID="lbl_SpeciesGroup" runat="server" Text='<%# Eval("extractionType") %>'></asp:Label>
+                    <asp:Label ID="lbl_SpeciesGroup" runat="server" Text='<%# Eval("ExtractionMethod") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

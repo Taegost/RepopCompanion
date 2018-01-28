@@ -90,14 +90,13 @@ public partial class Items_Item : BasePage
         {
             case DataControlRowType.DataRow:
                 HyperLink nameLink = (HyperLink)e.Row.FindControl("lnk_Name");
-                Recipe currentRecipe = (Recipe)e.Row.DataItem;
-                nameLink.Text = currentRecipe.displayName;
-                nameLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(currentRecipe.recipeID);
+                CraftingRecipe currentRecipe = (CraftingRecipe)e.Row.DataItem;
+                nameLink.Text = currentRecipe.Name;
+                nameLink.NavigateUrl = currentRecipe.URL;
                 HyperLink skillLink = (HyperLink)e.Row.FindControl("lnk_Skill");
-                Skill currentSkill = SkillGateway.SkillGetById(currentRecipe.skillID);
-                skillLink.Text = currentSkill.displayName;
-                skillLink.NavigateUrl = LinkGenerator.GenerateTradeskillLink(currentSkill.skillID);
-                e.Row.CssClass += " " + currentSkill.displayName;
+                skillLink.Text = currentRecipe.ParentSkill.Name;
+                skillLink.NavigateUrl = currentRecipe.ParentSkill.URL;
+                e.Row.CssClass += " " + currentRecipe.ParentSkill.Name;
                 // The logic below here needs to be re-written.  It's ugly.
                 HyperLink resultLink = (HyperLink)e.Row.FindControl("lnk_Result");
                 //List<Crafting_Filters> itemFilters = FilterGateway.GetCraftingFiltersByItemID(objectID);
@@ -138,14 +137,13 @@ public partial class Items_Item : BasePage
         {
             case DataControlRowType.DataRow:
                 HyperLink nameLink = (HyperLink)e.Row.FindControl("lnk_Name");
-                Recipe currentRecipe = (Recipe)e.Row.DataItem;
-                nameLink.Text = currentRecipe.displayName;
-                nameLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(currentRecipe.recipeID);
+                CraftingRecipe currentRecipe = (CraftingRecipe)e.Row.DataItem;
+                nameLink.Text = currentRecipe.Name;
+                nameLink.NavigateUrl = currentRecipe.URL;
                 HyperLink skillLink = (HyperLink)e.Row.FindControl("lnk_Skill");
-                Skill currentSkill = SkillGateway.SkillGetById(currentRecipe.skillID);
-                e.Row.CssClass +=" " + currentSkill.displayName;
-                skillLink.Text = currentSkill.displayName;
-                skillLink.NavigateUrl = LinkGenerator.GenerateTradeskillLink(currentSkill.skillID);
+                e.Row.CssClass +=" " + currentRecipe.ParentSkill.Name;
+                skillLink.Text = currentRecipe.ParentSkill.Name;
+                skillLink.NavigateUrl = currentRecipe.ParentSkill.URL;
                 break;
         } // switch
 
@@ -154,19 +152,16 @@ public partial class Items_Item : BasePage
 
     private void SetUpCraftingInfo()
     {
-        rpt_ComponentTypes.DataSource = ComponentGateway.GetComponentsByItemID(CurrentItem.ID);
+        rpt_ComponentTypes.DataSource = CurrentItem.Components;
         rpt_ComponentTypes.DataBind();
-        Crafting_Filters craftingFilter = FilterGateway.GetCraftingFilterByItemID(CurrentItem.ID);
-        if (craftingFilter != null)
+        if (CurrentItem.Filter != null)
         {
-            lnk_Filter.Text = craftingFilter.displayName;
-            lnk_Filter.NavigateUrl = LinkGenerator.GenerateFilterLink(craftingFilter.filterID);
+            lnk_Filter.Text = CurrentItem.Filter.Name;
+            lnk_Filter.NavigateUrl = CurrentItem.Filter.URL;
         }
-        //grd_Recipe.DataSource = RecipeGateway.GetRecipesByResultItemIDAndType(CurrentItem.itemID, ItemTypeEnum.Item);
-        //grd_Recipe.DataBind();
-        grd_Ingredient.DataSource = RecipeGateway.GetAllRecipesThatUseItemAsIngredient(CurrentItem.ID);
+        grd_Ingredient.DataSource = CurrentItem.RecipesUsedAsIngredient;
         grd_Ingredient.DataBind();
-        grd_Agent.DataSource = RecipeGateway.GetAllRecipesThatUseItemAsAgent(CurrentItem.ID);
+        grd_Agent.DataSource = CurrentItem.RecipesUsedAsAgent;
         grd_Agent.DataBind();
     } // SetUpCraftingInfo
 } // class Items_Item

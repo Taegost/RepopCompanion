@@ -9,6 +9,7 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class ItemBase : IRecipeResultItem
 {
+    private ItemGroupEnum[] ItemGroupsUsedInCrafting = { ItemGroupEnum.CraftingComponent, ItemGroupEnum.RawMaterial };
     public long ID { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
@@ -31,6 +32,10 @@ public class ItemBase : IRecipeResultItem
             return _group;
         } // get
     } // property Group
+    public bool IsUsedInCrafting()
+    {
+        return ItemGroupsUsedInCrafting.Contains(Group);        
+    } // IsUsedInCrafting
 
     private List<CraftingRecipe> _recipes = null;
     public List<CraftingRecipe> Recipes
@@ -71,6 +76,47 @@ public class ItemBase : IRecipeResultItem
             return _powerSource;
         } // get
     } // property PowerSource
+
+    private List<CraftingComponent> _components = null;
+    public List<CraftingComponent> Components
+    {
+        get
+        {
+            if (_components == null && IsUsedInCrafting()) { _components = ComponentGateway.ComponentsGetByItemID(ID); }
+            return _components;
+        } // get
+    } // property Components
+
+    private CraftingFilter _filter = null;
+    public CraftingFilter Filter
+    {
+        get
+        {
+            if (_filter == null && IsUsedInCrafting()) { _filter = FilterGateway.CraftingFilterGetByItemID(ID); }
+            return _filter;
+        } // get
+    } // property Filter
+
+    private List<CraftingRecipe> _recipesUsedAsAgent = null;
+    public List<CraftingRecipe> RecipesUsedAsAgent
+    {
+        get
+        {
+            if (_recipesUsedAsAgent == null && IsUsedInCrafting()) { _recipesUsedAsAgent = RecipeGateway.RecipesGetAllThatUseItemAsAgent(ID); }
+            return _recipesUsedAsAgent;
+        } // get
+    } // property RecipesUsedAsAgent
+
+    private List<CraftingRecipe> _recipesUsedAsIngredient = null;
+    public List<CraftingRecipe> RecipesUsedAsIngredient
+    {
+        get
+        {
+            // This method needs to be refactored before it'll work
+            // if (_recipesUsedAsIngredient == null && IsUsedInCrafting()) { _recipesUsedAsIngredient = RecipeGateway.RecipesGetAllThatUseItemAsIngredient(ID); }
+            return _recipesUsedAsIngredient;
+        } // get
+    } // property RecipesUsedAsIngredient
 
     public ItemBase(long itemID)
     {

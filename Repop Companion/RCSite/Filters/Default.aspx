@@ -6,7 +6,7 @@
     <h1>Filters</h1>
     <asp:Repeater ID="rpt_Filters" runat="server">
         <ItemTemplate>
-            <asp:HyperLink ID="lnk_Filter" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateFilterLink(Convert.ToInt32(Eval("filterID"))) %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
+            <asp:HyperLink ID="lnk_Filter" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="NoLinkStyle" runat="server"></asp:HyperLink><br />
         </ItemTemplate>
     </asp:Repeater>
 </asp:Content>

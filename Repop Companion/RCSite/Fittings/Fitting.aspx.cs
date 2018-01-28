@@ -9,17 +9,18 @@ using Repop_Companion.DataModels;
 
 public partial class Items_Fitting : BasePage
 {
-    public Fitting CurrentFitting { get; set; }
+    public FittingBase CurrentFitting { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (String.IsNullOrEmpty(Request.QueryString.Get("FittingID")))
         {
-            Response.Redirect("Default.aspx");
+            Response.Redirect("~/Fittings/Default.aspx");
         } // if (!String.IsNullOrEmpty(Request.QueryString.Get("ComponentID")))
 
         int currentID = Convert.ToInt32(Request.QueryString.Get("FittingID"));
-        CurrentFitting = ItemGateway.FittingGetByID(currentID);
-        Title = CurrentFitting.displayName;
+        CurrentFitting = new FittingBase(currentID) ;
+        if (CurrentFitting == null || CurrentFitting.Name.Equals("n/a")) { Response.Redirect("~/Fittings/Default.aspx"); }
+        Title = CurrentFitting.Name;
 
     } // method Page_Load
 } // class Items_Fitting

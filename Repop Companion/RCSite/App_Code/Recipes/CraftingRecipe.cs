@@ -21,22 +21,14 @@ public class CraftingRecipe
     {
         get
         {
-            if (_results == null)
-            {
-                List<Recipe_Results> recipeResults = RecipeGateway.RecipeResultsGetByRecipeID(ID);
-                _results = new List<CraftingRecipeResult>();
-                foreach (Recipe_Results result in recipeResults) { _results.Add(new CraftingRecipeResult(result)); }
-            } // if (_results == null)
+            if (_results == null) { _results = RecipeGateway.RecipeResultsGetByRecipeID(ID); } 
             return _results;
         } // get
     } // property Results
 
     public string URL
     {
-        get
-        {
-            return LinkGenerator.GenerateRecipeLink(ID);
-        } // get
+        get { return LinkGenerator.GenerateRecipeLink(ID); } 
     } // property URL
 
     private long parentSkillID;
@@ -45,10 +37,7 @@ public class CraftingRecipe
     {
         get
         {
-            if (_parentSkill == null)
-            {
-                _parentSkill = new CharacterTradeSkill(parentSkillID);
-            } // if (_parentSkill == null)
+            if (_parentSkill == null) { _parentSkill = new CharacterTradeSkill(parentSkillID); } 
             return _parentSkill;
         } // get
     } // property ParentSkill
@@ -58,12 +47,7 @@ public class CraftingRecipe
     {
         get
         {
-            if (_skillRange == null)
-            {
-                List<Recipe_Skill_Range> skillRanges = RecipeGateway.SkillRangeGetByRecipeID(ID);
-                _skillRange = new List<CraftingRecipeSkillRange>();
-                foreach (Recipe_Skill_Range range in skillRanges) { _skillRange.Add(new CraftingRecipeSkillRange(range)); }
-            }
+            if (_skillRange == null) { _skillRange = RecipeGateway.SkillRangeGetByRecipeID(ID); }
             return _skillRange;
         } // get
     } // property SkillRange
@@ -75,11 +59,11 @@ public class CraftingRecipe
         {
             if (_recipeBook == null)
             {
-                Item book = ItemGateway.BookGetByRecipeID(ID);
-                if (book == null)
+                _recipeBook = ItemGateway.BookGetByRecipeID(ID);
+                if (_recipeBook == null)
                 { _recipeBook = new RecipeBook(0); }
                 else
-                { _recipeBook = new RecipeBook(book.itemID); }
+                { _recipeBook = new RecipeBook(_recipeBook.ID); }
             }
             return _recipeBook;
         } // get
@@ -90,12 +74,7 @@ public class CraftingRecipe
     {
         get
         {
-            if (_ingredients == null)
-            {
-                List<Recipe_Ingredients> recipeIngredients = RecipeGateway.IngredientsGetByRecipeID(ID);
-                _ingredients = new List<CraftingRecipeIngredient>();
-                foreach (Recipe_Ingredients ingredient in recipeIngredients) { _ingredients.Add(new CraftingRecipeIngredient(ingredient)); }
-            }
+            if (_ingredients == null) { _ingredients = RecipeGateway.IngredientsGetByRecipeID(ID); }
             return _ingredients;
         } // get
     } // property Ingredients
@@ -105,12 +84,7 @@ public class CraftingRecipe
     {
         get
         {
-            if (_agents == null)
-            {
-                List<Recipe_Agents> recipeAgents = RecipeGateway.AgentsGetByRecipeID(ID);
-                _agents = new List<CraftingRecipeAgent>();
-                foreach (Recipe_Agents agent in recipeAgents) { _agents.Add(new CraftingRecipeAgent(agent)); }
-            }
+            if (_agents == null) { _agents = RecipeGateway.AgentsGetByRecipeID(ID); }
             return _agents;
         } // get
     } // property Agents

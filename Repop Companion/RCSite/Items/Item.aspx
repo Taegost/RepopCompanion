@@ -36,7 +36,7 @@
         <asp:Repeater ID="rpt_ComponentTypes" runat="server">
             <ItemTemplate>
                 Component:
-                <asp:HyperLink runat="server" Text='<%# Eval("displayName") %>' NavigateUrl='<%# LinkGenerator.GenerateComponentLink(Convert.ToInt32(Eval("componentID"))) %>' CssClass="NoLinkStyle"></asp:HyperLink><br />
+                <asp:HyperLink runat="server" Text='<%# Eval("Name") %>' NavigateUrl='<%# Eval("URL") %>' CssClass="NoLinkStyle"></asp:HyperLink><br />
             </ItemTemplate>
         </asp:Repeater>
         <div id="FilterWrapper" runat="server">

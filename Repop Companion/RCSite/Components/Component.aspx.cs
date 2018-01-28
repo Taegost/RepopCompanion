@@ -25,9 +25,9 @@ public partial class Components_Component : BasePage
 
         rpt_Items.DataSource = CurrentComponent.Items;
         rpt_Items.DataBind();
-        grd_Ingredients.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsIngredient(CurrentComponent.ID);
+        grd_Ingredients.DataSource = CurrentComponent.RecipesUsedAsIngredient;
         grd_Ingredients.DataBind();
-        grd_Agents.DataSource = RecipeGateway.GetAllRecipesThatUseComponentAsAgent(CurrentComponent.ID);
+        grd_Agents.DataSource = CurrentComponent.RecipesUsedAsAgent;
         grd_Agents.DataBind();
 
         ItemWrapper.Visible = rpt_Items.Items.Count > 0;
@@ -41,8 +41,8 @@ public partial class Components_Component : BasePage
         switch (e.Row.RowType)
         {
             case DataControlRowType.DataRow:
-                Recipe gameData = (Recipe)e.Row.DataItem;
-                e.Row.CssClass += " " + SkillGateway.SkillGetById(gameData.skillID).displayName;
+                CraftingRecipe gameData = (CraftingRecipe)e.Row.DataItem;
+                e.Row.CssClass += " " + gameData.ParentSkill.Name;
                 break;
         } // switch
     } // method grd_Ingredients_RowDataBound
@@ -52,8 +52,8 @@ public partial class Components_Component : BasePage
         switch (e.Row.RowType)
         {
             case DataControlRowType.DataRow:
-                Recipe gameData = (Recipe)e.Row.DataItem;
-                e.Row.CssClass += " " + SkillGateway.SkillGetById(gameData.skillID).displayName;
+                CraftingRecipe gameData = (CraftingRecipe)e.Row.DataItem;
+                e.Row.CssClass += " " + gameData.ParentSkill.Name;
                 break;
         } // switch
     } // method grd_Agents_RowDataBound

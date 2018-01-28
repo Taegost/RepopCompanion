@@ -47,6 +47,7 @@ public class SpeciesInfo
             ID = speciesData.speciesID;
             Name = speciesData.displayName;
             Description = speciesData.displayDescription;
+            ExtractionMethod = speciesData.extractionType;
         }
     } // constructor
 

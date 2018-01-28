@@ -9,29 +9,37 @@ using Repop_Companion.DataModels;
 
 public partial class Filters_Filter : BasePage
 {
-    public Crafting_Filters CurrentFilter { get; set; }
+    public CraftingFilter CurrentFilter { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (String.IsNullOrEmpty(Request.QueryString.Get("FilterID")))
-        {
-            Response.Redirect("Default.aspx");
-        } // if (!String.IsNullOrEmpty(Request.QueryString.Get("RecipeID")))
+        if (String.IsNullOrEmpty(Request.QueryString.Get("FilterID"))) { Response.Redirect("~/Filters/Default.aspx"); }
 
         int itemID = Convert.ToInt32(Request.QueryString.Get("FilterID"));
         CurrentFilter = FilterGateway.CraftingFilterGetByFilterID(itemID);
-        if (CurrentFilter == null) { Response.Redirect("Default.aspx"); }
+        if (CurrentFilter == null || CurrentFilter.Name.Equals("n/a")) { Response.Redirect("~/Filters/Default.aspx"); }
 
         // Main information
-        Title = CurrentFilter.displayName;
+        Title = CurrentFilter.Name;
 
-        rpt_Items.DataSource = ItemGateway.GetItemsByFilterID(CurrentFilter.filterID);
+        rpt_Items.DataSource = CurrentFilter.Items;
         rpt_Items.DataBind();
-        grd_Recipes.DataSource = RecipeGateway.GetAllRecipesThatUseFilter(CurrentFilter.filterID);
+        grd_Recipes.DataSource = CurrentFilter.RecipesUsedAsIngredient;
         grd_Recipes.DataBind();
 
         ItemWrapper.Visible = rpt_Items.Items.Count > 0;
         RecipeWrapper.Visible = grd_Recipes.Rows.Count > 0;
 
     } // method Page_Load
+
+    protected void grd_Recipes_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        switch (e.Row.RowType)
+        {
+            case DataControlRowType.DataRow:
+                CraftingRecipe gameData = (CraftingRecipe)e.Row.DataItem;
+                e.Row.CssClass += " " + gameData.ParentSkill.Name;
+                break;
+        } // switch
+    }
 } // class Filters_Filter

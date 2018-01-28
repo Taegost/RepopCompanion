@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cp_MainContent" Runat="Server">
-    <h1><%=CurrentFitting.displayName %></h1>
+    <h1><%=CurrentFitting.Name %></h1>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="cp_ClientScript" Runat="Server">
 </asp:Content>

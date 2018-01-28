@@ -41,9 +41,9 @@ public class CraftingRecipeFilter
         // In this case, the filter is a Crafting Component
         if (filterID == 0 && ingCount == -1)
         {
-            List<Recipe_Ingredients> ingredients = RecipeGateway.IngredientsGetByRecipeID(parentRecipeID);
+            List<CraftingRecipeIngredient> ingredients = RecipeGateway.IngredientsGetByRecipeID(parentRecipeID);
             var ingredient = (from item in ingredients
-                              where item.ingSlot == Slot
+                              where item.Slot == Slot
                               select item).FirstOrDefault();
             if (ingredient == null)
             {
@@ -51,8 +51,8 @@ public class CraftingRecipeFilter
             }
             else
             {
-                Ingredient = new CraftingComponent(ingredient.componentID);
-                Count = ingredient.count;
+                Ingredient = ingredient.CraftingComponent;
+                Count = ingredient.Count;
                 _ingredientFullName = Ingredient.Name;
                 return;
             } // if (ingredient == null)

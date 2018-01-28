@@ -9,6 +9,7 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class ItemGateway
 {
+    // This method is used by the ItemBase constructor
     public static Item ItemGetByID(long objectID)
     {
         string cacheKey = "Item_" + objectID;
@@ -28,6 +29,7 @@ public class ItemGateway
         return returnObject;
     } // method ItemGetByID
 
+    // This method is used by the FittingBase constructor
     public static Fitting FittingGetByID(long objectID)
     {
         string cacheKey = "Fitting_" + objectID;
@@ -47,6 +49,7 @@ public class ItemGateway
         return returnObject;
     } // method FittingGetByID
 
+    // This method is used by the BlueprintBase constructor
     public static Structure BlueprintGetByID(long objectID)
     {
         string cacheKey = "Blueprint_" + objectID;
@@ -66,21 +69,22 @@ public class ItemGateway
         return returnObject;
     } // method BlueprintGetByID
 
-    public static Item BookGetByRecipeID(long objectID)
+    public static RecipeBook BookGetByRecipeID(long objectID)
     {
         string cacheKey = "BookByRecipeID_" + objectID;
-        Recipe_Books returnObject = HttpContext.Current.Cache[cacheKey] as Recipe_Books;
+        RecipeBook returnObject = HttpContext.Current.Cache[cacheKey] as RecipeBook;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
             {
-                returnObject = (from item in myEntities.Recipe_Books
+                var result = (from item in myEntities.Recipe_Books
                                 where item.recipeID == objectID
                                 select item).FirstOrDefault();
-                if (returnObject == null) { return null; }
+                if (result == null) { return null; }
+                returnObject = new RecipeBook(result.itemID);
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
-        return ItemGetByID(returnObject.itemID);
+        return returnObject;
     } // method BookGetByRecipeID
 
     public static List<ItemBase> ItemsGetByComponentID(long objectID)
@@ -103,10 +107,10 @@ public class ItemGateway
         return returnObject;
     } // GetCraftingComponentsByComponentID
 
-    public static List<Item> GetItemsByFilterID(long objectID)
+    public static List<ItemBase> ItemsGetAllByFilterID(long objectID)
     {
         string cacheKey = "ItemsByFilterID_" + objectID;
-        List<Item> returnObject = HttpContext.Current.Cache[cacheKey] as List<Item>;
+        List<ItemBase> returnObject = HttpContext.Current.Cache[cacheKey] as List<ItemBase>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -116,11 +120,12 @@ public class ItemGateway
                               where filters.filterID == objectID
                               select item).OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<ItemBase>();
+                foreach (Item item in result.ToList()) { returnObject.Add(new ItemBase(item.itemID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
-    } // method GetItemsByFilterID
+    } // method ItemsGetAllByFilterID
 
     public static List<ItemBase> ItemsGetAllCreatedByTradeskillID(long objectID)
     {
@@ -218,14 +223,13 @@ public class ItemGateway
                     AppCaching.AddToCache(cacheKey, returnObject);
                     return returnObject;
                 }
-                var componentResult = ComponentGateway.GetComponentsByItemID(objectID);
+                var componentResult = ComponentGateway.ComponentsGetByItemID(objectID);
                 if (componentResult.Count > 0)
                     {
                     returnObject = ItemGroupEnum.CraftingComponent;
                     AppCaching.AddToCache(cacheKey, returnObject);
                     return returnObject;
                 }
-
             } // using
         return returnObject;
     } // DetermineItemGroupByItemID
@@ -265,10 +269,10 @@ public class ItemGateway
         return returnObject;
     } // method GetAllItems
     
-    public static List<Fitting> GetAllFittings()
+    public static List<FittingBase> GetAllFittings()
     {
         string cacheKey = "AllFittings";
-        List<Fitting> returnObject = HttpContext.Current.Cache[cacheKey] as List<Fitting>;
+        List<FittingBase> returnObject = HttpContext.Current.Cache[cacheKey] as List<FittingBase>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -276,16 +280,17 @@ public class ItemGateway
                 var result = (from item in myEntities.Fittings
                               select item).Distinct().OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<FittingBase>();
+                foreach (Fitting item in result.ToList()) { returnObject.Add(new global::FittingBase(item.fittingID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
     } // method GetAllFittings
 
-    public static List<Structure> GetAllBlueprints()
+    public static List<BlueprintBase> GetAllBlueprints()
     {
         string cacheKey = "AllBlueprints";
-        List<Structure> returnObject = HttpContext.Current.Cache[cacheKey] as List<Structure>;
+        List<BlueprintBase> returnObject = HttpContext.Current.Cache[cacheKey] as List<BlueprintBase>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -293,7 +298,8 @@ public class ItemGateway
                 var result = (from item in myEntities.Structures
                               select item).Distinct().OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<BlueprintBase>();
+                foreach (Structure item in result.ToList()) { returnObject.Add(new BlueprintBase(item.structureID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;

@@ -20,7 +20,7 @@ public partial class Subsistence_Species : BasePage
 
         int itemID = Convert.ToInt32(Request.QueryString.Get("SpeciesID"));
         CurrentSpecies = SpeciesGateway.SpeciesInfoGetBySpeciesID(itemID);
-        if (CurrentSpecies == null) { Response.Redirect("Default.aspx"); }
+        if (CurrentSpecies == null || CurrentSpecies.Name.Equals("n/a")) { Response.Redirect("Default.aspx"); }
         Title = CurrentSpecies.Name;
 
     } // method Page_Load

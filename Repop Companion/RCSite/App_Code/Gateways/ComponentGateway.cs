@@ -9,10 +9,10 @@ using Repop_Companion.DataModels;
 /// </summary>
 public class ComponentGateway
 {
-    public static List<Crafting_Components> GetAllComponents()
+    public static List<CraftingComponent> GetAllComponents()
     {
         string cacheKey = "AllComponents";
-        List<Crafting_Components> returnObject = HttpContext.Current.Cache[cacheKey] as List<Crafting_Components>;
+        List<CraftingComponent> returnObject = HttpContext.Current.Cache[cacheKey] as List<CraftingComponent>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -20,7 +20,8 @@ public class ComponentGateway
                 var result = (from item in myEntities.Crafting_Components
                               select item).Distinct().OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<CraftingComponent>();
+                foreach (Crafting_Components item in result.ToList()) { returnObject.Add(new CraftingComponent(item.componentID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;
@@ -44,15 +45,10 @@ public class ComponentGateway
         return returnObject;
     } // method CraftingComponentGetByComponentID
 
-    public static List<Crafting_Components> GetComponentsByItemID(long objectID)
-    {
-        return GetComponentsByItemID(Convert.ToInt32(objectID));
-    }
-
-    public static List<Crafting_Components> GetComponentsByItemID(Int32 objectID)
+    public static List<CraftingComponent> ComponentsGetByItemID(long objectID)
     {
         string cacheKey = "ComponentsByItemID_" + objectID;
-        List<Crafting_Components> returnObject = HttpContext.Current.Cache[cacheKey] as List<Crafting_Components>;
+        List<CraftingComponent> returnObject = HttpContext.Current.Cache[cacheKey] as List<CraftingComponent>;
 
         if (returnObject == null)
             using (RepopdataEntities myEntities = new RepopdataEntities())
@@ -62,7 +58,8 @@ public class ComponentGateway
                               where itemComponents.itemID == objectID
                               select item).Distinct().OrderBy(x => x.displayName);
                 if (result == null) { return null; }
-                returnObject = result.ToList();
+                returnObject = new List<CraftingComponent>();
+                foreach (Crafting_Components item in result.ToList()) { returnObject.Add(new CraftingComponent(item.componentID)); }
                 AppCaching.AddToCache(cacheKey, returnObject);
             } // using
         return returnObject;

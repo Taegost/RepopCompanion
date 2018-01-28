@@ -33,6 +33,26 @@ public class CraftingComponent : IRecipeIngredient
         } // get
     } // property Items
 
+    private List<CraftingRecipe> _recipesUsedAsAgent = null;
+    public List<CraftingRecipe> RecipesUsedAsAgent
+    {
+        get
+        {
+            if (_recipesUsedAsAgent == null) { _recipesUsedAsAgent = RecipeGateway.RecipesGetAllThatUseComponentAsAgent(ID); }
+            return _recipesUsedAsAgent;
+        } // get
+    } // property RecipesUsedAsAgent
+
+    private List<CraftingRecipe> _recipesUsedAsIngredient = null;
+    public List<CraftingRecipe> RecipesUsedAsIngredient
+    {
+        get
+        {
+            if (_recipesUsedAsIngredient == null) { _recipesUsedAsIngredient = RecipeGateway.RecipesGetAllThatUseComponentAsIngredient(ID); }
+            return _recipesUsedAsIngredient;
+        } // get
+    } // property RecipesUsedAsIngredient
+
     public CraftingComponent(long componentID)
     {
         ID = componentID;
