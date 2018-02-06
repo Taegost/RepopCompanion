@@ -31,6 +31,7 @@ public class CraftingRecipeFilter
             return _ingredientFullName;
         }
     } // property IngredientFullName
+    public IngredientTypeEnum IngredientType { get; private set; }
 
     public CraftingRecipeFilter(long recipeID, long filterID, long ingCount, long slot)
     {
@@ -48,10 +49,12 @@ public class CraftingRecipeFilter
             if (ingredient == null)
             {
                 Ingredient = null;
+                IngredientType = IngredientTypeEnum.Unkonwn;
             }
             else
             {
                 Ingredient = ingredient.CraftingComponent;
+                IngredientType = IngredientTypeEnum.Component;
                 Count = ingredient.Count;
                 _ingredientFullName = Ingredient.Name;
                 return;
@@ -62,6 +65,7 @@ public class CraftingRecipeFilter
         if (ingCount == 0)
         {
             _ingredientFullName = "None";
+            IngredientType = IngredientTypeEnum.Unkonwn;
             return;
         }
 
@@ -69,6 +73,7 @@ public class CraftingRecipeFilter
         if (filterID > 0)
         {
             Ingredient = new CraftingFilter(filterID);
+            IngredientType = IngredientTypeEnum.Filter;
             _ingredientFullName = Ingredient.Name;
             return;
         } // if (ingredientCount == 0)

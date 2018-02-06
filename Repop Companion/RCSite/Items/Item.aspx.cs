@@ -54,6 +54,8 @@ public partial class Items_Item : BasePage
                 SetUpCraftingInfo();
                 break;
             case ItemGroupEnum.CraftingComponent:
+                VisualizationControl.SetItem(CurrentItem);
+                CraftingVisualizerSection.Visible = true;
                 SetUpCraftingInfo();
                 break;
         } // switch
@@ -72,14 +74,13 @@ public partial class Items_Item : BasePage
         {
             case DataControlRowType.DataRow:
                 HyperLink nameLink = (HyperLink)e.Row.FindControl("lnk_Name");
-                Recipe currentRecipe = (Recipe)e.Row.DataItem;
-                nameLink.Text = currentRecipe.displayName;
-                nameLink.NavigateUrl = LinkGenerator.GenerateRecipeLink(currentRecipe.recipeID);
+                CraftingRecipe currentRecipe = (CraftingRecipe)e.Row.DataItem;
+                nameLink.Text = currentRecipe.Name;
+                nameLink.NavigateUrl = currentRecipe.URL;
                 HyperLink skillLink = (HyperLink)e.Row.FindControl("lnk_Skill");
-                Skill currentSkill = SkillGateway.SkillGetById(currentRecipe.skillID);
-                e.Row.CssClass += " " + currentSkill.displayName;
-                skillLink.Text = currentSkill.displayName;
-                skillLink.NavigateUrl = LinkGenerator.GenerateTradeskillLink(currentSkill.skillID);
+                e.Row.CssClass += " " + currentRecipe.ParentSkill.Name;
+                skillLink.Text = currentRecipe.ParentSkill.Name;
+                skillLink.NavigateUrl = currentRecipe.ParentSkill.URL;
                 break;
         } // switch
     } // method grd_Recipe_RowDataBound
@@ -159,6 +160,8 @@ public partial class Items_Item : BasePage
             lnk_Filter.Text = CurrentItem.Filter.Name;
             lnk_Filter.NavigateUrl = CurrentItem.Filter.URL;
         }
+        grd_Recipe.DataSource = CurrentItem.Recipes;
+        grd_Recipe.DataBind();
         grd_Ingredient.DataSource = CurrentItem.RecipesUsedAsIngredient;
         grd_Ingredient.DataBind();
         grd_Agent.DataSource = CurrentItem.RecipesUsedAsAgent;

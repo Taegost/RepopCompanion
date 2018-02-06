@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="Item" Language="C#" MasterPageFile="~/MasterPages/FrontEnd.master" AutoEventWireup="true" CodeFile="Item.aspx.cs" Inherits="Items_Item" %>
 
+<%@ Register Src="~/Controls/VisualizationControl.ascx" TagPrefix="uc1" TagName="VisualizationControl" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cp_MainContent" runat="Server">
@@ -42,6 +45,11 @@
         <div id="FilterWrapper" runat="server">
             Filter: <asp:HyperLink ID="lnk_Filter" runat="server" Text="" CssClass="NoLinkStyle"></asp:HyperLink><br />
         </div>
+        <section id="CraftingVisualizerSection" runat="server" visible="false">
+            <h2>Crafting Visualization</h2>
+            <uc1:VisualizationControl runat="server" ID="VisualizationControl"/>
+        </section>
+
         <section id="RecipeWrapper" runat="server">
             <h2>Produced in Recipe</h2>
             <asp:GridView ID="grd_Recipe" runat="server" AutoGenerateColumns="False" OnRowDataBound="grd_Recipe_RowDataBound">

@@ -274,74 +274,32 @@ public class RecipeGateway
     } // method RecipesGetAllThatUseItemAsAgent
 
     // All of this logic needs to be completely re-written from scratch due to the refactoring
-    //public static List<CraftingRecipe> RecipesGetAllThatUseItemAsIngredient(long objectID)
-    //{
-    //    string cacheKey = "AllRecipesThatUseItemAsIngredient_" + objectID;
-    //    List<CraftingRecipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<CraftingRecipe>;
+    public static List<CraftingRecipe> RecipesThatUseItemAsIngredient(ItemBase item)
+    {
+        string cacheKey = "AllRecipesThatUseItemAsIngredient_" + item.ID;
+        List<CraftingRecipe> returnObject = HttpContext.Current.Cache[cacheKey] as List<CraftingRecipe>;
 
-    //    if (returnObject == null)
-    //        using (RepopdataEntities myEntities = new RepopdataEntities())
-    //        {
-    //            returnObject = new List<CraftingRecipe>();
-    //            var recipeList = (from item in myEntities.Recipes
-    //                              join ingredients in myEntities.Recipe_Ingredients on item.recipeID equals ingredients.recipeID
-    //                              join itemCraftingComponents in myEntities.Item_Crafting_Components on ingredients.componentID equals itemCraftingComponents.componentID
-    //                              join actualItems in myEntities.Items on itemCraftingComponents.itemID equals actualItems.itemID
-    //                              where actualItems.itemID == objectID
-    //                              select item).OrderBy(x => x.skillID);
-    //            if (recipeList == null) { return null; }
-    //            foreach (Recipe recipe in recipeList)
-    //            {
-    //                List<CraftingRecipeResult> recipeResults = RecipeResultsGetByRecipeID(recipe.recipeID);
-
-    //                // We only need the Recipe_Ingredients for the current recipe that use one of the item components
-    //                List<CraftingRecipeIngredient> componentIngredients = (from item in IngredientsGetByRecipeID(recipe.recipeID)
-    //                                                                 join components in ComponentGateway.ComponentsGetByItemID(objectID) on item.CraftingComponent.ID equals components.ID
-    //                                                                 select item).ToList();
-
-    //                // This is a terrible hack to make this work while I refactor.  It needs to be taken out back and buried
-    //                CraftingFilter itemFilter = FilterGateway.CraftingFilterGetByItemID(objectID);
-    //                if (itemFilter == null) { itemFilter = new CraftingFilter(null); }
-    //                foreach (CraftingRecipeIngredient recipeIngredient in componentIngredients)
-    //                {
-    //                    switch (recipeIngredient.Slot)
-    //                    {
-    //                        case 1:
-    //                            foreach (CraftingRecipeResult recipeResult in recipeResults)
-    //                            {
-    //                                if ((recipeResult.Filters[0].Ingredient.ID == 0 || recipeResult.filter1ID == itemFilter.ID) && !returnObject.Contains(new CraftingRecipe(recipe.recipeID)))
-    //                                { returnObject.Add(new CraftingRecipe(recipe.recipeID)); break; } // Don't need to continue if it matches
-    //                            } // foreach (Recipe_Results recipeResult in recipeResults)
-    //                            break;
-    //                        case 2:
-    //                            foreach (CraftingRecipeResult recipeResult in recipeResults)
-    //                            {
-    //                                if ((recipeResult.Filters[1].Ingredient.ID == 0 || recipeResult.filter2ID == itemFilter.ID) && !returnObject.Contains(new CraftingRecipe(recipe.recipeID)))
-    //                                { returnObject.Add(new CraftingRecipe(recipe.recipeID)); break; } // Don't need to continue if it matches
-    //                            } // foreach (Recipe_Results recipeResult in recipeResults)
-    //                            break;
-    //                        case 3:
-    //                            foreach (CraftingRecipeResult recipeResult in recipeResults)
-    //                            {
-    //                                if ((recipeResult.Filters[2].Ingredient.ID == 0 || recipeResult.filter3ID == itemFilter.ID) && !returnObject.Contains(new CraftingRecipe(recipe.recipeID)))
-    //                                { returnObject.Add(new CraftingRecipe(recipe.recipeID)); break; } // Don't need to continue if it matches
-    //                            } // foreach (Recipe_Results recipeResult in recipeResults)
-    //                            break;
-    //                        case 4:
-    //                            foreach (CraftingRecipeResult recipeResult in recipeResults)
-    //                            {
-    //                                if ((recipeResult.Filters[3].Ingredient.ID == 0 || recipeResult.filter4ID == itemFilter.ID) && !returnObject.Contains(new CraftingRecipe(recipe.recipeID)))
-    //                                { returnObject.Add(new CraftingRecipe(recipe.recipeID)); break; } // Don't need to continue if it matches
-    //                            } // foreach (Recipe_Results recipeResult in recipeResults)
-    //                            break;
-    //                    } // switch (recipeIngredient.ingSlot)
-    //                } // foreach (Recipe_Ingredients recipeIngredient in componentIngredients)
-    //            } // foreach (Recipe recipe in recipeList)
-    //            if (returnObject == null) { return null; }
-    //            AppCaching.AddToCache(cacheKey, returnObject);
-    //        } // using
-    //    return returnObject;
-    //} // method RecipesGetAllThatUseItemAsIngredient
+        if (returnObject == null)
+            using (RepopdataEntities myEntities = new RepopdataEntities())
+            {
+                returnObject = new List<CraftingRecipe>();
+                foreach (CraftingComponent component in item.Components)
+                {
+                    foreach (CraftingRecipe recipe in component.RecipesUsedAsIngredient)
+                    {
+                        if (!returnObject.Any(x => x.ID == recipe.ID)) { returnObject.Add(recipe); }
+                    }
+                }
+                foreach (CraftingRecipe recipe in item.Filter.RecipesUsedAsIngredient)
+                {
+                    if (!returnObject.Any(x => x.ID == recipe.ID)) { returnObject.Add(recipe); }
+                }
+                returnObject = returnObject.OrderBy(x => x.ParentSkill.Name).ToList();
+                if (returnObject == null) { return null; }
+                AppCaching.AddToCache(cacheKey, returnObject);
+            } // using
+        return returnObject;
+    } // method RecipesThatUseItemAsIngredient
 
     public static List<CraftingRecipe> RecipesGetAllThatUseFilter(long objectID)
     {

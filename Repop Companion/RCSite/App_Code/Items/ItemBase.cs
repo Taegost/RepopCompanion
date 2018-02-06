@@ -113,7 +113,7 @@ public class ItemBase : IRecipeResultItem
         get
         {
             // This method needs to be refactored before it'll work
-            // if (_recipesUsedAsIngredient == null && IsUsedInCrafting()) { _recipesUsedAsIngredient = RecipeGateway.RecipesGetAllThatUseItemAsIngredient(ID); }
+            if (_recipesUsedAsIngredient == null && IsUsedInCrafting()) { _recipesUsedAsIngredient = RecipeGateway.RecipesThatUseItemAsIngredient(this); }
             return _recipesUsedAsIngredient;
         } // get
     } // property RecipesUsedAsIngredient
